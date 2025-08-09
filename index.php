@@ -999,19 +999,38 @@ if ($_POST && isset($_POST['contact_form'])) {
                             <div class="group flex flex-col items-center p-3 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-105 theme-transition">
                                 <!-- Logo -->
                                 <div class="flex justify-center mb-3">
-                                    <?php if (!empty($provider['logo_url']) && file_exists($provider['logo_url'])): ?>
+                                    <?php 
+                                    // Handle logo path - add admin/ prefix for files stored in admin directory
+                                    $logoPath = '';
+                                    $hasLogo = false;
+                                    if (!empty($provider['logo_url'])) {
+                                        // Check if it's already a full URL or starts with admin/
+                                        if (filter_var($provider['logo_url'], FILTER_VALIDATE_URL) || strpos($provider['logo_url'], 'admin/') === 0) {
+                                            $logoPath = $provider['logo_url'];
+                                        } else {
+                                            // Add admin/ prefix for relative paths
+                                            $logoPath = 'admin/' . ltrim($provider['logo_url'], '/');
+                                        }
+                                        $hasLogo = file_exists($logoPath);
+                                    }
+                                    ?>
+                                    <?php if ($hasLogo): ?>
                                     <div class="h-12 w-16 bg-white dark:bg-gray-700 rounded-lg flex items-center justify-center p-2 group-hover:shadow-md transition-shadow duration-200">
-                                        <img src="<?php echo htmlspecialchars($provider['logo_url']); ?>" 
+                                        <img src="<?php echo htmlspecialchars($logoPath); ?>" 
                                              alt="<?php echo htmlspecialchars($provider['provider_name']); ?>" 
-                                             class="h-full w-full object-contain">
-                                    </div>
+                                             class="h-full w-full object-contain"
+                                             onerror="this.style.display='none'; this.parentNode.style.display='none'; this.parentNode.nextElementSibling.style.display='flex';">
+                                </div>
+                                    <div class="h-12 w-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center group-hover:shadow-lg transition-shadow duration-200" style="display: none;">
+                                        <i class="fas fa-shield-alt text-white text-lg"></i>
+                            </div>
                                     <?php else: ?>
                                     <div class="h-12 w-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center group-hover:shadow-lg transition-shadow duration-200">
                                         <i class="fas fa-shield-alt text-white text-lg"></i>
-                                    </div>
-                                    <?php endif; ?>
                                 </div>
-                                
+                                    <?php endif; ?>
+                            </div>
+
                                 <!-- Provider Name -->
                                 <p class="text-xs font-medium text-gray-600 dark:text-gray-400 text-center line-clamp-2 mb-2" title="<?php echo htmlspecialchars($provider['provider_name']); ?>">
                                     <?php echo htmlspecialchars($provider['provider_name']); ?>

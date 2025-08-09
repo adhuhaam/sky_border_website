@@ -68,11 +68,31 @@ try {
                 
                 <!-- Logo -->
                 <div class="flex justify-center mb-6">
-                    <?php if (!empty($provider['logo_url']) && file_exists($provider['logo_url'])): ?>
+                    <?php 
+                    // Handle logo path properly for web access
+                    $logoPath = '';
+                    $hasLogo = false;
+                    if (!empty($provider['logo_url'])) {
+                        // Check if it's already a full URL
+                        if (filter_var($provider['logo_url'], FILTER_VALIDATE_URL)) {
+                            $logoPath = $provider['logo_url'];
+                            $hasLogo = true; // Assume external URLs are valid
+                        } else {
+                            // For local files, just use the path as stored (it's relative to admin)
+                            $logoPath = '../' . ltrim($provider['logo_url'], '/');
+                            $hasLogo = file_exists($logoPath);
+                        }
+                    }
+                    ?>
+                    <?php if ($hasLogo): ?>
                     <div class="h-20 w-24 bg-gray-50 dark:bg-gray-700 rounded-xl flex items-center justify-center p-3 group-hover:bg-gray-100 dark:group-hover:bg-gray-600 transition-colors duration-200">
-                        <img src="<?php echo htmlspecialchars($provider['logo_url']); ?>" 
+                        <img src="<?php echo htmlspecialchars($logoPath); ?>" 
                              alt="<?php echo htmlspecialchars($provider['provider_name']); ?>" 
-                             class="h-full w-full object-contain">
+                             class="h-full w-full object-contain"
+                             onerror="this.style.display='none'; this.parentNode.style.display='none'; this.parentNode.nextElementSibling.style.display='flex';">
+                    </div>
+                    <div class="h-20 w-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow duration-200" style="display: none;">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
                     </div>
                     <?php else: ?>
                     <div class="h-20 w-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow duration-200">
@@ -121,11 +141,31 @@ try {
             <div class="group relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-gray-200 dark:border-gray-700">
                 <!-- Logo -->
                 <div class="flex justify-center mb-4">
-                    <?php if (!empty($provider['logo_url']) && file_exists($provider['logo_url'])): ?>
+                    <?php 
+                    // Handle logo path properly for web access
+                    $logoPath = '';
+                    $hasLogo = false;
+                    if (!empty($provider['logo_url'])) {
+                        // Check if it's already a full URL
+                        if (filter_var($provider['logo_url'], FILTER_VALIDATE_URL)) {
+                            $logoPath = $provider['logo_url'];
+                            $hasLogo = true; // Assume external URLs are valid
+                        } else {
+                            // For local files, just use the path as stored (it's relative to admin)
+                            $logoPath = '../' . ltrim($provider['logo_url'], '/');
+                            $hasLogo = file_exists($logoPath);
+                        }
+                    }
+                    ?>
+                    <?php if ($hasLogo): ?>
                     <div class="h-12 w-16 bg-gray-50 dark:bg-gray-700 rounded-lg flex items-center justify-center p-2 group-hover:bg-gray-100 dark:group-hover:bg-gray-600 transition-colors duration-200">
-                        <img src="<?php echo htmlspecialchars($provider['logo_url']); ?>" 
+                        <img src="<?php echo htmlspecialchars($logoPath); ?>" 
                              alt="<?php echo htmlspecialchars($provider['provider_name']); ?>" 
-                             class="h-full w-full object-contain">
+                             class="h-full w-full object-contain"
+                             onerror="this.style.display='none'; this.parentNode.style.display='none'; this.parentNode.nextElementSibling.style.display='flex';">
+                    </div>
+                    <div class="h-12 w-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow duration-200" style="display: none;">
+                        <i class="fas fa-shield-alt text-white text-lg"></i>
                     </div>
                     <?php else: ?>
                     <div class="h-12 w-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow duration-200">
