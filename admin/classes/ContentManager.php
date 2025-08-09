@@ -606,5 +606,111 @@ class ContentManager {
             return false;
         }
     }
+    
+    // Insurance Provider Methods
+    public function getInsuranceProviders($type = null, $featured_only = false) {
+        try {
+            $query = "SELECT * FROM insurance_providers WHERE is_active = 1";
+            $params = [];
+            
+            if ($type) {
+                $query .= " AND provider_type = :type";
+                $params[':type'] = $type;
+            }
+            
+            if ($featured_only) {
+                $query .= " AND is_featured = 1";
+            }
+            
+            $query .= " ORDER BY display_order ASC, provider_name ASC";
+            
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get insurance providers error: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    public function getInsuranceProvider($id) {
+        try {
+            $query = "SELECT * FROM insurance_providers WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get insurance provider error: " . $e->getMessage());
+            return null;
+        }
+    }
+    
+    public function addInsuranceProvider($data) {
+        try {
+            $query = "INSERT INTO insurance_providers (
+                provider_name, logo_url, is_featured, display_order
+            ) VALUES (
+                :provider_name, :logo_url, :is_featured, :display_order
+            )";
+            
+            $stmt = $this->conn->prepare($query);
+            
+            // Set default values if not provided
+            $data['is_featured'] = isset($data['is_featured']) ? (bool)$data['is_featured'] : false;
+            $data['display_order'] = isset($data['display_order']) ? (int)$data['display_order'] : 0;
+            
+            return $stmt->execute([
+                ':provider_name' => $data['provider_name'],
+                ':logo_url' => $data['logo_url'] ?? '',
+                ':is_featured' => $data['is_featured'],
+                ':display_order' => $data['display_order']
+            ]);
+        } catch (Exception $e) {
+            error_log("Add insurance provider error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function updateInsuranceProvider($id, $data) {
+        try {
+            $query = "UPDATE insurance_providers SET 
+                provider_name = :provider_name,
+                logo_url = :logo_url,
+                is_featured = :is_featured,
+                display_order = :display_order
+                WHERE id = :id";
+            
+            $stmt = $this->conn->prepare($query);
+            
+            // Set default values if not provided
+            $data['is_featured'] = isset($data['is_featured']) ? (bool)$data['is_featured'] : false;
+            $data['display_order'] = isset($data['display_order']) ? (int)$data['display_order'] : 0;
+            
+            return $stmt->execute([
+                ':provider_name' => $data['provider_name'],
+                ':logo_url' => $data['logo_url'] ?? '',
+                ':is_featured' => $data['is_featured'],
+                ':display_order' => $data['display_order'],
+                ':id' => $id
+            ]);
+        } catch (Exception $e) {
+            error_log("Update insurance provider error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function deleteInsuranceProvider($id) {
+        try {
+            $query = "UPDATE insurance_providers SET is_active = 0 WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            return $stmt->execute([':id' => $id]);
+        } catch (Exception $e) {
+            error_log("Delete insurance provider error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    
 }
 ?>

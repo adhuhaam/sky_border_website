@@ -28,6 +28,61 @@ class FileUploader {
     }
     
     /**
+     * Upload a file to a specific category directory
+     */
+    public function uploadFile($file, $category = 'clients', $prefix = '') {
+        // Set upload directory based on category
+        switch ($category) {
+            case 'insurance':
+                $this->uploadDir = 'uploads/insurance/';
+                break;
+            case 'clients':
+            default:
+                $this->uploadDir = 'uploads/clients/logos/';
+                break;
+        }
+        
+        // Ensure upload directory exists
+        if (!file_exists($this->uploadDir)) {
+            mkdir($this->uploadDir, 0755, true);
+        }
+        
+        // Validate file
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            return ['success' => false, 'error' => 'File upload error.'];
+        }
+        
+        // Validate file type
+        if (!array_key_exists($file['type'], $this->allowedTypes)) {
+            return ['success' => false, 'error' => 'Invalid file type. Only images are allowed.'];
+        }
+        
+        // Validate file size
+        if ($file['size'] > $this->maxFileSize) {
+            return ['success' => false, 'error' => 'File size exceeds maximum limit of ' . $this->formatBytes($this->maxFileSize)];
+        }
+        
+        // Generate unique filename
+        $extension = $this->allowedTypes[$file['type']];
+        $filename = $prefix . time() . '_' . uniqid() . '.' . $extension;
+        $filePath = $this->uploadDir . $filename;
+        
+        // Additional security: validate file content
+        if (!$this->validateFileContent($file['tmp_name'], $file['type'])) {
+            return ['success' => false, 'error' => 'File validation failed. File may be corrupted.'];
+        }
+        
+        // Move uploaded file
+        if (move_uploaded_file($file['tmp_name'], $filePath)) {
+            // Set appropriate permissions
+            chmod($filePath, 0644);
+            return ['success' => true, 'file_path' => $filePath];
+        }
+        
+        return ['success' => false, 'error' => 'Failed to upload file.'];
+    }
+
+    /**
      * Upload a file and return the file path or false on error
      */
     public function upload($fileInput, $prefix = '') {

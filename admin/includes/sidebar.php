@@ -47,6 +47,12 @@ $navItems = [
         'active' => $currentPage === 'clients.php'
     ],
     [
+        'name' => 'Insurance Providers',
+        'url' => 'insurance.php',
+        'icon' => 'fas fa-shield-alt',
+        'active' => $currentPage === 'insurance.php'
+    ],
+    [
         'name' => 'Messages',
         'url' => 'messages.php',
         'icon' => 'fas fa-envelope',
