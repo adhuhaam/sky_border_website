@@ -1,80 +1,340 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sky x Border Solutions | HR Consulting &amp; Recruitment Agency</title>
-    <!-- Normalize some default styling across browsers -->
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sky Border Solutions | Professional HR Consulting & Recruitment Agency</title>
+    <meta name="description" content="Leading HR consultancy and recruitment firm in Maldives. We provide end-to-end manpower solutions, work permits, visa processing, and HR support services.">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        },
+                        'accent': {
+                            50: '#fefce8',
+                            100: '#fef9c3',
+                            200: '#fef08a',
+                            300: '#fde047',
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            700: '#a16207',
+                            800: '#854d0e',
+                            900: '#713f12',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'bounce-slow': 'bounce 3s infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
   </head>
-  <body>
+
+<body class="h-full bg-white">
     <!-- Navigation -->
-    <header>
-      <nav class="navbar">
-        <div class="logo">Sky&nbsp;Border&nbsp;Solutions</div>
-        <!-- Menu toggle for mobile -->
-        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-        <label for="nav-toggle" class="hamburger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </label>
-        <ul class="nav-menu">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#clients">Clients</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
+        <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center space-x-3">
+                        <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-brand-600 to-brand-700 flex items-center justify-center">
+                            <i class="fas fa-building text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-900">Sky Border Solutions</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="text-gray-900 hover:text-brand-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#about" class="text-gray-500 hover:text-brand-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="#team" class="text-gray-500 hover:text-brand-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Team</a>
+                        <a href="#services" class="text-gray-500 hover:text-brand-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Services</a>
+                        <a href="#portfolio" class="text-gray-500 hover:text-brand-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Portfolio</a>
+                        <a href="#contact" class="bg-brand-600 text-white hover:bg-brand-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="mobile-menu-button bg-gray-100 p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <i class="fas fa-bars h-6 w-6"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Menu -->
+            <div class="mobile-menu hidden md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+                    <a href="#home" class="text-gray-900 hover:text-brand-600 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                    <a href="#about" class="text-gray-500 hover:text-brand-600 block px-3 py-2 rounded-md text-base font-medium">About</a>
+                    <a href="#team" class="text-gray-500 hover:text-brand-600 block px-3 py-2 rounded-md text-base font-medium">Team</a>
+                    <a href="#services" class="text-gray-500 hover:text-brand-600 block px-3 py-2 rounded-md text-base font-medium">Services</a>
+                    <a href="#portfolio" class="text-gray-500 hover:text-brand-600 block px-3 py-2 rounded-md text-base font-medium">Portfolio</a>
+                    <a href="#contact" class="bg-brand-600 text-white hover:bg-brand-700 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+                </div>
+            </div>
       </nav>
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
-      <div class="hero-content">
-        <h1>Sky&nbsp;Border&nbsp;Solutions</h1>
-        <p class="tagline">Where compliance meets competence</p>
-        <a href="#contact" class="btn btn-primary">Get&nbsp;Started</a>
+    <section id="home" class="relative overflow-hidden bg-gradient-to-br from-brand-50 via-white to-accent-50">
+        <div class="absolute inset-0 bg-gradient-to-br from-brand-600/5 to-accent-600/5"></div>
+        <div class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+            <div class="text-center">
+                <!-- Badge -->
+                <div class="mx-auto mb-6 inline-flex items-center space-x-2 rounded-full bg-brand-100 px-4 py-2 text-sm font-medium text-brand-700">
+                    <i class="fas fa-award"></i>
+                    <span>An HR consultanting & Recruitment agency</span>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 class="mx-auto max-w-4xl text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
+                    Sky Border
+                    <span class="bg-gradient-to-r from-brand-600 to-accent-500 bg-clip-text text-transparent">Solutions</span>
+                </h1>
+
+                <!-- Tagline -->
+                <p class="mx-auto mt-6 max-w-2xl text-xl leading-8 text-gray-600">
+                    Where compliance meets competence
+                </p>
+
+                <!-- Description -->
+                <p class="mx-auto mt-4 max-w-3xl text-lg leading-8 text-gray-500">
+                    Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.
+                </p>
+
+                <!-- CTA Buttons -->
+                <div class="mt-10 flex items-center justify-center gap-x-6">
+                    <a href="#contact" class="rounded-lg bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-brand-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 transition-all duration-200 hover:shadow-lg">
+                        <i class="fas fa-phone mr-2"></i>
+                        Get Started
+                    </a>
+                    <a href="#services" class="rounded-lg bg-white px-6 py-3 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 transition-all duration-200">
+                        <i class="fas fa-arrow-down mr-2"></i>
+                        Our Services
+                    </a>
+                </div>
+
+                <!-- Scroll Indicator -->
+                <div class="mt-16 animate-bounce-slow">
+                    <a href="#about" class="inline-block text-gray-400 hover:text-brand-600 transition-colors">
+                        <i class="fas fa-chevron-down text-2xl"></i>
+                    </a>
+                </div>
+            </div>
       </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="about">
-      <div class="container">
-        <h2>About&nbsp;Us</h2>
-        <p>
-          Sky&nbsp;Border&nbsp;Solution&nbsp;Pvt&nbsp;Ltd is a government‑licensed HR
-          consultancy and recruitment firm headquartered in the Republic of
-          Maldives. Established in response to the rising demand for skilled
-          foreign labor, we provide end‑to‑end manpower solutions. Our
-          operations are driven by a long‑term vision, well‑defined mission and
-          core values. With a seasoned leadership team bringing decades of
-          recruitment expertise, we adeptly identify, source and place the most
-          qualified talent to meet diverse organizational needs. Our consistent
-          year‑on‑year growth, backed by a solid financial framework, reflects
-          our commitment to service excellence, operational integrity and client
-          satisfaction. We are dedicated to bridging workforce gaps with
-          professionalism, precision and purpose.
-        </p>
-        <div class="mission-vision">
-          <div class="mission">
-            <h3>Our&nbsp;Mission</h3>
-            <p>
-              To foster enduring partnerships with organizations by delivering
-              superior recruitment solutions that align with their strategic
-              goals. We are committed to offering unparalleled client service,
-              acting as a seamless extension of our clients’ human resource
-              operations. Our mission is to consistently exceed expectations
-              through agile, transparent and results‑driven support that
-              enhances workforce capability and organizational success.
+    <section id="about" class="py-24 sm:py-32">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mx-auto max-w-2xl text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">About Us</h2>
+                <p class="mt-4 text-lg leading-8 text-gray-600">Leading HR solutions in the Maldives with government licensing and proven expertise</p>
+            </div>
+
+            <!-- Main Content -->
+            <div class="mx-auto mt-16 max-w-5xl">
+                <div class="grid grid-cols-1 gap-16 lg:grid-cols-3">
+                    <!-- About Text -->
+                    <div class="lg:col-span-2">
+                        <div class="prose prose-lg prose-gray max-w-none">
+                            <p class="text-xl leading-8 text-gray-700 mb-6">
+                                Sky Border Solution Pvt Ltd is a government-licensed HR consultancy and recruitment firm headquartered in the Republic of Maldives.
+                            </p>
+                            <p class="text-gray-600 mb-6">
+                                Established in response to the rising demand for skilled foreign labor, we provide end-to-end manpower solutions. Our operations are driven by a long-term vision, well-defined mission and core values. With a seasoned leadership team bringing decades of recruitment expertise, we adeptly identify, source and place the most qualified talent to meet diverse organizational needs.
+                            </p>
+                            <p class="text-gray-600">
+                                Our consistent year-on-year growth, backed by a solid financial framework, reflects our commitment to service excellence, operational integrity and client satisfaction. We are dedicated to bridging workforce gaps with professionalism, precision and purpose.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="space-y-6">
+                        <div class="rounded-2xl bg-brand-50 p-6 text-center">
+                            <div class="text-3xl font-bold text-brand-600">1000+</div>
+                            <div class="text-sm font-medium text-gray-600">Successful Placements</div>
+                        </div>
+                        <div class="rounded-2xl bg-accent-50 p-6 text-center">
+                            <div class="text-3xl font-bold text-accent-600">50+</div>
+                            <div class="text-sm font-medium text-gray-600">Partner Companies</div>
+                        </div>
+                        <div class="rounded-2xl bg-green-50 p-6 text-center">
+                            <div class="text-3xl font-bold text-green-600">100%</div>
+                            <div class="text-sm font-medium text-gray-600">Licensed & Compliant</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mission & Vision -->
+            <div class="mx-auto mt-20 grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-2">
+                <!-- Mission -->
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-gray-200 hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100">
+                            <i class="fas fa-target text-brand-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Our Mission</h3>
+                    </div>
+                    <p class="text-gray-600 leading-7">
+                        To foster enduring partnerships with organizations by delivering superior recruitment solutions that align with their strategic goals. We are committed to offering unparalleled client service, acting as a seamless extension of our clients' human resource operations.
             </p>
           </div>
-          <div class="vision">
-            <h3>Our&nbsp;Vision</h3>
-            <p>
-              To be the most trusted and recognized recruitment company in the
-              Maldives, known for our professionalism, excellence and ability to
-              deliver outstanding outcomes for both employers and candidates.
+
+                <!-- Vision -->
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-gray-200 hover:shadow-lg transition-shadow duration-300">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-accent-100">
+                            <i class="fas fa-eye text-accent-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Our Vision</h3>
+                    </div>
+                    <p class="text-gray-600 leading-7">
+                        To be the most trusted and recognized recruitment company in the Maldives, known for our professionalism, excellence and ability to deliver outstanding outcomes for both employers and candidates.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Company Profile Download -->
+            <div class="mx-auto mt-16 max-w-md text-center">
+                <div class="rounded-3xl bg-gradient-to-br from-gray-50 to-gray-100 p-8">
+                    <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-100">
+                        <i class="fas fa-download text-brand-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Company Profile</h3>
+                    <p class="text-gray-600 mb-6">Download our comprehensive company profile to learn more about our services and expertise.</p>
+                    <a href="http://skybordersolutions.com/profile.pdf" target="_blank" class="inline-flex items-center space-x-2 rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white hover:bg-brand-700 transition-colors">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>Download Profile</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="bg-gray-50 py-24 sm:py-32">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mx-auto max-w-2xl text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Leadership Team</h2>
+                <p class="mt-4 text-lg leading-8 text-gray-600">Experienced professionals with decades of recruitment expertise driving our success</p>
+            </div>
+
+            <!-- Team Grid -->
+            <div class="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-8 lg:grid-cols-3">
+                <!-- Managing Director -->
+                <div class="rounded-3xl bg-white p-8 text-center ring-1 ring-gray-200 hover:shadow-lg transition-all duration-300">
+                    <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-brand-600">
+                        <i class="fas fa-user-tie text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900">Managing Director</h3>
+                    <p class="text-brand-600 font-medium mb-4">Chief Executive Officer</p>
+                    <p class="text-gray-600 text-sm leading-6 mb-6">
+                        With over 15 years of experience in HR consulting and recruitment, our Managing Director leads Sky Border Solutions with a vision for excellence and innovation in workforce solutions.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <span class="rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700">Strategic Leadership</span>
+                        <span class="rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700">HR Management</span>
+                        <span class="rounded-full bg-brand-100 px-3 py-1 text-xs font-medium text-brand-700">Business Development</span>
+                    </div>
+                </div>
+
+                <!-- Operations Director -->
+                <div class="rounded-3xl bg-white p-8 text-center ring-1 ring-gray-200 hover:shadow-lg transition-all duration-300">
+                    <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-accent-500 to-accent-600">
+                        <i class="fas fa-users-cog text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900">Operations Director</h3>
+                    <p class="text-accent-600 font-medium mb-4">Director of Operations</p>
+                    <p class="text-gray-600 text-sm leading-6 mb-6">
+                        Oversees all operational aspects of our recruitment services, ensuring seamless delivery of our comprehensive HR solutions and maintaining our high standards of service excellence.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <span class="rounded-full bg-accent-100 px-3 py-1 text-xs font-medium text-accent-700">Operations Management</span>
+                        <span class="rounded-full bg-accent-100 px-3 py-1 text-xs font-medium text-accent-700">Process Optimization</span>
+                        <span class="rounded-full bg-accent-100 px-3 py-1 text-xs font-medium text-accent-700">Quality Assurance</span>
+                    </div>
+                </div>
+
+                <!-- Business Development Manager -->
+                <div class="rounded-3xl bg-white p-8 text-center ring-1 ring-gray-200 hover:shadow-lg transition-all duration-300">
+                    <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900">Business Development Manager</h3>
+                    <p class="text-green-600 font-medium mb-4">Sales & Marketing Director</p>
+                    <p class="text-gray-600 text-sm leading-6 mb-6">
+                        Drives business growth through strategic partnerships and client relationship management, leveraging extensive networks across multiple industries in the Maldives and beyond.
+                    </p>
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">Client Relations</span>
+                        <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">Market Analysis</span>
+                        <span class="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">Partnership Development</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Board Info -->
+            <div class="mx-auto mt-16 max-w-4xl">
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-gray-200">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100">
+                            <i class="fas fa-users text-gray-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Board of Directors</h3>
+                    </div>
+                    <p class="text-gray-600 leading-7">
+                        Our board of directors brings together decades of recruitment expertise and industry knowledge. They have established strong relationships with recruitment agencies across Bangladesh, India, Sri Lanka, Nepal, and other key markets. Their collective experience drives our commitment to maintaining the highest standards of professionalism in all our services.
             </p>
           </div>
         </div>
@@ -82,154 +342,872 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="services">
-      <div class="container">
-        <h2>Our&nbsp;Services</h2>
-        <div class="service-grid">
-          <div class="card">
-            <h3>Recruitment&nbsp;Services</h3>
-            <p>
-              We source and screen candidates across multiple sectors, from
-              professional specialists to semi‑skilled labourers. Our extensive
-              database and global network ensure timely placements and ethical
-              recruitment practices.
-            </p>
-            <ul>
-              <li>Construction&nbsp;&amp;&nbsp;Engineering</li>
-              <li>Healthcare</li>
-              <li>Tourism&nbsp;&amp;&nbsp;Hospitality</li>
-              <li>Retail&nbsp;&amp;&nbsp;Customer&nbsp;Service</li>
-              <li>Administration&nbsp;&amp;&nbsp;Office&nbsp;Support</li>
-              <li>Transport&nbsp;&amp;&nbsp;Logistics</li>
-              <li>Facility&nbsp;Management</li>
-              <li>Education&nbsp;&amp;&nbsp;Childcare</li>
-            </ul>
+    <section id="services" class="py-24 sm:py-32">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mx-auto max-w-2xl text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Services</h2>
+                <p class="mt-4 text-lg leading-8 text-gray-600">Comprehensive HR solutions tailored to meet your organization's workforce needs</p>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-8 lg:grid-cols-2">
+                <!-- Recruitment Services -->
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-gray-200 hover:shadow-lg transition-all duration-300">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100">
+                            <i class="fas fa-user-tie text-brand-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Recruitment Services</h3>
+                    </div>
+                    <p class="text-gray-600 mb-6">
+                        We source and screen candidates across multiple sectors, from professional specialists to semi-skilled labourers. Our extensive database and global network ensure timely placements and ethical recruitment practices.
+                    </p>
+                    
+                    <!-- Service Categories -->
+                    <div class="space-y-4">
+                        <div class="rounded-xl bg-gray-50 p-4">
+                            <h4 class="flex items-center space-x-2 font-medium text-gray-900 mb-2">
+                                <i class="fas fa-hard-hat text-brand-600"></i>
+                                <span>Construction & Engineering</span>
+                            </h4>
+                            <p class="text-sm text-gray-600">Carpenter, Mason, Plumber, Electrician, Welder, Painter, Steel Fixer, Civil Engineer, Quantity Surveyor, Excavator Operator, Bulldozer Operator, Crane Operator, Site Supervisor, Project Manager, Mechanical Engineer, HVAC Technician, Safety Officer</p>
+                        </div>
+                        
+                        <div class="rounded-xl bg-gray-50 p-4">
+                            <h4 class="flex items-center space-x-2 font-medium text-gray-900 mb-2">
+                                <i class="fas fa-user-md text-brand-600"></i>
+                                <span>Healthcare</span>
+                            </h4>
+                            <p class="text-sm text-gray-600">General Practitioners, Nurses, Surgeons, Paediatricians, Orthopaedic Surgeons, ENT Specialists, Dermatologists, Pharmacists, Laboratory Technicians, Radiologists, Physiotherapists, Speech Therapists, Medical Officers, Dentists</p>
+                        </div>
+                        
+                        <div class="rounded-xl bg-gray-50 p-4">
+                            <h4 class="flex items-center space-x-2 font-medium text-gray-900 mb-2">
+                                <i class="fas fa-concierge-bell text-brand-600"></i>
+                                <span>Tourism & Hospitality</span>
+                            </h4>
+                            <p class="text-sm text-gray-600">Spa Therapists, Head Chefs, Sous Chefs, Pastry Chefs, Bartenders, Waiters/Waitresses, Restaurant Supervisors, DJs/Entertainers, Butlers, Sommeliers, Bell Boys, Housekeeping Attendants, Front Office Receptionists, Guest Relations Officers</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HR Support Services -->
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-gray-200 hover:shadow-lg transition-all duration-300">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-accent-100">
+                            <i class="fas fa-users-cog text-accent-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">HR Support Services</h3>
           </div>
-          <div class="card">
-            <h3>HR&nbsp;Support&nbsp;Services</h3>
-            <p>
-              Comprehensive post‑recruitment support ensures expatriate
-              employees are onboarded smoothly and in full compliance with
-              Maldivian labour and immigration laws.
-            </p>
-            <ul>
-              <li>Employee Documentation&nbsp;&amp;&nbsp;Compliance</li>
-              <li>Medical Clearance Coordination</li>
-              <li>Bank Account Opening Assistance</li>
-              <li>Passport&nbsp;&amp;&nbsp;Consular Support</li>
-              <li>Quota Hosting Services</li>
-              <li>Employee Orientation</li>
-            </ul>
+                    <p class="text-gray-600 mb-6">
+                        We deliver comprehensive post-recruitment support tailored to ensure expatriate employees are onboarded efficiently and in full compliance with Maldivian labour and immigration laws.
+                    </p>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex h-6 w-6 items-center justify-center rounded bg-accent-100 mt-0.5">
+                                <i class="fas fa-file-contract text-accent-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-medium text-gray-900">Employee Documentation & Compliance</h5>
+                                <p class="text-xs text-gray-600">Employment contracts and onboarding forms with EA compliance</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="flex h-6 w-6 items-center justify-center rounded bg-accent-100 mt-0.5">
+                                <i class="fas fa-heartbeat text-accent-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-medium text-gray-900">Medical Clearance Coordination</h5>
+                                <p class="text-xs text-gray-600">Pre-employment medical check-ups and Xpat system uploads</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="flex h-6 w-6 items-center justify-center rounded bg-accent-100 mt-0.5">
+                                <i class="fas fa-university text-accent-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-medium text-gray-900">Bank Account Opening</h5>
+                                <p class="text-xs text-gray-600">Salary account setup with licensed financial institutions</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="flex h-6 w-6 items-center justify-center rounded bg-accent-100 mt-0.5">
+                                <i class="fas fa-passport text-accent-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-medium text-gray-900">Passport & Consular Support</h5>
+                                <p class="text-xs text-gray-600">Embassy liaison for Bangladesh, India, Sri Lanka, and Nepal</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="flex h-6 w-6 items-center justify-center rounded bg-accent-100 mt-0.5">
+                                <i class="fas fa-server text-accent-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-medium text-gray-900">Quota Hosting Services</h5>
+                                <p class="text-xs text-gray-600">Company quota solutions for project continuity</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="flex h-6 w-6 items-center justify-center rounded bg-accent-100 mt-0.5">
+                                <i class="fas fa-chalkboard-teacher text-accent-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-medium text-gray-900">Employee Orientation</h5>
+                                <p class="text-xs text-gray-600">Structured onboarding with legal compliance training</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Permits & Visa Processing -->
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-gray-200 hover:shadow-lg transition-all duration-300">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100">
+                            <i class="fas fa-passport text-green-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Permits & Visa Processing</h3>
           </div>
-          <div class="card">
-            <h3>Permits&nbsp;&amp;&nbsp;Visa&nbsp;Processing</h3>
-            <p>
-              We oversee the full spectrum of government approvals required for
-              legal expatriate employment, from quota applications to visa
-              endorsements and renewals.
-            </p>
-            <ul>
-              <li>Employment Quota Management</li>
-              <li>Work Permit Applications</li>
-              <li>Visa Endorsement&nbsp;&amp;&nbsp;Processing</li>
-              <li>Renewals, Transfers&nbsp;&amp;&nbsp;Cancellations</li>
-              <li>Document Tracking&nbsp;&amp;&nbsp;Compliance</li>
-            </ul>
+                    <p class="text-gray-600 mb-6">
+                        We oversee the full spectrum of government approvals required for legal expatriate employment, in close coordination with the Ministry of Economic Development and Maldives Immigration.
+                    </p>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex h-6 w-6 items-center justify-center rounded bg-green-100 mt-0.5">
+                                <i class="fas fa-users text-green-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-medium text-gray-900">Employment Quotas</h5>
+                                <p class="text-xs text-gray-600">Application, renewal, and modification through xpat system</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="flex h-6 w-6 items-center justify-center rounded bg-green-100 mt-0.5">
+                                <i class="fas fa-id-card text-green-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-medium text-gray-900">Work Permit Applications</h5>
+                                <p class="text-xs text-gray-600">Employment Approval (EA) via PFED with documentation</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="flex h-6 w-6 items-center justify-center rounded bg-green-100 mt-0.5">
+                                <i class="fas fa-stamp text-green-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-medium text-gray-900">Visa Endorsement & Processing</h5>
+                                <p class="text-xs text-gray-600">Biometric submissions and visa card issuance</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="flex h-6 w-6 items-center justify-center rounded bg-green-100 mt-0.5">
+                                <i class="fas fa-sync-alt text-green-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-medium text-gray-900">Renewals & Transfers</h5>
+                                <p class="text-xs text-gray-600">Sponsorship transfers and employment site changes</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="flex h-6 w-6 items-center justify-center rounded bg-green-100 mt-0.5">
+                                <i class="fas fa-clipboard-check text-green-600 text-xs"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-medium text-gray-900">Document Tracking</h5>
+                                <p class="text-xs text-gray-600">Systematic tracking and renewal notifications</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Insurance Services -->
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-gray-200 hover:shadow-lg transition-all duration-300">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100">
+                            <i class="fas fa-shield-alt text-blue-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900">Insurance Services</h3>
           </div>
-          <div class="card">
-            <h3>Insurance&nbsp;Services</h3>
-            <p>
-              We support acquiring and managing mandatory medical insurance for
-              foreign workers, coordinating with recognized providers to ensure
-              uninterrupted coverage.
-            </p>
-            <ul>
-              <li>Work Visa Medical Insurance</li>
-              <li>Policy Selection &amp; Documentation</li>
-              <li>Renewals &amp; Claims Coordination</li>
-              <li>Advice on Tailored Coverage</li>
-            </ul>
+                    <p class="text-gray-600 mb-6">
+                        We provide end-to-end support in securing and managing comprehensive insurance coverage for expatriate employees, in line with mandatory requirements.
+                    </p>
+                    
+                    <div class="rounded-xl bg-blue-50 p-4 mb-4">
+                        <h5 class="flex items-center space-x-2 font-medium text-blue-900 mb-2">
+                            <i class="fas fa-shield-alt text-blue-600"></i>
+                            <span>Mandatory Work Visa Medical Insurance</span>
+                        </h5>
+                        <p class="text-sm text-blue-700">Required for all foreign workers prior to visa endorsement, with xpat system coordination.</p>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <div class="flex items-center space-x-2 text-sm text-gray-600">
+                            <i class="fas fa-stethoscope text-blue-600 w-4"></i>
+                            <span>Outpatient and inpatient treatment</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-sm text-gray-600">
+                            <i class="fas fa-ambulance text-blue-600 w-4"></i>
+                            <span>Emergency care and hospitalization</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-sm text-gray-600">
+                            <i class="fas fa-hard-hat text-blue-600 w-4"></i>
+                            <span>Work-related injury protection</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-sm text-gray-600">
+                            <i class="fas fa-plane text-blue-600 w-4"></i>
+                            <span>Repatriation support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recruitment Process -->
+            <div class="mx-auto mt-20">
+                <div class="text-center mb-12">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Our Recruitment Process</h3>
+                    <p class="text-gray-600">A streamlined approach to finding the right talent for your organization</p>
+                </div>
+                
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-5">
+                    <div class="text-center">
+                        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-100">
+                            <span class="text-lg font-bold text-brand-600">01</span>
+                        </div>
+                        <h4 class="text-sm font-semibold text-gray-900 mb-2">Requirements Analysis</h4>
+                        <p class="text-xs text-gray-600">Document and analyze specific recruitment requirements</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-100">
+                            <span class="text-lg font-bold text-brand-600">02</span>
+                        </div>
+                        <h4 class="text-sm font-semibold text-gray-900 mb-2">Candidate Sourcing</h4>
+                        <p class="text-xs text-gray-600">Leverage global network to identify qualified candidates</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-100">
+                            <span class="text-lg font-bold text-brand-600">03</span>
+                        </div>
+                        <h4 class="text-sm font-semibold text-gray-900 mb-2">Screening & Evaluation</h4>
+                        <p class="text-xs text-gray-600">Thorough assessment and background verification</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-100">
+                            <span class="text-lg font-bold text-brand-600">04</span>
+                        </div>
+                        <h4 class="text-sm font-semibold text-gray-900 mb-2">Documentation</h4>
+                        <p class="text-xs text-gray-600">Complete handling of legal documentation</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-brand-100">
+                            <span class="text-lg font-bold text-brand-600">05</span>
+                        </div>
+                        <h4 class="text-sm font-semibold text-gray-900 mb-2">Placement & Support</h4>
+                        <p class="text-xs text-gray-600">Successful placement with ongoing support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="bg-gray-50 py-24 sm:py-32">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mx-auto max-w-2xl text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Portfolio</h2>
+                <p class="mt-4 text-lg leading-8 text-gray-600">Success stories and expertise across diverse industries</p>
+            </div>
+
+            <!-- Portfolio Filters -->
+            <div class="mt-12 flex flex-wrap justify-center gap-4">
+                <button class="portfolio-filter active rounded-full bg-brand-600 px-6 py-2 text-sm font-medium text-white hover:bg-brand-700 transition-colors" data-filter="all">All</button>
+                <button class="portfolio-filter rounded-full bg-white px-6 py-2 text-sm font-medium text-gray-700 ring-1 ring-gray-300 hover:bg-gray-50 transition-colors" data-filter="construction">Construction</button>
+                <button class="portfolio-filter rounded-full bg-white px-6 py-2 text-sm font-medium text-gray-700 ring-1 ring-gray-300 hover:bg-gray-50 transition-colors" data-filter="hospitality">Hospitality</button>
+                <button class="portfolio-filter rounded-full bg-white px-6 py-2 text-sm font-medium text-gray-700 ring-1 ring-gray-300 hover:bg-gray-50 transition-colors" data-filter="healthcare">Healthcare</button>
+                <button class="portfolio-filter rounded-full bg-white px-6 py-2 text-sm font-medium text-gray-700 ring-1 ring-gray-300 hover:bg-gray-50 transition-colors" data-filter="professional">Professional</button>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div class="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-8 lg:grid-cols-2">
+                <!-- Construction Portfolio -->
+                <div class="portfolio-item rounded-3xl bg-white p-8 ring-1 ring-gray-200 hover:shadow-lg transition-all duration-300" data-category="construction">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-100">
+                            <i class="fas fa-hard-hat text-brand-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Construction & Engineering</h3>
+                            <div class="flex space-x-4 text-sm text-gray-500">
+                                <span class="bg-brand-50 text-brand-700 px-2 py-1 rounded">200+ Placements</span>
+                                <span class="bg-brand-50 text-brand-700 px-2 py-1 rounded">15+ Projects</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Successfully recruited skilled workers for major construction and infrastructure projects across the Maldives, including engineers, supervisors, and specialized tradespeople.
+                    </p>
+                    <div class="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Site Engineers</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Project Supervisors</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Skilled Masons</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Welders & Fabricators</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospitality Portfolio -->
+                <div class="portfolio-item rounded-3xl bg-white p-8 ring-1 ring-gray-200 hover:shadow-lg transition-all duration-300" data-category="hospitality">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-accent-100">
+                            <i class="fas fa-concierge-bell text-accent-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Tourism & Hospitality</h3>
+                            <div class="flex space-x-4 text-sm text-gray-500">
+                                <span class="bg-accent-50 text-accent-700 px-2 py-1 rounded">150+ Placements</span>
+                                <span class="bg-accent-50 text-accent-700 px-2 py-1 rounded">25+ Resorts</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Partnered with leading resorts and hotels to provide skilled hospitality professionals, from chefs and bartenders to management staff.
+                    </p>
+                    <div class="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Executive Chefs</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Restaurant Managers</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Bartenders & Waiters</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Housekeeping Staff</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Healthcare Portfolio -->
+                <div class="portfolio-item rounded-3xl bg-white p-8 ring-1 ring-gray-200 hover:shadow-lg transition-all duration-300" data-category="healthcare">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100">
+                            <i class="fas fa-user-md text-green-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Healthcare Services</h3>
+                            <div class="flex space-x-4 text-sm text-gray-500">
+                                <span class="bg-green-50 text-green-700 px-2 py-1 rounded">80+ Placements</span>
+                                <span class="bg-green-50 text-green-700 px-2 py-1 rounded">10+ Facilities</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Recruited qualified healthcare professionals for hospitals, clinics, and medical facilities throughout the Maldives.
+                    </p>
+                    <div class="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Registered Nurses</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Medical Specialists</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Healthcare Assistants</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Medical Technicians</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Services Portfolio -->
+                <div class="portfolio-item rounded-3xl bg-white p-8 ring-1 ring-gray-200 hover:shadow-lg transition-all duration-300" data-category="professional">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-100">
+                            <i class="fas fa-laptop-code text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-900">Professional Services</h3>
+                            <div class="flex space-x-4 text-sm text-gray-500">
+                                <span class="bg-purple-50 text-purple-700 px-2 py-1 rounded">120+ Placements</span>
+                                <span class="bg-purple-50 text-purple-700 px-2 py-1 rounded">30+ Companies</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        Placed skilled professionals in various sectors including IT, finance, administration, and specialized consultancy roles.
+                    </p>
+                    <div class="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>IT Specialists</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Accountants & Auditors</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Administrative Staff</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-check text-green-500"></i>
+                            <span>Business Consultants</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Portfolio Summary -->
+            <div class="mx-auto mt-16 max-w-4xl rounded-3xl bg-white p-8 ring-1 ring-gray-200">
+                <div class="grid grid-cols-2 gap-8 lg:grid-cols-4">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-brand-600">550+</div>
+                        <div class="text-sm text-gray-600">Total Successful Placements</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-accent-600">80+</div>
+                        <div class="text-sm text-gray-600">Partner Organizations</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-green-600">15+</div>
+                        <div class="text-sm text-gray-600">Countries Sourced From</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-600">98%</div>
+                        <div class="text-sm text-gray-600">Client Satisfaction Rate</div>
+                    </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Clients Section -->
-    <section id="clients" class="clients">
-      <div class="container">
-        <h2>Our&nbsp;Clients</h2>
-        <p>
-          We proudly serve organizations across the Maldives spanning construction,
-          engineering, hospitality, retail and other service sectors. From major
-          contractors and investment firms to boutique hotels and local
-          businesses, our partners trust us to deliver talent and compliance
-          solutions that drive success.
-        </p>
+    <section id="clients" class="py-24 sm:py-32">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mx-auto max-w-2xl text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Clients</h2>
+                <p class="mt-4 text-lg leading-8 text-gray-600">Trusted by leading organizations across the Maldives</p>
+            </div>
+
+            <!-- Client Categories -->
+            <div class="mx-auto mt-16 max-w-6xl space-y-12">
+                <!-- Construction & Engineering -->
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-gray-200">
+                    <h3 class="flex items-center space-x-3 text-xl font-semibold text-gray-900 mb-6">
+                        <i class="fas fa-building text-brand-600"></i>
+                        <span>Construction & Engineering</span>
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">ABC Construction Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Adam Builders Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Aduham Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">ALG Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Anaya Construction Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Black Horse Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Black Stone Holding Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Blue Ray Construction Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Blue Ray Logistics Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Double Construction Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Haadhee Construction Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Khalid Engineering Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Key Construction Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Novel Construction Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Quick Construction Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">White Horse Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-700 transition-colors">Zyro Pvt Ltd</div>
+                    </div>
+                </div>
+
+                <!-- Tourism & Hospitality -->
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-gray-200">
+                    <h3 class="flex items-center space-x-3 text-xl font-semibold text-gray-900 mb-6">
+                        <i class="fas fa-hotel text-accent-600"></i>
+                        <span>Tourism & Hospitality</span>
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-accent-50 hover:text-accent-700 transition-colors">Aavila Inn</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-accent-50 hover:text-accent-700 transition-colors">Lagoon Escape</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-accent-50 hover:text-accent-700 transition-colors">Summer Inn</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-accent-50 hover:text-accent-700 transition-colors">Thama Maldives</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-accent-50 hover:text-accent-700 transition-colors">Thooddoo Inn</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-accent-50 hover:text-accent-700 transition-colors">Café Leo</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-accent-50 hover:text-accent-700 transition-colors">Pearl Atoll</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-accent-50 hover:text-accent-700 transition-colors">Eri adhu</div>
+                    </div>
+                </div>
+
+                <!-- Investments & Services -->
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-gray-200">
+                    <h3 class="flex items-center space-x-3 text-xl font-semibold text-gray-900 mb-6">
+                        <i class="fas fa-chart-line text-green-600"></i>
+                        <span>Investments, Services & Trading</span>
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">Ant Investment</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">Baarah Investment</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">Baranda Investment</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">Best & Co Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">Crimpson Investment</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">Creative Agency Maldives</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">Fuel Delivery Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">LEO International Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">M & A Marketing</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">M.A. Demax Company</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">M.L.N Investment</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">Murali Investment</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">Oliver Maldives Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">PowerShell Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">Red Brother</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">U One Saloon</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">Unique Choice Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">Xaan Zone Pvt Ltd</div>
+                        <div class="rounded-lg bg-gray-50 px-3 py-2 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 transition-colors">ZY & Co Pvt Ltd</div>
+                    </div>
+                </div>
+            </div>
       </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="contact">
-      <div class="container contact-container">
-        <h2>Contact&nbsp;Us</h2>
-        <p class="contact-intro">
-          Ready to partner with us? Get in touch today and let’s discuss how we
-          can support your workforce needs.
-        </p>
-        <div class="contact-details-form">
-          <div class="contact-details">
-            <p><strong>Phone:</strong> +960&nbsp;4000‑444</p>
-            <p>
-              <strong>Hotline:</strong>
-              +960&nbsp;755‑9001&nbsp;/&nbsp;+960&nbsp;911‑1409
-            </p>
-            <p>
-              <strong>Email:</strong>
-              <a href="mailto:info@skybordersolutions.com">
-                info@skybordersolutions.com
-              </a>
-            </p>
-            <p>
-              <strong>Address:</strong> H.&nbsp;Dhoorihaa&nbsp;(5A), Kalaafaanu
-              Hingun, Male’ City, Republic of Maldives
-            </p>
+    <section id="contact" class="bg-gray-50 py-24 sm:py-32">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mx-auto max-w-2xl text-center">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Contact Us</h2>
+                <p class="mt-4 text-lg leading-8 text-gray-600">Ready to partner with us? Get in touch today and let's discuss how we can support your workforce needs.</p>
+            </div>
+
+            <!-- Contact Content -->
+            <div class="mx-auto mt-16 grid max-w-5xl grid-cols-1 gap-12 lg:grid-cols-2">
+                <!-- Contact Information -->
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-gray-200">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-8">Get in Touch</h3>
+                    
+                    <div class="space-y-6">
+                        <!-- Phone -->
+                        <div class="flex items-start space-x-4">
+                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-100">
+                                <i class="fas fa-phone text-brand-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-900">Phone</h4>
+                                <a href="tel:+9604000444" class="text-brand-600 hover:text-brand-700">+960 4000-444</a>
+                            </div>
+                        </div>
+
+                        <!-- Hotline -->
+                        <div class="flex items-start space-x-4">
+                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-100">
+                                <i class="fas fa-mobile-alt text-accent-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-900">Hotline</h4>
+                                <div class="text-accent-600">
+                                    <a href="tel:+9607559001" class="hover:text-accent-700">+960 755-9001</a> / 
+                                    <a href="tel:+9609111409" class="hover:text-accent-700">+960 911-1409</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="flex items-start space-x-4">
+                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-green-100">
+                                <i class="fas fa-envelope text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-900">Email</h4>
+                                <a href="mailto:info@skybordersolutions.com" class="text-green-600 hover:text-green-700">info@skybordersolutions.com</a>
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="flex items-start space-x-4">
+                            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-100">
+                                <i class="fas fa-map-marker-alt text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-900">Address</h4>
+                                <p class="text-gray-600">H. Dhoorihaa (5A), Kalaafaanu Hingun<br>Male' City, Republic of Maldives</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Business Hours -->
+                    <div class="mt-8 rounded-xl bg-gray-50 p-4">
+                        <h4 class="flex items-center space-x-2 font-medium text-gray-900 mb-3">
+                            <i class="fas fa-clock text-brand-600"></i>
+                            <span>Business Hours</span>
+                        </h4>
+                        <div class="text-sm text-gray-600 space-y-1">
+                            <p>Sunday - Thursday: 8:00 AM - 5:00 PM</p>
+                            <p>Saturday: 9:00 AM - 1:00 PM</p>
+                            <p>Friday: Closed</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="rounded-3xl bg-white p-8 ring-1 ring-gray-200">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Send us a Message</h3>
+                    
+                    <form class="contact-form space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                            <input type="text" id="name" name="name" required class="w-full rounded-lg border-gray-300 px-4 py-3 text-sm focus:border-brand-500 focus:ring-brand-500">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" id="email" name="email" required class="w-full rounded-lg border-gray-300 px-4 py-3 text-sm focus:border-brand-500 focus:ring-brand-500">
+                        </div>
+                        
+                        <div>
+                            <label for="company" class="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
+                            <input type="text" id="company" name="company" class="w-full rounded-lg border-gray-300 px-4 py-3 text-sm focus:border-brand-500 focus:ring-brand-500">
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea id="message" name="message" rows="4" required class="w-full rounded-lg border-gray-300 px-4 py-3 text-sm focus:border-brand-500 focus:ring-brand-500"></textarea>
           </div>
-          <form class="contact-form" action="#" method="post">
-            <input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              required
-            />
-            <textarea
-              name="message"
-              rows="5"
-              placeholder="How can we help you?"
-              required
-            ></textarea>
-            <button type="submit" class="btn btn-primary">
-              Send&nbsp;Message
+                        
+                        <button type="submit" class="w-full rounded-lg bg-brand-600 px-6 py-3 text-sm font-semibold text-white hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 transition-colors">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Send Message
             </button>
           </form>
+                </div>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-      <div class="container">
-        <p>&copy;&nbsp;<span id="year"></span>&nbsp;Sky&nbsp;Border&nbsp;Solutions. All rights reserved.</p>
+    <footer class="bg-gray-900">
+        <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 gap-8 lg:grid-cols-4">
+                <!-- Company Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-brand-600 to-brand-700 flex items-center justify-center">
+                            <i class="fas fa-building text-white text-sm"></i>
+                        </div>
+                        <span class="text-xl font-bold text-white">Sky Border Solutions</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Government-licensed HR consultancy and recruitment firm providing comprehensive workforce solutions across the Maldives.
+                    </p>
+                    <div class="inline-flex items-center space-x-2 rounded-full bg-brand-100 px-3 py-1 text-sm font-medium text-brand-700">
+                        <i class="fas fa-certificate"></i>
+                        <span>Licensed & Compliant</span>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">Quick Links</h3>
+                    <div class="space-y-2">
+                        <a href="#home" class="block text-gray-300 hover:text-white transition-colors">Home</a>
+                        <a href="#about" class="block text-gray-300 hover:text-white transition-colors">About Us</a>
+                        <a href="#team" class="block text-gray-300 hover:text-white transition-colors">Team</a>
+                        <a href="#services" class="block text-gray-300 hover:text-white transition-colors">Services</a>
+                        <a href="#portfolio" class="block text-gray-300 hover:text-white transition-colors">Portfolio</a>
+                        <a href="#contact" class="block text-gray-300 hover:text-white transition-colors">Contact</a>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">Contact</h3>
+                    <div class="space-y-2 text-gray-300">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-phone text-brand-400 w-4"></i>
+                            <span>+960 4000-444</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-envelope text-brand-400 w-4"></i>
+                            <span>info@skybordersolutions.com</span>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <i class="fas fa-map-marker-alt text-brand-400 w-4 mt-1"></i>
+                            <span class="text-sm">Male' City, Maldives</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="mt-12 border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between">
+                <p class="text-gray-400 text-sm">
+                    &copy; <span id="year"></span> Sky Border Solutions. All rights reserved.
+                </p>
+                <div class="mt-4 sm:mt-0 flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
+                </div>
+            </div>
       </div>
     </footer>
+
+    <!-- Scripts -->
     <script>
-      // Update footer year dynamically
-      document.getElementById("year").textContent = new Date().getFullYear();
+        // Update footer year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Portfolio filtering
+        const portfolioFilters = document.querySelectorAll('.portfolio-filter');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        portfolioFilters.forEach(filter => {
+            filter.addEventListener('click', function() {
+                // Update active filter
+                portfolioFilters.forEach(f => {
+                    f.classList.remove('bg-brand-600', 'text-white');
+                    f.classList.add('bg-white', 'text-gray-700', 'ring-1', 'ring-gray-300');
+                });
+                this.classList.remove('bg-white', 'text-gray-700', 'ring-1', 'ring-gray-300');
+                this.classList.add('bg-brand-600', 'text-white');
+
+                const filterValue = this.getAttribute('data-filter');
+
+                // Filter portfolio items
+                portfolioItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, 10);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Contact form handling
+        const contactForm = document.querySelector('.contact-form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const name = formData.get('name');
+                const email = formData.get('email');
+                const message = formData.get('message');
+                
+                // Basic validation
+                if (!name || !email || !message) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+                
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+                
+                // Show success message
+                const button = this.querySelector('button[type="submit"]');
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check mr-2"></i>Message Sent!';
+                button.classList.add('bg-green-600', 'hover:bg-green-700');
+                button.classList.remove('bg-brand-600', 'hover:bg-brand-700');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('bg-green-600', 'hover:bg-green-700');
+                    button.classList.add('bg-brand-600', 'hover:bg-brand-700');
+                    this.reset();
+                }, 3000);
+            });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.rounded-3xl').forEach(card => {
+            observer.observe(card);
+        });
     </script>
   </body>
 </html>
