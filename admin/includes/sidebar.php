@@ -67,12 +67,24 @@ try {
 <!-- Sidebar -->
 <div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
     <div class="flex flex-col flex-grow pt-5 bg-white dark:bg-gray-800 overflow-y-auto border-r border-gray-200 dark:border-gray-700 theme-transition">
-        <!-- Logo and Title -->
-        <div class="flex items-center flex-shrink-0 px-4">
-            <img class="h-8 w-auto" src="../images/logo.svg" alt="Sky Border Solutions">
-            <div class="ml-3">
-                <h1 class="text-lg font-bold text-gray-900 dark:text-white theme-transition">CMS Admin</h1>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Content Management</p>
+        <!-- Logo and Brand -->
+        <div class="flex items-center flex-shrink-0 px-4 pb-4 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center w-full sidebar-logo-container">
+                <div class="flex-shrink-0">
+                    <img class="h-12 w-auto drop-shadow-sm" src="../images/logo.svg" alt="Sky Border Solutions" 
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <!-- Fallback logo if image fails to load -->
+                    <div class="h-12 w-12 bg-gradient-to-r from-brand-blue to-brand-teal rounded-xl flex items-center justify-center shadow-lg" style="display: none;">
+                        <span class="text-white font-bold text-lg">SBS</span>
+                    </div>
+                </div>
+                <div class="ml-4 flex-1 min-w-0">
+                    <h1 class="text-xl font-bold text-gray-900 dark:text-white theme-transition truncate">
+                        Sky Border
+                    </h1>
+                    <p class="text-sm font-semibold gradient-text">Admin Panel</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Content Management System</p>
+                </div>
             </div>
         </div>
         

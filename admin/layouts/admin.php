@@ -69,6 +69,27 @@ $additionalJS = $additionalJS ?? '';
             transform: translateY(-1px);
             box-shadow: 0 4px 15px rgba(26, 90, 122, 0.3);
         }
+        .gradient-text {
+            background: linear-gradient(135deg, #1a5a7a 0%, #2a7a6e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .dark .gradient-text {
+            background: linear-gradient(135deg, #2a7a8a 0%, #4ECDC4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .sidebar-logo-container {
+            background: linear-gradient(135deg, rgba(26, 90, 122, 0.05) 0%, rgba(42, 122, 110, 0.05) 100%);
+            border-radius: 0.75rem;
+            padding: 0.75rem;
+            margin: -0.75rem;
+        }
+        .dark .sidebar-logo-container {
+            background: linear-gradient(135deg, rgba(42, 122, 138, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%);
+        }
         <?php echo $additionalCSS; ?>
     </style>
     

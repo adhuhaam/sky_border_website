@@ -48,34 +48,32 @@ class ContentManager {
     
     public function updateCompanyInfo($data) {
         try {
-            $query = "UPDATE company_info SET 
-                      company_name = :company_name,
-                      tagline = :tagline,
-                      description = :description,
-                      mission = :mission,
-                      vision = :vision,
-                      phone = :phone,
-                      hotline1 = :hotline1,
-                      hotline2 = :hotline2,
-                      email = :email,
-                      address = :address,
-                      business_hours = :business_hours
-                      WHERE id = 1";
+            // Build dynamic query based on provided data
+            $updateFields = [];
+            $params = [':id' => 1];
+            
+            $allowedFields = [
+                'company_name', 'tagline', 'description', 'about_us', 'mission', 'vision',
+                'phone', 'hotline1', 'hotline2', 'email', 'address', 'business_hours',
+                'website', 'established_year', 'business_type', 'registration_number',
+                'license_number', 'facebook_url', 'linkedin_url', 'twitter_url', 'instagram_url'
+            ];
+            
+            foreach ($allowedFields as $field) {
+                if (array_key_exists($field, $data)) {
+                    $updateFields[] = "$field = :$field";
+                    $params[":$field"] = $data[$field];
+                }
+            }
+            
+            if (empty($updateFields)) {
+                return false; // No data to update
+            }
+            
+            $query = "UPDATE company_info SET " . implode(', ', $updateFields) . " WHERE id = :id";
             
             $stmt = $this->conn->prepare($query);
-            return $stmt->execute([
-                ':company_name' => $data['company_name'],
-                ':tagline' => $data['tagline'],
-                ':description' => $data['description'],
-                ':mission' => $data['mission'],
-                ':vision' => $data['vision'],
-                ':phone' => $data['phone'],
-                ':hotline1' => $data['hotline1'],
-                ':hotline2' => $data['hotline2'],
-                ':email' => $data['email'],
-                ':address' => $data['address'],
-                ':business_hours' => $data['business_hours']
-            ]);
+            return $stmt->execute($params);
         } catch (Exception $e) {
             error_log("Update company info error: " . $e->getMessage());
             return false;

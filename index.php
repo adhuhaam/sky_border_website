@@ -36,6 +36,7 @@ if (!$databaseAvailable) {
         'company_name' => 'Sky Border Solutions',
         'tagline' => 'Where compliance meets competence',
         'description' => 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.',
+        'about_us' => 'Sky Border Solution Pvt Ltd is a government-licensed HR consultancy and recruitment firm headquartered in the Republic of Maldives. Established in response to the rising demand for skilled foreign labor, we are strategically positioned to provide end-to-end manpower solutions. Our operations are driven by a long-term vision, well-defined mission, and a strong foundation of core values. With a seasoned leadership team that brings decades of recruitment expertise, we are adept at identifying, sourcing, and placing the most qualified talent to meet diverse organizational needs. Our consistent year-on-year growth, backed by a solid financial framework, reflects our commitment to service excellence, operational integrity, and client satisfaction. At Sky Border Solution, we are dedicated to bridging workforce gaps with professionalism, precision, and purpose.',
         'mission' => 'To foster enduring partnerships with organizations by delivering superior recruitment solutions that align with their strategic goals.',
         'vision' => 'To be the most trusted and recognized recruitment company in the Maldives, known for our professionalism, excellence and ability to deliver outstanding outcomes.',
         'phone' => '+960 4000-444',
@@ -545,13 +546,19 @@ if ($_POST && isset($_POST['contact_form'])) {
     <!-- About Section -->
     <section id="about" class="py-24 sm:py-32 bg-white dark:bg-gray-900 theme-transition">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div class="mx-auto max-w-2xl text-center scroll-reveal">
+            <div class="mx-auto max-w-4xl text-center scroll-reveal">
                 <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl theme-transition">
                     About <span class="gradient-text">Sky Border Solutions</span>
                 </h2>
-                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">
-                    <?php echo htmlspecialchars($companyInfo['description']); ?>
-                </p>
+                <?php if (!empty($companyInfo['about_us'])): ?>
+                    <div class="mt-8 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">
+                        <?php echo nl2br(htmlspecialchars($companyInfo['about_us'])); ?>
+                    </div>
+                <?php else: ?>
+                    <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">
+                        <?php echo htmlspecialchars($companyInfo['description']); ?>
+                    </p>
+                <?php endif; ?>
             </div>
             
             <div class="mx-auto mt-16 max-w-5xl">
