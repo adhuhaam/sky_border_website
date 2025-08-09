@@ -203,7 +203,7 @@ $totalServices = count($contentManager->getServiceCategories());
                     <!-- Quick Actions -->
                     <div class="mt-8">
                         <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4 theme-transition">Quick Actions</h2>
-                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                             <a href="company-info.php" class="modern-card group block rounded-lg bg-white dark:bg-gray-800 p-6 hover:shadow-md theme-transition">
                                 <div class="flex items-center">
                                     <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-brand-blue to-brand-teal">
@@ -224,6 +224,30 @@ $totalServices = count($contentManager->getServiceCategories());
                                     <div class="ml-4">
                                         <h3 class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-brand-teal theme-transition">Manage Services</h3>
                                         <p class="text-xs text-gray-500 dark:text-gray-400">Add or edit services</p>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a href="industries.php" class="modern-card group block rounded-lg bg-white dark:bg-gray-800 p-6 hover:shadow-md theme-transition">
+                                <div class="flex items-center">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-amber-500 to-orange-500">
+                                        <i class="fas fa-industry text-white"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-amber-600 theme-transition">Manage Industries</h3>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Industry categories</p>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a href="positions.php" class="modern-card group block rounded-lg bg-white dark:bg-gray-800 p-6 hover:shadow-md theme-transition">
+                                <div class="flex items-center">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500">
+                                        <i class="fas fa-user-tie text-white"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-indigo-600 theme-transition">Job Positions</h3>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Manage job positions</p>
                                     </div>
                                 </div>
                             </a>

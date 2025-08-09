@@ -347,6 +347,201 @@ class ContentManager {
         }
     }
     
+    // Industries Methods
+    public function getIndustries() {
+        try {
+            $query = "SELECT * FROM industries WHERE is_active = 1 ORDER BY display_order, industry_name";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get industries error: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function getIndustry($id) {
+        try {
+            $query = "SELECT * FROM industries WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get industry error: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function addIndustry($industry_name, $industry_description, $icon_class, $color_theme, $display_order = 0) {
+        try {
+            $query = "INSERT INTO industries (industry_name, industry_description, icon_class, color_theme, display_order) 
+                      VALUES (:industry_name, :industry_description, :icon_class, :color_theme, :display_order)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':industry_name', $industry_name);
+            $stmt->bindParam(':industry_description', $industry_description);
+            $stmt->bindParam(':icon_class', $icon_class);
+            $stmt->bindParam(':color_theme', $color_theme);
+            $stmt->bindParam(':display_order', $display_order);
+            return $stmt->execute();
+        } catch (Exception $e) {
+            error_log("Add industry error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function updateIndustry($id, $industry_name, $industry_description, $icon_class, $color_theme, $display_order = 0) {
+        try {
+            $query = "UPDATE industries SET industry_name = :industry_name, industry_description = :industry_description, 
+                      icon_class = :icon_class, color_theme = :color_theme, display_order = :display_order 
+                      WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':industry_name', $industry_name);
+            $stmt->bindParam(':industry_description', $industry_description);
+            $stmt->bindParam(':icon_class', $icon_class);
+            $stmt->bindParam(':color_theme', $color_theme);
+            $stmt->bindParam(':display_order', $display_order);
+            return $stmt->execute();
+        } catch (Exception $e) {
+            error_log("Update industry error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function deleteIndustry($id) {
+        try {
+            $query = "UPDATE industries SET is_active = 0 WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (Exception $e) {
+            error_log("Delete industry error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Job Positions Methods
+    public function getJobPositions($industry_id = null) {
+        try {
+            if ($industry_id) {
+                $query = "SELECT jp.*, i.industry_name 
+                          FROM job_positions jp 
+                          LEFT JOIN industries i ON jp.industry_id = i.id 
+                          WHERE jp.is_active = 1 AND jp.industry_id = :industry_id 
+                          ORDER BY jp.display_order, jp.position_name";
+                $stmt = $this->conn->prepare($query);
+                $stmt->bindParam(':industry_id', $industry_id);
+            } else {
+                $query = "SELECT jp.*, i.industry_name 
+                          FROM job_positions jp 
+                          LEFT JOIN industries i ON jp.industry_id = i.id 
+                          WHERE jp.is_active = 1 
+                          ORDER BY i.display_order, jp.display_order, jp.position_name";
+                $stmt = $this->conn->prepare($query);
+            }
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get job positions error: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    public function getJobPosition($id) {
+        try {
+            $query = "SELECT jp.*, i.industry_name 
+                      FROM job_positions jp 
+                      LEFT JOIN industries i ON jp.industry_id = i.id 
+                      WHERE jp.id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get job position error: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function addJobPosition($industry_id, $position_name, $position_description, $is_featured = false, $display_order = 0) {
+        try {
+            $query = "INSERT INTO job_positions (industry_id, position_name, position_description, is_featured, display_order) 
+                      VALUES (:industry_id, :position_name, :position_description, :is_featured, :display_order)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':industry_id', $industry_id);
+            $stmt->bindParam(':position_name', $position_name);
+            $stmt->bindParam(':position_description', $position_description);
+            $stmt->bindParam(':is_featured', $is_featured, PDO::PARAM_BOOL);
+            $stmt->bindParam(':display_order', $display_order);
+            return $stmt->execute();
+        } catch (Exception $e) {
+            error_log("Add job position error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function updateJobPosition($id, $industry_id, $position_name, $position_description, $is_featured = false, $display_order = 0) {
+        try {
+            $query = "UPDATE job_positions SET industry_id = :industry_id, position_name = :position_name, 
+                      position_description = :position_description, is_featured = :is_featured, display_order = :display_order 
+                      WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':industry_id', $industry_id);
+            $stmt->bindParam(':position_name', $position_name);
+            $stmt->bindParam(':position_description', $position_description);
+            $stmt->bindParam(':is_featured', $is_featured, PDO::PARAM_BOOL);
+            $stmt->bindParam(':display_order', $display_order);
+            return $stmt->execute();
+        } catch (Exception $e) {
+            error_log("Update job position error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function deleteJobPosition($id) {
+        try {
+            $query = "UPDATE job_positions SET is_active = 0 WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (Exception $e) {
+            error_log("Delete job position error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getFeaturedPositions($industry_id = null, $limit = 6) {
+        try {
+            if ($industry_id) {
+                $query = "SELECT jp.*, i.industry_name, i.color_theme 
+                          FROM job_positions jp 
+                          LEFT JOIN industries i ON jp.industry_id = i.id 
+                          WHERE jp.is_active = 1 AND jp.is_featured = 1 AND jp.industry_id = :industry_id 
+                          ORDER BY jp.display_order, jp.position_name 
+                          LIMIT :limit";
+                $stmt = $this->conn->prepare($query);
+                $stmt->bindParam(':industry_id', $industry_id);
+                $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            } else {
+                $query = "SELECT jp.*, i.industry_name, i.color_theme 
+                          FROM job_positions jp 
+                          LEFT JOIN industries i ON jp.industry_id = i.id 
+                          WHERE jp.is_active = 1 AND jp.is_featured = 1 
+                          ORDER BY i.display_order, jp.display_order, jp.position_name 
+                          LIMIT :limit";
+                $stmt = $this->conn->prepare($query);
+                $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            }
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get featured positions error: " . $e->getMessage());
+            return [];
+        }
+    }
+
     // Contact Messages Methods
     public function getContactMessages($status = null, $limit = 50) {
         try {
