@@ -145,15 +145,17 @@ if ($action === 'edit' && $clientId) {
     </script>
 </head>
 <body class="h-full bg-gray-50 dark:bg-gray-900 theme-transition">
-    <!-- Dark Mode Toggle -->
-    <div class="fixed top-4 right-4 z-50">
-        <button id="theme-toggle" class="p-2 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 theme-transition">
-            <i id="theme-icon" class="fas fa-moon dark:hidden"></i>
-            <i id="theme-icon-dark" class="fas fa-sun hidden dark:block"></i>
-        </button>
-    </div>
+    <div class="flex h-screen">
+        <!-- Include Sidebar -->
+        <?php include 'includes/sidebar.php'; ?>
 
-    <div class="min-h-full">
+        <!-- Main content area -->
+        <div class="flex-1 md:pl-64">
+            <div class="flex flex-col h-full">
+                <!-- Main content -->
+                <main class="flex-1 relative overflow-y-auto focus:outline-none">
+                    <div class="py-6">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <!-- Navigation -->
         <nav class="bg-white dark:bg-gray-800 shadow-sm theme-transition">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

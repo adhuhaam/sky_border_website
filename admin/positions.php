@@ -154,121 +154,55 @@ foreach ($positions as $position) {
     </script>
 </head>
 <body class="h-full bg-gray-50 dark:bg-gray-900 theme-transition">
-    <!-- Dark Mode Toggle -->
-    <div class="fixed top-4 right-4 z-50">
-        <button id="theme-toggle" class="p-2 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 theme-transition">
-            <i id="theme-icon" class="fas fa-moon dark:hidden"></i>
-            <i id="theme-icon-dark" class="fas fa-sun hidden dark:block"></i>
-        </button>
-    </div>
+    <div class="flex h-screen">
+        <!-- Include Sidebar -->
+        <?php include 'includes/sidebar.php'; ?>
 
-    <div class="min-h-full">
-        <!-- Navigation -->
-        <nav class="bg-white dark:bg-gray-800 shadow-sm theme-transition">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="flex h-16 justify-between">
-                    <div class="flex">
-                        <div class="flex flex-shrink-0 items-center">
-                            <img src="../images/logo.svg" alt="Sky Border Solutions" class="h-8 w-auto">
-                            <span class="ml-3 text-xl font-bold text-gray-900 dark:text-white theme-transition">CMS Dashboard</span>
-                        </div>
-                        <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                            <a href="dashboard.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
-                                <i class="fas fa-tachometer-alt mr-2"></i>
-                                Dashboard
-                            </a>
-                            <a href="company-info.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
-                                <i class="fas fa-building mr-2"></i>
-                                Company Info
-                            </a>
-                            <a href="services.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
-                                <i class="fas fa-cogs mr-2"></i>
-                                Services
-                            </a>
-                            <a href="industries.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
-                                <i class="fas fa-industry mr-2"></i>
-                                Industries
-                            </a>
-                            <a href="positions.php" class="border-brand-blue text-gray-900 dark:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
-                                <i class="fas fa-user-tie mr-2"></i>
-                                Positions
-                            </a>
-                            <a href="clients.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
-                                <i class="fas fa-users mr-2"></i>
-                                Clients
-                            </a>
-                            <a href="messages.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
-                                <i class="fas fa-envelope mr-2"></i>
-                                Messages
-                            </a>
-                        </div>
-                    </div>
-                    <div class="hidden sm:ml-6 sm:flex sm:items-center">
-                        <div class="relative ml-3">
-                            <div class="flex items-center space-x-4">
-                                <span class="text-sm text-gray-700 dark:text-gray-300 theme-transition">
-                                    Welcome, <?php echo htmlspecialchars($currentUser['full_name']); ?>
-                                </span>
-                                <a href="logout.php" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
-                                    <i class="fas fa-sign-out-alt mr-1"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Main Content -->
-        <div class="py-10">
-            <header>
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <a href="dashboard.php" class="text-brand-blue hover:text-brand-blue-dark mr-4">
-                                <i class="fas fa-arrow-left"></i>
-                            </a>
-                            <div>
-                                <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white theme-transition">
-                                    <?php if ($action === 'add'): ?>
-                                        Add New Position
-                                    <?php elseif ($action === 'edit'): ?>
-                                        Edit Position
-                                    <?php else: ?>
-                                        Job Positions Management
-                                    <?php endif; ?>
-                                </h1>
-                                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 theme-transition">
+        <!-- Main content area -->
+        <div class="flex-1 md:pl-64">
+            <div class="flex flex-col h-full">
+                <!-- Main content -->
+                <main class="flex-1 relative overflow-y-auto focus:outline-none">
+                    <div class="py-6">
+                        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+                            <!-- Page header -->
+                            <div class="mb-6">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">
+                                            <?php if ($action === 'add'): ?>
+                                                Add New Position
+                                            <?php elseif ($action === 'edit'): ?>
+                                                Edit Position
+                                            <?php else: ?>
+                                                Job Positions Management
+                                            <?php endif; ?>
+                                        </h1>
+                                        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400 theme-transition">
+                                            <?php if ($action === 'list'): ?>
+                                                Manage job positions across all industries
+                                            <?php else: ?>
+                                                Update position information and settings
+                                            <?php endif; ?>
+                                        </p>
+                                    </div>
                                     <?php if ($action === 'list'): ?>
-                                        Manage job positions across all industries
-                                    <?php else: ?>
-                                        Update position information and settings
+                                    <div class="flex items-center space-x-4">
+                                        <?php if ($industryFilter): ?>
+                                        <a href="positions.php" class="text-brand-blue hover:text-brand-blue-dark text-sm font-medium">
+                                            <i class="fas fa-times mr-1"></i>
+                                            Clear Filter
+                                        </a>
+                                        <?php endif; ?>
+                                        <a href="?action=add" class="bg-gradient-to-r from-brand-blue to-brand-teal border border-transparent rounded-md py-2 px-4 inline-flex items-center text-sm font-medium text-white hover:from-brand-blue-dark hover:to-brand-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue">
+                                            <i class="fas fa-plus mr-2"></i>
+                                            Add Position
+                                        </a>
+                                    </div>
                                     <?php endif; ?>
-                                </p>
+                                </div>
                             </div>
-                        </div>
-                        <?php if ($action === 'list'): ?>
-                        <div class="flex items-center space-x-4">
-                            <?php if ($industryFilter): ?>
-                            <a href="positions.php" class="text-brand-blue hover:text-brand-blue-dark text-sm font-medium">
-                                <i class="fas fa-times mr-1"></i>
-                                Clear Filter
-                            </a>
-                            <?php endif; ?>
-                            <a href="?action=add" class="bg-gradient-to-r from-brand-blue to-brand-teal border border-transparent rounded-md py-2 px-4 inline-flex items-center text-sm font-medium text-white hover:from-brand-blue-dark hover:to-brand-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue">
-                                <i class="fas fa-plus mr-2"></i>
-                                Add Position
-                            </a>
-                        </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </header>
-            
-            <main>
-                <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div class="mt-8">
+
                         <!-- Success/Error Messages -->
                         <?php if ($success): ?>
                         <div class="mb-6 rounded-md bg-green-50 dark:bg-green-900/20 p-4">
@@ -466,9 +400,10 @@ foreach ($positions as $position) {
                             </div>
                         </div>
                         <?php endif; ?>
+                        </div>
                     </div>
-                </div>
-            </main>
+                </main>
+            </div>
         </div>
     </div>
 
