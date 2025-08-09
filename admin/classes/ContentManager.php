@@ -606,5 +606,11 @@ class ContentManager {
             return false;
         }
     }
+    
+    // Portfolio Categories Methods (placeholder - returns empty for now)
+    public function getPortfolioCategories() {
+        // This method can be expanded later if portfolio functionality is needed
+        return [];
+    }
 }
 ?>

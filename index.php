@@ -25,7 +25,14 @@ if ($databaseAvailable && $contentManager) {
         $services = $contentManager->getServiceCategories();
         $portfolioCategories = $contentManager->getPortfolioCategories();
         $clients = $contentManager->getClients();
+        
+        // Validate that we got the essential data
+        if (empty($companyInfo) || empty($clients)) {
+            error_log("Sky Border: Essential data missing from database");
+            $databaseAvailable = false;
+        }
     } catch (Exception $e) {
+        error_log("Sky Border: Database content loading error - " . $e->getMessage());
         $databaseAvailable = false;
     }
 }
@@ -380,6 +387,15 @@ if ($_POST && isset($_POST['contact_form'])) {
     </style>
     
     <script>
+        // Early theme initialization to prevent flash
+        (function() {
+            const darkMode = localStorage.getItem('darkMode') === 'true' || 
+                           (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            if (darkMode) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+        
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -408,9 +424,9 @@ if ($_POST && isset($_POST['contact_form'])) {
 <body class="h-full bg-white dark:bg-gray-900 theme-transition">
     <!-- Dark Mode Toggle -->
     <div class="fixed top-4 right-4 z-50">
-        <button id="theme-toggle" class="p-3 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-lg border border-gray-200/50 dark:border-gray-700/50 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 theme-transition">
-            <i id="theme-icon" class="fas fa-moon dark:hidden text-lg"></i>
-            <i id="theme-icon-dark" class="fas fa-sun hidden dark:block text-lg"></i>
+        <button id="theme-toggle" class="p-3 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-lg border border-gray-200/50 dark:border-gray-700/50 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 hover:scale-105 active:scale-95 theme-transition focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 dark:focus:ring-offset-gray-800" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+            <i id="theme-icon" class="fas fa-moon text-lg transition-all duration-200" aria-hidden="true"></i>
+            <i id="theme-icon-dark" class="fas fa-sun text-lg hidden transition-all duration-200" aria-hidden="true"></i>
         </button>
     </div>
 
@@ -1544,22 +1560,94 @@ if ($_POST && isset($_POST['contact_form'])) {
             } else {
                 document.documentElement.classList.remove('dark');
             }
+            
+            // Update theme icons
+            updateThemeIcons();
         }
         
         function toggleTheme() {
-            const darkMode = !document.documentElement.classList.contains('dark');
-            localStorage.setItem('darkMode', darkMode);
-            initTheme();
+            const isDark = document.documentElement.classList.contains('dark');
+            const newDarkMode = !isDark;
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            // Add brief loading state
+            if (themeToggle) {
+                themeToggle.style.opacity = '0.7';
+                themeToggle.style.transform = 'scale(0.95)';
+            }
+            
+            localStorage.setItem('darkMode', newDarkMode.toString());
+            
+            if (newDarkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            
+            // Update theme icons with slight delay for smooth transition
+            setTimeout(() => {
+                updateThemeIcons();
+                if (themeToggle) {
+                    themeToggle.style.opacity = '';
+                    themeToggle.style.transform = '';
+                }
+            }, 100);
         }
         
-        // Initialize theme on page load
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const moonIcon = document.getElementById('theme-icon');
+            const sunIcon = document.getElementById('theme-icon-dark');
+            
+            if (moonIcon && sunIcon) {
+                if (isDark) {
+                    // Dark mode: show sun icon (to switch to light)
+                    moonIcon.classList.add('hidden');
+                    sunIcon.classList.remove('hidden');
+                } else {
+                    // Light mode: show moon icon (to switch to dark)
+                    moonIcon.classList.remove('hidden');
+                    sunIcon.classList.add('hidden');
+                }
+            } else {
+                console.warn('Sky Border: Theme icons not found');
+            }
+        }
+        
+        // Debug function for theme state
+        function getThemeDebugInfo() {
+            return {
+                isDark: document.documentElement.classList.contains('dark'),
+                localStorage: localStorage.getItem('darkMode'),
+                systemPreference: window.matchMedia('(prefers-color-scheme: dark)').matches,
+                moonIcon: !!document.getElementById('theme-icon'),
+                sunIcon: !!document.getElementById('theme-icon-dark'),
+                toggleButton: !!document.getElementById('theme-toggle')
+            };
+        }
+        
+        // Initialize theme on page load (early to prevent flash)
         initTheme();
         
         document.addEventListener('DOMContentLoaded', function() {
+            // Re-initialize theme to ensure icons are updated
+            initTheme();
+            
             // Theme toggle button
             const themeToggle = document.getElementById('theme-toggle');
             if (themeToggle) {
                 themeToggle.addEventListener('click', toggleTheme);
+            }
+            
+            // Listen for system theme changes
+            if (window.matchMedia) {
+                const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+                mediaQuery.addListener(function() {
+                    // Only update if user hasn't manually set a preference
+                    if (!localStorage.getItem('darkMode')) {
+                        initTheme();
+                    }
+                });
             }
             
             // Update footer year
