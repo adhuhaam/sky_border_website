@@ -262,6 +262,32 @@ if ($_POST && isset($_POST['contact_form'])) {
                 opacity: 0;
             }
         }
+        @keyframes countUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes progressFill {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0%);
+            }
+        }
+        @keyframes counterPulse {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
         
         .animate-float { animation: float 3s ease-in-out infinite; }
         .animate-fadeInUp { animation: fadeInUp 0.8s ease-out; }
@@ -269,6 +295,9 @@ if ($_POST && isset($_POST['contact_form'])) {
         .animate-fadeInRight { animation: fadeInRight 0.8s ease-out; }
         .animate-scale { animation: scale 2s ease-in-out infinite; }
         .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        .animate-countUp { animation: countUp 0.6s ease-out; }
+        .animate-progressFill { animation: progressFill 2s ease-out; }
+        .animate-counterPulse { animation: counterPulse 1s ease-in-out infinite; }
         
         /* Enhanced Mobile Animations */
         @media (max-width: 768px) {
@@ -492,13 +521,13 @@ if ($_POST && isset($_POST['contact_form'])) {
                     <h1 class="mx-auto max-w-5xl text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-6xl">
                         <span class="block">
                             <span class="bg-gradient-to-r from-brand-blue via-brand-teal to-brand-green bg-clip-text text-transparent animate-pulse">
-                                <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
+                        <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
                             </span>
                         </span>
                         <span class="mt-2 block text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-600 dark:text-gray-300">
                             Professional Workforce Solutions
-                        </span>
-                    </h1>
+                    </span>
+                </h1>
                 </div>
 
                 <!-- Tagline -->
@@ -506,17 +535,17 @@ if ($_POST && isset($_POST['contact_form'])) {
                     <p class="mx-auto mt-8 max-w-2xl text-xl leading-8 text-gray-600 dark:text-gray-300">
                         <span class="relative">
                             <span class="absolute -left-4 top-0 text-brand-blue/40 text-lg">"</span>
-                            <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
+                    <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
                             <span class="absolute -right-4 bottom-0 text-brand-blue/40 text-lg">"</span>
                         </span>
-                    </p>
+                </p>
                 </div>
 
                 <!-- Description -->
                 <div class="scroll-reveal" style="animation-delay: 0.6s;">
                     <p class="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-gray-500 dark:text-gray-400">
-                        <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
-                    </p>
+                    <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
+                </p>
                 </div>
 
                 <!-- Status Badges -->
@@ -548,13 +577,13 @@ if ($_POST && isset($_POST['contact_form'])) {
                     </a>
                 </div>
 
-                <!-- Enhanced Stats with Catalyst Design -->
-                <div class="mx-auto mt-20 max-w-5xl scroll-reveal" style="animation-delay: 1s;">
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:gap-8">
+                <!-- Enhanced Stats with Real-time Count Animation -->
+                <div class="mx-auto mt-16 max-w-7xl scroll-reveal" style="animation-delay: 1s;">
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
                         <?php foreach ($stats as $index => $stat): ?>
-                        <div class="group relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-8 text-center border border-gray-200/50 dark:border-gray-700/50 hover:border-gray-300/70 dark:hover:border-gray-600/70 transition-all duration-300 hover:scale-105 scroll-reveal" style="animation-delay: <?php echo 1.2 + ($index * 0.1); ?>s;">
+                        <div class="group relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-6 text-center border border-gray-200/50 dark:border-gray-700/50 hover:border-gray-300/70 dark:hover:border-gray-600/70 transition-all duration-300 hover:scale-105 hover:shadow-lg scroll-reveal" style="animation-delay: <?php echo 1.2 + ($index * 0.1); ?>s;">
                             <!-- Background Gradient -->
-                            <div class="absolute inset-0 rounded-2xl bg-gradient-to-br <?php 
+                            <div class="absolute inset-0 rounded-xl bg-gradient-to-br <?php 
                                 switch($stat['stat_name']) {
                                     case 'placements': echo 'from-brand-blue/5 to-brand-teal/5';
                                         break;
@@ -567,7 +596,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                             ?> opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             
                             <!-- Icon -->
-                            <div class="relative z-10 mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r <?php 
+                            <div class="relative z-10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r <?php 
                                 switch($stat['stat_name']) {
                                     case 'placements': echo 'from-brand-blue to-brand-teal';
                                         break;
@@ -577,7 +606,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                                         break;
                                     default: echo 'from-gray-400 to-gray-600';
                                 }
-                            ?> shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                            ?> shadow-md group-hover:shadow-lg transition-all duration-300">
                                 <i class="fas fa-<?php 
                                     switch($stat['stat_name']) {
                                         case 'placements': echo 'users';
@@ -588,20 +617,57 @@ if ($_POST && isset($_POST['contact_form'])) {
                                             break;
                                         default: echo 'chart-line';
                                     }
-                                ?> text-white text-xl group-hover:scale-110 transition-transform duration-300"></i>
+                                ?> text-white text-lg group-hover:scale-110 transition-transform duration-300"></i>
                             </div>
                             
-                            <!-- Value -->
+                            <!-- Animated Value -->
                             <div class="relative z-10">
-                                <p class="text-4xl font-bold tracking-tight bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 bg-clip-text text-transparent">
-                                    <?php echo htmlspecialchars($stat['stat_value']); ?>
-                                </p>
-                                <p class="mt-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                <?php 
+                                // Extract numeric value for animation
+                                $numericValue = preg_replace('/[^0-9]/', '', $stat['stat_value']);
+                                $suffix = preg_replace('/[0-9]/', '', $stat['stat_value']);
+                                ?>
+                                <div class="relative overflow-hidden">
+                                    <p class="text-3xl sm:text-4xl font-bold tracking-tight bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 bg-clip-text text-transparent">
+                                        <span class="counter-value" 
+                                              data-target="<?php echo $numericValue; ?>" 
+                                              data-suffix="<?php echo htmlspecialchars($suffix); ?>"
+                                              data-duration="2000">0<?php echo htmlspecialchars($suffix); ?></span>
+                                    </p>
+                                    <!-- Pulse effect during counting -->
+                                    <div class="absolute inset-0 bg-gradient-to-r from-brand-blue/10 to-brand-teal/10 rounded opacity-0 counter-pulse"></div>
+                                </div>
+                                <p class="mt-2 text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-300 leading-tight">
                                     <?php echo htmlspecialchars($stat['stat_label']); ?>
                                 </p>
                             </div>
+
+                            <!-- Progress bar animation -->
+                            <div class="relative z-10 mt-3">
+                                <div class="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r <?php 
+                                        switch($stat['stat_name']) {
+                                            case 'placements': echo 'from-brand-blue to-brand-teal';
+                                                break;
+                                            case 'partners': echo 'from-brand-teal to-brand-green';
+                                                break;
+                                            case 'compliance': echo 'from-brand-green to-brand-blue';
+                                                break;
+                                            default: echo 'from-gray-400 to-gray-600';
+                                        }
+                                    ?> rounded-full transform -translate-x-full progress-bar transition-transform duration-2000 ease-out"></div>
+                                </div>
+                            </div>
                         </div>
                         <?php endforeach; ?>
+                    </div>
+                    
+                    <!-- Live Update Indicator -->
+                    <div class="text-center mt-6">
+                        <div class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium">
+                            <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                            Live Statistics
+                        </div>
                     </div>
                 </div>
 
@@ -653,18 +719,18 @@ if ($_POST && isset($_POST['contact_form'])) {
                         <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-blue/5 to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         
                         <div class="relative z-10">
-                            <div class="flex items-center mb-6">
+                        <div class="flex items-center mb-6">
                                 <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-brand-blue to-brand-teal shadow-lg group-hover:shadow-xl transition-shadow duration-300">
                                     <i class="fas fa-bullseye text-white text-xl group-hover:scale-110 transition-transform duration-300"></i>
-                                </div>
+                            </div>
                                 <div class="ml-4">
                                     <h3 class="text-xl font-bold text-gray-900 dark:text-white">Our Mission</h3>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">What drives us forward</p>
-                                </div>
+                        </div>
                             </div>
                             <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                                <?php echo htmlspecialchars($companyInfo['mission']); ?>
-                            </p>
+                            <?php echo htmlspecialchars($companyInfo['mission']); ?>
+                        </p>
                         </div>
                     </div>
                     
@@ -674,18 +740,18 @@ if ($_POST && isset($_POST['contact_form'])) {
                         <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-teal/5 to-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         
                         <div class="relative z-10">
-                            <div class="flex items-center mb-6">
+                        <div class="flex items-center mb-6">
                                 <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-brand-teal to-brand-green shadow-lg group-hover:shadow-xl transition-shadow duration-300">
                                     <i class="fas fa-eye text-white text-xl group-hover:scale-110 transition-transform duration-300"></i>
-                                </div>
+                            </div>
                                 <div class="ml-4">
                                     <h3 class="text-xl font-bold text-gray-900 dark:text-white">Our Vision</h3>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">Where we're heading</p>
-                                </div>
+                        </div>
                             </div>
                             <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                                <?php echo htmlspecialchars($companyInfo['vision']); ?>
-                            </p>
+                            <?php echo htmlspecialchars($companyInfo['vision']); ?>
+                        </p>
                         </div>
                     </div>
                 </div>
@@ -1734,9 +1800,9 @@ if ($_POST && isset($_POST['contact_form'])) {
             const mobileMenu = document.querySelector('.mobile-menu');
             
             if (mobileMenuButton && mobileMenu) {
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
             }
 
             // Navigation functionality
@@ -1744,50 +1810,177 @@ if ($_POST && isset($_POST['contact_form'])) {
                 link.addEventListener('click', function(e) {
                     const href = this.getAttribute('href');
                     if (href && href.startsWith('#')) {
-                        e.preventDefault();
+                    e.preventDefault();
                         const targetId = href.substring(1);
-                        const targetElement = document.getElementById(targetId);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        const headerOffset = 80; // Account for fixed header
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
                         
-                        if (targetElement) {
-                            const headerOffset = 80; // Account for fixed header
-                            const elementPosition = targetElement.getBoundingClientRect().top;
-                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                            
-                            window.scrollTo({
-                                top: offsetPosition,
-                                behavior: 'smooth'
-                            });
-                            
-                            // Close mobile menu after clicking
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu after clicking
                             if (mobileMenu) {
-                                mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.add('hidden');
                             }
                         }
                     }
                 });
             });
 
-            // Scroll animations with fallback
-            if ('IntersectionObserver' in window) {
-                const observerOptions = {
-                    threshold: 0.1,
-                    rootMargin: '0px 0px -50px 0px'
-                };
+            // Counter Animation Function
+            function animateCounter(element) {
+                const target = parseInt(element.dataset.target);
+                const suffix = element.dataset.suffix || '';
+                const duration = parseInt(element.dataset.duration) || 2000;
+                const startTime = performance.now();
+                const startValue = 0;
+                
+                // Get associated progress bar and pulse effect
+                const card = element.closest('.group');
+                const progressBar = card?.querySelector('.progress-bar');
+                const pulseEffect = card?.querySelector('.counter-pulse');
+                
+                // Start pulse animation
+                if (pulseEffect) {
+                    pulseEffect.style.opacity = '0.3';
+                    pulseEffect.style.animation = 'pulse 0.5s ease-in-out infinite';
+                }
 
-                const observer = new IntersectionObserver((entries) => {
+                function updateCounter(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // Use easeOutQuart for smooth animation
+                    const easeProgress = 1 - Math.pow(1 - progress, 4);
+                    const currentValue = Math.floor(startValue + (target - startValue) * easeProgress);
+                    
+                    // Update counter display
+                    element.textContent = currentValue.toLocaleString() + suffix;
+                    
+                    // Update progress bar
+                    if (progressBar) {
+                        progressBar.style.transform = `translateX(-${100 - (progress * 100)}%)`;
+                    }
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        // Animation complete
+                        element.textContent = target.toLocaleString() + suffix;
+                        if (progressBar) {
+                            progressBar.style.transform = 'translateX(0%)';
+                        }
+                        if (pulseEffect) {
+                            pulseEffect.style.opacity = '0';
+                            pulseEffect.style.animation = 'none';
+                        }
+                        
+                        // Add completion effect
+                        element.style.animation = 'pulse 0.3s ease-in-out';
+                        setTimeout(() => {
+                            element.style.animation = '';
+                        }, 300);
+                    }
+                }
+                
+                requestAnimationFrame(updateCounter);
+            }
+
+            // Enhanced Stats Counter with Real-time Updates
+            function initStatsCounters() {
+                const counters = document.querySelectorAll('.counter-value');
+                const statsObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
+                            const counter = entry.target;
+                            if (!counter.dataset.animated) {
+                                counter.dataset.animated = 'true';
+                                // Add slight delay for staggered effect
+                                const delay = Array.from(counters).indexOf(counter) * 200;
+                                setTimeout(() => {
+                                    animateCounter(counter);
+                                }, delay);
+                            }
+                            statsObserver.unobserve(counter);
+                        }
+                    });
+                }, {
+                    threshold: 0.5,
+                    rootMargin: '0px 0px -100px 0px'
+                });
+
+                counters.forEach(counter => {
+                    statsObserver.observe(counter);
+                });
+            }
+
+            // Simulate real-time updates (optional - for demo purposes)
+            function simulateRealTimeUpdates() {
+                const counters = document.querySelectorAll('.counter-value[data-animated="true"]');
+                
+                counters.forEach(counter => {
+                    const currentTarget = parseInt(counter.dataset.target);
+                    const suffix = counter.dataset.suffix || '';
+                    
+                    // Small random increment every 30-60 seconds
+                    const updateInterval = Math.random() * 30000 + 30000; // 30-60 seconds
+                    
+                    setTimeout(() => {
+                        if (Math.random() > 0.7) { // 30% chance of update
+                            const increment = Math.floor(Math.random() * 3) + 1; // 1-3 increment
+                            const newTarget = currentTarget + increment;
+                            
+                            // Update target and re-animate briefly
+                            counter.dataset.target = newTarget;
+                            counter.style.transition = 'all 0.5s ease';
+                            counter.textContent = newTarget.toLocaleString() + suffix;
+                            
+                            // Pulse effect for real-time update
+                            counter.style.transform = 'scale(1.1)';
+                            setTimeout(() => {
+                                counter.style.transform = 'scale(1)';
+                            }, 200);
+                        }
+                        
+                        // Schedule next potential update
+                        simulateRealTimeUpdates();
+                    }, updateInterval);
+                });
+            }
+
+            // Initialize counters
+            initStatsCounters();
+            
+            // Start real-time simulation after initial load
+            setTimeout(simulateRealTimeUpdates, 5000);
+
+            // Scroll animations with fallback
+            if ('IntersectionObserver' in window) {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
                             entry.target.classList.add('revealed');
                             // Unobserve once revealed to prevent multiple triggers
                             observer.unobserve(entry.target);
-                        }
-                    });
-                }, observerOptions);
-
-                // Observe all scroll-reveal elements
-                document.querySelectorAll('.scroll-reveal').forEach(el => {
-                    observer.observe(el);
+                    }
                 });
+            }, observerOptions);
+
+            // Observe all scroll-reveal elements
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
             } else {
                 // Fallback: immediately show all scroll-reveal elements
                 document.querySelectorAll('.scroll-reveal').forEach(el => {
