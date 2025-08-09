@@ -1522,375 +1522,6 @@ if ($_POST && isset($_POST['contact_form'])) {
             </div>
         </div>
     </footer>
-                                <dt class="text-sm font-medium leading-6 text-gray-900 dark:text-white theme-transition">Vision</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 dark:text-gray-300 sm:col-span-2 sm:mt-0 theme-transition">
-                                    <?php echo htmlspecialchars($companyInfo['vision'] ?? 'To be the most trusted and recognized recruitment company in the Maldives, known for our professionalism, excellence and ability to deliver outstanding outcomes.'); ?>
-                                </dd>
-                            </div>
-                        </dl>
-                    </div>
-                </div>
-
-                <!-- Company Profile Download -->
-                <div class="text-center">
-                    <div class="overflow-hidden bg-white dark:bg-gray-900 shadow-sm ring-1 ring-gray-900/5 dark:ring-white/10 sm:rounded-lg theme-transition">
-                        <div class="px-4 py-5 sm:p-6">
-                            <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white mb-2 theme-transition">Company Profile</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 theme-transition">Download our comprehensive company profile to learn more about our services and expertise.</p>
-                            <a href="http://skybordersolutions.com/profile.pdf" target="_blank" class="inline-flex items-center rounded-lg bg-gradient-to-r from-brand-green to-brand-green-light px-4 py-2 text-sm font-semibold text-white shadow-sm hover:from-brand-green-dark hover:to-brand-green transition-all duration-200 transform hover:scale-105">
-                                <i class="fas fa-download mr-2"></i>
-                                Download Profile
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Clients Section -->
-    <section id="clients" class="py-24 sm:py-32 bg-gray-50 dark:bg-gray-800 theme-transition">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <!-- Section Header -->
-            <div class="mx-auto max-w-2xl text-center mb-16">
-                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl theme-transition">Our Clients</h2>
-                <p class="mt-4 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">Trusted by leading organizations across the Maldives</p>
-            </div>
-
-            <!-- Client Categories -->
-            <?php 
-            // Group clients by category (using real database structure)
-            $groupedClients = [];
-            foreach ($clients as $client) {
-                $categoryName = $client['category_name'] ?? 'Other';
-                if (!isset($groupedClients[$categoryName])) {
-                    $groupedClients[$categoryName] = [];
-                }
-                $groupedClients[$categoryName][] = $client;
-            }
-            ?>
-
-            <?php if (!empty($groupedClients)): ?>
-            <div class="space-y-12">
-                <?php foreach ($groupedClients as $categoryName => $categoryClients): ?>
-                <div>
-                    <!-- Category Header -->
-                    <div class="mb-8">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center theme-transition">
-                            <?php 
-                            $categoryIcon = 'fas fa-building';
-                            switch (strtolower($categoryName)) {
-                                case 'construction':
-                                case 'engineering':
-                                case 'construction & engineering':
-                                    $categoryIcon = 'fas fa-building';
-                                    $categoryColor = 'text-brand-blue dark:text-brand-blue-light';
-                                    break;
-                                case 'tourism':
-                                case 'hospitality':
-                                case 'tourism & hospitality':
-                                    $categoryIcon = 'fas fa-hotel';
-                                    $categoryColor = 'text-brand-teal';
-                                    break;
-                                case 'investment':
-                                case 'trading':
-                                case 'services':
-                                case 'investments, services & trading':
-                                    $categoryIcon = 'fas fa-chart-line';
-                                    $categoryColor = 'text-brand-green dark:text-brand-green-light';
-                                    break;
-                                default:
-                                    $categoryIcon = 'fas fa-briefcase';
-                                    $categoryColor = 'text-gray-600 dark:text-gray-400';
-                            }
-                            ?>
-                            <i class="<?php echo $categoryIcon; ?> mr-3 <?php echo $categoryColor; ?>"></i>
-                            <?php echo htmlspecialchars($categoryName); ?>
-                        </h3>
-                    </div>
-
-                    <!-- Clients Grid -->
-                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                        <?php foreach ($categoryClients as $client): ?>
-                        <div class="group relative overflow-hidden bg-white dark:bg-gray-900 shadow-sm ring-1 ring-gray-900/5 dark:ring-white/10 rounded-lg hover:shadow-md hover:ring-2 hover:ring-brand-blue/20 dark:hover:ring-brand-blue-light/20 transition-all duration-200 theme-transition">
-                            <div class="p-4">
-                                <?php if (!empty($client['logo_url'])): ?>
-                                <!-- Company Logo -->
-                                <div class="flex h-16 w-full items-center justify-center mb-3 bg-gray-50 dark:bg-gray-800 rounded-md theme-transition">
-                                    <?php 
-                                    // Handle both uploaded files and external URLs
-                                    $logoSrc = $client['logo_url'];
-                                    if (!filter_var($logoSrc, FILTER_VALIDATE_URL)) {
-                                        // It's a local file path, prepend admin directory
-                                        $logoSrc = 'admin/' . ltrim($logoSrc, '/');
-                                    }
-                                    ?>
-                                    <img src="<?php echo htmlspecialchars($logoSrc); ?>" 
-                                         alt="<?php echo htmlspecialchars($client['client_name']); ?>" 
-                                         class="h-12 w-auto object-contain"
-                                         onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=&quot;fas fa-building text-2xl text-gray-400 dark:text-gray-500&quot;></i>';">
-                                </div>
-                                <?php else: ?>
-                                <!-- Placeholder for logo -->
-                                <div class="flex h-16 w-full items-center justify-center mb-3 bg-gray-100 dark:bg-gray-700 rounded-md theme-transition">
-                                    <i class="fas fa-building text-2xl text-gray-400 dark:text-gray-500"></i>
-                                </div>
-                                <?php endif; ?>
-
-                                <!-- Company Name -->
-                                <div class="text-center">
-                                    <h4 class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-brand-blue dark:group-hover:text-brand-blue-light transition-colors theme-transition">
-                                        <?php echo htmlspecialchars($client['client_name']); ?>
-                                    </h4>
-                                </div>
-                            </div>
-                            
-                            <!-- Hover Effect -->
-                            <div class="absolute inset-0 bg-gradient-to-r from-brand-blue/5 to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg"></div>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            </div>
-            <?php else: ?>
-            <!-- Fallback when no clients in database -->
-            <div class="text-center py-12">
-                <div class="mx-auto max-w-md">
-                    <i class="fas fa-users text-4xl text-gray-400 dark:text-gray-600 mb-4"></i>
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2 theme-transition">No Clients Yet</h3>
-                    <p class="text-gray-600 dark:text-gray-400 theme-transition">Client information will be displayed here once added through the admin panel.</p>
-                </div>
-            </div>
-            <?php endif; ?>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 sm:py-32 bg-white dark:bg-gray-900 theme-transition">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <!-- Section Header -->
-            <div class="mx-auto max-w-2xl text-center mb-16">
-                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl theme-transition">Contact Us</h2>
-                <p class="mt-4 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">Ready to partner with us? Get in touch today and let's discuss how we can support your workforce needs.</p>
-            </div>
-
-            <!-- Contact Content -->
-            <div class="mx-auto max-w-5xl grid grid-cols-1 gap-12 lg:grid-cols-2">
-                <!-- Contact Information -->
-                <div class="overflow-hidden bg-gray-50 dark:bg-gray-800 shadow-sm ring-1 ring-gray-900/5 dark:ring-white/10 sm:rounded-lg theme-transition">
-                    <div class="px-4 py-5 sm:p-6">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-8 theme-transition">Get in Touch</h3>
-                        
-                        <div class="space-y-6">
-                            <!-- Phone -->
-                            <div class="flex items-start space-x-4">
-                                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-blue/10 dark:bg-brand-blue/20">
-                                    <i class="fas fa-phone text-brand-blue dark:text-brand-blue-light"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-900 dark:text-white theme-transition">Phone</h4>
-                                    <a href="tel:<?php echo str_replace([' ', '-'], '', $companyInfo['phone'] ?? '+9604000444'); ?>" class="text-brand-blue dark:text-brand-blue-light hover:text-brand-blue-dark dark:hover:text-brand-blue theme-transition"><?php echo htmlspecialchars($companyInfo['phone'] ?? '+960 4000-444'); ?></a>
-                                </div>
-                            </div>
-
-                            <!-- Hotlines -->
-                            <?php if (!empty($companyInfo['hotline1']) || !empty($companyInfo['hotline2'])): ?>
-                            <div class="flex items-start space-x-4">
-                                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-teal/10 dark:bg-brand-teal/20">
-                                    <i class="fas fa-mobile-alt text-brand-teal"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-900 dark:text-white theme-transition">Hotline</h4>
-                                    <div class="text-brand-teal">
-                                        <?php if (!empty($companyInfo['hotline1'])): ?>
-                                        <a href="tel:<?php echo str_replace([' ', '-'], '', $companyInfo['hotline1']); ?>" class="hover:text-brand-blue theme-transition"><?php echo htmlspecialchars($companyInfo['hotline1']); ?></a>
-                                        <?php endif; ?>
-                                        <?php if (!empty($companyInfo['hotline1']) && !empty($companyInfo['hotline2'])): ?> / <?php endif; ?>
-                                        <?php if (!empty($companyInfo['hotline2'])): ?>
-                                        <a href="tel:<?php echo str_replace([' ', '-'], '', $companyInfo['hotline2']); ?>" class="hover:text-brand-blue theme-transition"><?php echo htmlspecialchars($companyInfo['hotline2']); ?></a>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php endif; ?>
-
-                            <!-- Email -->
-                            <div class="flex items-start space-x-4">
-                                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-green/10 dark:bg-brand-green/20">
-                                    <i class="fas fa-envelope text-brand-green dark:text-brand-green-light"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-900 dark:text-white theme-transition">Email</h4>
-                                    <a href="mailto:<?php echo htmlspecialchars($companyInfo['email'] ?? 'info@skybordersolutions.com'); ?>" class="text-brand-green dark:text-brand-green-light hover:text-brand-green-dark dark:hover:text-brand-green theme-transition"><?php echo htmlspecialchars($companyInfo['email'] ?? 'info@skybordersolutions.com'); ?></a>
-                                </div>
-                            </div>
-
-                            <!-- Address -->
-                            <div class="flex items-start space-x-4">
-                                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-100 dark:bg-purple-900/20">
-                                    <i class="fas fa-map-marker-alt text-purple-600 dark:text-purple-400"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-900 dark:text-white theme-transition">Address</h4>
-                                    <p class="text-gray-600 dark:text-gray-400 theme-transition"><?php echo nl2br(htmlspecialchars($companyInfo['address'] ?? 'H. Dhoorihaa (5A), Kalaafaanu Hingun\nMale\' City, Republic of Maldives')); ?></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Business Hours -->
-                        <?php if (!empty($companyInfo['business_hours'])): ?>
-                        <div class="mt-8 rounded-xl bg-gray-100 dark:bg-gray-700 p-4 theme-transition">
-                            <h4 class="flex items-center space-x-2 font-medium text-gray-900 dark:text-white mb-3 theme-transition">
-                                <i class="fas fa-clock text-brand-blue dark:text-brand-blue-light"></i>
-                                <span>Business Hours</span>
-                            </h4>
-                            <div class="text-sm text-gray-600 dark:text-gray-400 space-y-1 theme-transition">
-                                <?php echo nl2br(htmlspecialchars($companyInfo['business_hours'])); ?>
-                            </div>
-                        </div>
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-                <!-- Contact Form -->
-                <div class="overflow-hidden bg-white dark:bg-gray-800 shadow-sm ring-1 ring-gray-900/5 dark:ring-white/10 sm:rounded-lg theme-transition">
-                    <div class="px-4 py-5 sm:p-6">
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6 theme-transition">Send us a Message</h3>
-                        
-                        <!-- Success/Error Messages -->
-                        <?php if ($contactMessage): ?>
-                        <div class="mb-6 bg-brand-green/10 dark:bg-brand-green/20 border border-brand-green/20 dark:border-brand-green/30 rounded-md p-4">
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                    <i class="fas fa-check-circle text-brand-green dark:text-brand-green-light"></i>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm text-brand-green-dark dark:text-brand-green-light"><?php echo htmlspecialchars($contactMessage); ?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endif; ?>
-
-                        <?php if ($contactError): ?>
-                        <div class="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-4">
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                    <i class="fas fa-exclamation-circle text-red-400 dark:text-red-300"></i>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm text-red-800 dark:text-red-300"><?php echo htmlspecialchars($contactError); ?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endif; ?>
-                        
-                        <form class="contact-form space-y-6" method="POST">
-                            <input type="hidden" name="contact_form" value="1">
-                            
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 theme-transition">Full Name</label>
-                                <input type="text" id="name" name="name" required 
-                                       class="w-full rounded-lg border-0 py-1.5 text-gray-900 dark:text-white bg-white dark:bg-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm sm:leading-6 theme-transition"
-                                       value="<?php echo htmlspecialchars($_POST['name'] ?? ''); ?>">
-                            </div>
-                            
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 theme-transition">Email Address</label>
-                                <input type="email" id="email" name="email" required 
-                                       class="w-full rounded-lg border-0 py-1.5 text-gray-900 dark:text-white bg-white dark:bg-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm sm:leading-6 theme-transition"
-                                       value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
-                            </div>
-                            
-                            <div>
-                                <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 theme-transition">Company Name</label>
-                                <input type="text" id="company" name="company" 
-                                       class="w-full rounded-lg border-0 py-1.5 text-gray-900 dark:text-white bg-white dark:bg-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm sm:leading-6 theme-transition"
-                                       value="<?php echo htmlspecialchars($_POST['company'] ?? ''); ?>">
-                            </div>
-                            
-                            <div>
-                                <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 theme-transition">Message</label>
-                                <textarea id="message" name="message" rows="4" required 
-                                          class="w-full rounded-lg border-0 py-1.5 text-gray-900 dark:text-white bg-white dark:bg-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm sm:leading-6 theme-transition"><?php echo htmlspecialchars($_POST['message'] ?? ''); ?></textarea>
-                            </div>
-                            
-                            <button type="submit" class="w-full rounded-lg bg-gradient-to-r from-brand-blue to-brand-teal px-6 py-3 text-sm font-semibold text-white hover:from-brand-blue-dark hover:to-brand-blue focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition-all duration-200 transform hover:scale-105 shadow-lg">
-                                <i class="fas fa-paper-plane mr-2"></i>
-                                Send Message
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 dark:bg-gray-950 theme-transition">
-        <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 gap-8 lg:grid-cols-4">
-                <!-- Company Info -->
-                <div class="lg:col-span-2">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <img src="images/logo.svg" alt="<?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>" class="h-10 w-auto filter brightness-0 invert">
-                    </div>
-                    <p class="text-gray-400 mb-6">
-                        <?php echo htmlspecialchars($companyInfo['description'] ?? 'Government-licensed HR consultancy and recruitment firm providing comprehensive workforce solutions across the Maldives.'); ?>
-                    </p>
-                    <div class="inline-flex items-center space-x-2 rounded-full bg-brand-green/10 px-3 py-1 text-sm font-medium text-brand-green-light">
-                        <i class="fas fa-certificate"></i>
-                        <span>Licensed & Compliant</span>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">Quick Links</h3>
-                    <div class="space-y-2">
-                        <a href="#home" class="block text-gray-300 hover:text-brand-blue-light transition-colors">Home</a>
-                        <a href="#about" class="block text-gray-300 hover:text-brand-blue-light transition-colors">About Us</a>
-                        <a href="#services" class="block text-gray-300 hover:text-brand-blue-light transition-colors">Services</a>
-                        <a href="#clients" class="block text-gray-300 hover:text-brand-blue-light transition-colors">Clients</a>
-                        <a href="#contact" class="block text-gray-300 hover:text-brand-blue-light transition-colors">Contact</a>
-                        <a href="admin/" class="block text-gray-300 hover:text-brand-teal transition-colors">
-                            <i class="fas fa-lock mr-1"></i>Admin
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Contact Info -->
-                <div>
-                    <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">Contact</h3>
-                    <div class="space-y-2 text-gray-300">
-                        <div class="flex items-center space-x-2">
-                            <i class="fas fa-phone text-brand-blue-light w-4"></i>
-                            <span><?php echo htmlspecialchars($companyInfo['phone'] ?? '+960 4000-444'); ?></span>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <i class="fas fa-envelope text-brand-teal w-4"></i>
-                            <span><?php echo htmlspecialchars($companyInfo['email'] ?? 'info@skybordersolutions.com'); ?></span>
-                        </div>
-                        <div class="flex items-start space-x-2">
-                            <i class="fas fa-map-marker-alt text-brand-green-light w-4 mt-1"></i>
-                            <span class="text-sm">Male' City, Maldives</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bottom Footer -->
-            <div class="mt-12 border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between">
-                <p class="text-gray-400 text-sm">
-                    &copy; <span id="year"></span> <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>. All rights reserved.
-                </p>
-                <div class="mt-4 sm:mt-0 flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-brand-blue-light text-sm transition-colors">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-brand-blue-light text-sm transition-colors">Terms of Service</a>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts -->
     <script>
@@ -1905,23 +1536,17 @@ if ($_POST && isset($_POST['contact_form'])) {
                 document.documentElement.classList.remove('dark');
             }
         }
-
+        
         function toggleTheme() {
-            const isDark = document.documentElement.classList.contains('dark');
-            
-            if (isDark) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('darkMode', 'false');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('darkMode', 'true');
-            }
-        }
-
-        // Initialize theme and interactions
-        document.addEventListener('DOMContentLoaded', function() {
+            const darkMode = !document.documentElement.classList.contains('dark');
+            localStorage.setItem('darkMode', darkMode);
             initTheme();
-            
+        }
+        
+        // Initialize theme on page load
+        initTheme();
+        
+        document.addEventListener('DOMContentLoaded', function() {
             // Theme toggle button
             document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
             
@@ -1941,110 +1566,41 @@ if ($_POST && isset($_POST['contact_form'])) {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const targetId = this.getAttribute('href').substring(1);
-                    const targetSection = document.getElementById(targetId);
+                    const targetElement = document.getElementById(targetId);
                     
-                    if (targetSection) {
-                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    if (targetElement) {
+                        const headerOffset = 80; // Account for fixed header
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
                         
-                        // Close mobile menu if open
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu after clicking
                         mobileMenu.classList.add('hidden');
                     }
                 });
             });
-        });
-        
-        // Listen for system theme changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-            if (!localStorage.getItem('darkMode')) {
-                if (e.matches) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-            }
-        });
 
-        // Smooth scroll behavior for all internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-        
-        // Enhanced Scroll Reveal Animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-        
-        // Observe all scroll-reveal elements
-        document.querySelectorAll('.scroll-reveal').forEach(el => {
-            observer.observe(el);
-        });
-        
-        // Enhanced button interactions with ripple effect
-        document.querySelectorAll('.btn-primary').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                // Create ripple effect
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.style.position = 'absolute';
-                ripple.style.borderRadius = '50%';
-                ripple.style.background = 'rgba(255, 255, 255, 0.6)';
-                ripple.style.transform = 'scale(0)';
-                ripple.style.animation = 'ripple-animation 0.6s linear';
-                ripple.style.pointerEvents = 'none';
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
-        });
-        
-        // Add enhanced hover effects for cards
-        document.querySelectorAll('.modern-card, .hover-lift').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-8px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-        
-        // Parallax effect for floating elements
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            
-            document.querySelectorAll('.animate-float').forEach((element, index) => {
-                const speed = 0.5 + (index * 0.1);
-                element.style.transform = `translateY(${rate * speed}px)`;
+            // Scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fadeInUp');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all scroll-reveal elements
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
             });
         });
     </script>
