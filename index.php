@@ -178,18 +178,18 @@ if ($_POST && isset($_POST['contact_form'])) {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
         }
         
-        /* Modern Gradients */
+        /* Modern Gradients - Darker Shades */
         .gradient-bg { 
-            background: linear-gradient(135deg, #2E86AB 0%, #4ECDC4 50%, #5CB85C 100%); 
+            background: linear-gradient(135deg, #1a5a7a 0%, #2a7a6e 50%, #3a6b3a 100%); 
         }
         .gradient-text { 
-            background: linear-gradient(135deg, #2E86AB 0%, #4ECDC4 100%); 
+            background: linear-gradient(135deg, #1a5a7a 0%, #2a7a6e 100%); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
             background-clip: text; 
         }
         .gradient-text-animated {
-            background: linear-gradient(45deg, #2E86AB, #4ECDC4, #5CB85C, #9BC53D, #2E86AB);
+            background: linear-gradient(45deg, #1a5a7a, #2a7a6e, #3a6b3a, #5a8a2a, #1a5a7a);
             background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -197,7 +197,7 @@ if ($_POST && isset($_POST['contact_form'])) {
             animation: gradient-flow 3s ease-in-out infinite;
         }
         .gradient-border {
-            background: linear-gradient(135deg, #2E86AB, #4ECDC4, #5CB85C);
+            background: linear-gradient(135deg, #1a5a7a, #2a7a6e, #3a6b3a);
             border-radius: 0.75rem;
             padding: 2px;
         }
@@ -306,9 +306,9 @@ if ($_POST && isset($_POST['contact_form'])) {
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
         }
         
-        /* Enhanced Button Styles */
+        /* Enhanced Button Styles - Darker Shades */
         .btn-primary {
-            background: linear-gradient(135deg, #2E86AB 0%, #4ECDC4 100%);
+            background: linear-gradient(135deg, #1a5a7a 0%, #2a7a6e 100%);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
@@ -328,7 +328,7 @@ if ($_POST && isset($_POST['contact_form'])) {
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(46, 134, 171, 0.4);
+            box-shadow: 0 10px 30px rgba(26, 90, 122, 0.4);
         }
         
         /* Scroll Reveal */
@@ -358,11 +358,11 @@ if ($_POST && isset($_POST['contact_form'])) {
             background: #f1f5f9;
         }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #2E86AB, #4ECDC4);
+            background: linear-gradient(135deg, #1a5a7a, #2a7a6e);
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #1E5F7A, #2E86AB);
+            background: linear-gradient(135deg, #0f3a4a, #1a5a7a);
         }
         .dark ::-webkit-scrollbar-track {
             background: #1e293b;
@@ -375,18 +375,18 @@ if ($_POST && isset($_POST['contact_form'])) {
             theme: {
                 extend: {
                     colors: {
-                        // Sky Border Solutions Brand Colors
+                        // Sky Border Solutions Brand Colors - Darker Shades
                         'brand': {
-                            'green-light': '#9BC53D',
-                            'green': '#5CB85C',
-                            'green-dark': '#4A9649',
-                            'blue-light': '#5CB3CC',
-                            'blue': '#2E86AB',
-                            'blue-dark': '#1E5F7A',
-                            'teal': '#4ECDC4',
-                            'gray-light': '#F8FAFC',
-                            'gray': '#64748B',
-                            'gray-dark': '#334155'
+                            'green-light': '#5a8a2a',
+                            'green': '#3a6b3a',
+                            'green-dark': '#2a5a2a',
+                            'blue-light': '#2a7a8a',
+                            'blue': '#1a5a7a',
+                            'blue-dark': '#0f3a4a',
+                            'teal': '#2a7a6e',
+                            'gray-light': '#E2E8F0',
+                            'gray': '#475569',
+                            'gray-dark': '#1e293b'
                         }
                     }
                 }
@@ -451,15 +451,15 @@ if ($_POST && isset($_POST['contact_form'])) {
     <section id="home" class="relative overflow-hidden bg-white dark:bg-gray-900 theme-transition">
         <!-- Animated Background Elements -->
         <div class="absolute inset-0 -z-20">
-            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-brand-blue/5 via-brand-teal/5 to-brand-green/5 dark:from-brand-blue/10 dark:via-brand-teal/10 dark:to-brand-green/10"></div>
-            <div class="absolute top-10 left-10 w-72 h-72 bg-brand-blue/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
-            <div class="absolute top-0 right-4 w-72 h-72 bg-brand-teal/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style="animation-delay: 2s;"></div>
-            <div class="absolute -bottom-8 left-20 w-72 h-72 bg-brand-green/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style="animation-delay: 4s;"></div>
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-brand-blue/8 via-brand-teal/8 to-brand-green/8 dark:from-brand-blue/15 dark:via-brand-teal/15 dark:to-brand-green/15"></div>
+            <div class="absolute top-10 left-10 w-72 h-72 bg-brand-blue/15 rounded-full mix-blend-multiply filter blur-xl opacity-80 animate-float"></div>
+            <div class="absolute top-0 right-4 w-72 h-72 bg-brand-teal/15 rounded-full mix-blend-multiply filter blur-xl opacity-80 animate-float" style="animation-delay: 2s;"></div>
+            <div class="absolute -bottom-8 left-20 w-72 h-72 bg-brand-green/15 rounded-full mix-blend-multiply filter blur-xl opacity-80 animate-float" style="animation-delay: 4s;"></div>
         </div>
         
         <!-- Enhanced Background gradient -->
         <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-            <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-brand-blue via-brand-teal to-brand-green opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem] animate-pulse-glow" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+            <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-brand-blue via-brand-teal to-brand-green opacity-40 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem] animate-pulse-glow" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
         </div>
         
         <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
@@ -777,7 +777,139 @@ if ($_POST && isset($_POST['contact_form'])) {
                         </div>
                         <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
                             <i class="fas fa-check-circle text-purple-500 mr-3"></i>
-                            Work-related injury protection
+                            Work-related injury and accident protection
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-purple-500 mr-3"></i>
+                            Disability and death benefits
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-purple-500 mr-3"></i>
+                            Repatriation support in medical emergencies
+                        </div>
+                    </div>
+
+                    <!-- Insurance Providers within Insurance Services -->
+                    <div class="mt-8 pt-8 border-t border-purple-200 dark:border-purple-700">
+                        <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-6 theme-transition">
+                            Our Insurance Partners
+                        </h4>
+                        
+                        <!-- Insurance Providers Grid -->
+                        <div class="grid grid-cols-2 gap-4 md:grid-cols-4 mb-6">
+                            <!-- Provider 1 - Placeholder -->
+                            <div class="flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors theme-transition">
+                                <div class="h-12 w-20 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center mb-3">
+                                    <i class="fas fa-shield-alt text-gray-400 text-lg"></i>
+                                </div>
+                                <p class="text-xs font-medium text-gray-600 dark:text-gray-400 text-center">Insurance Provider 1</p>
+                            </div>
+
+                            <!-- Provider 2 - Placeholder -->
+                            <div class="flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors theme-transition">
+                                <div class="h-12 w-20 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center mb-3">
+                                    <i class="fas fa-shield-alt text-gray-400 text-lg"></i>
+                                </div>
+                                <p class="text-xs font-medium text-gray-600 dark:text-gray-400 text-center">Insurance Provider 2</p>
+                            </div>
+
+                            <!-- Provider 3 - Placeholder -->
+                            <div class="flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors theme-transition">
+                                <div class="h-12 w-20 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center mb-3">
+                                    <i class="fas fa-shield-alt text-gray-400 text-lg"></i>
+                                </div>
+                                <p class="text-xs font-medium text-gray-600 dark:text-gray-400 text-center">Insurance Provider 3</p>
+                            </div>
+
+                            <!-- Provider 4 - Placeholder -->
+                            <div class="flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors theme-transition">
+                                <div class="h-12 w-20 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center mb-3">
+                                    <i class="fas fa-shield-alt text-gray-400 text-lg"></i>
+                                </div>
+                                <p class="text-xs font-medium text-gray-600 dark:text-gray-400 text-center">Insurance Provider 4</p>
+                            </div>
+                        </div>
+
+                        <!-- Comprehensive Coverage Areas -->
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 mt-6">
+                            <!-- Medical Treatment -->
+                            <div class="flex items-start space-x-3">
+                                <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 flex-shrink-0">
+                                    <i class="fas fa-hospital text-white text-xs"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Medical Treatment</h5>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 theme-transition">Outpatient and inpatient coverage</p>
+                                </div>
+                            </div>
+
+                            <!-- Emergency Care -->
+                            <div class="flex items-start space-x-3">
+                                <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-red-500 to-pink-500 flex-shrink-0">
+                                    <i class="fas fa-ambulance text-white text-xs"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Emergency Care</h5>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 theme-transition">24/7 emergency care & hospitalization</p>
+                                </div>
+                            </div>
+
+                            <!-- Work Injury -->
+                            <div class="flex items-start space-x-3">
+                                <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 flex-shrink-0">
+                                    <i class="fas fa-hard-hat text-white text-xs"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Work-Related Injury</h5>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 theme-transition">Accident protection coverage</p>
+                                </div>
+                            </div>
+
+                            <!-- Disability Benefits -->
+                            <div class="flex items-start space-x-3">
+                                <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-purple-500 to-indigo-500 flex-shrink-0">
+                                    <i class="fas fa-wheelchair text-white text-xs"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Disability Benefits</h5>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 theme-transition">Disability coverage per policy</p>
+                                </div>
+                            </div>
+
+                            <!-- Death Benefits -->
+                            <div class="flex items-start space-x-3">
+                                <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-gray-600 to-gray-800 flex-shrink-0">
+                                    <i class="fas fa-heart text-white text-xs"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Death Benefits</h5>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 theme-transition">Death benefit for families</p>
+                                </div>
+                            </div>
+
+                            <!-- Repatriation Support -->
+                            <div class="flex items-start space-x-3">
+                                <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-brand-teal to-brand-blue flex-shrink-0">
+                                    <i class="fas fa-plane text-white text-xs"></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Repatriation Support</h5>
+                                    <p class="text-xs text-gray-600 dark:text-gray-400 theme-transition">Medical emergency repatriation</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Insurance Support Note -->
+                        <div class="mt-6 p-4 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-xl border border-purple-200 dark:border-purple-700">
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-info-circle text-purple-600 dark:text-purple-400 mt-0.5 text-sm"></i>
+                                <div>
+                                    <h5 class="text-sm font-medium text-purple-900 dark:text-purple-300 mb-1">Full Insurance Lifecycle Management</h5>
+                                    <p class="text-xs text-purple-800 dark:text-purple-400">
+                                        Our team handles the full insurance lifecycle - from policy selection and documentation to renewals and claims coordination - ensuring uninterrupted coverage and full compliance.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -785,7 +917,8 @@ if ($_POST && isset($_POST['contact_form'])) {
                     <div class="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-brand-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
                 </div>
             </div>
-            
+
+
             <!-- Industries & Positions Section -->
             <div class="mt-24 scroll-reveal" style="animation-delay: 0.6s;">
                 <div class="text-center mb-16">
