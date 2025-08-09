@@ -537,31 +537,568 @@ if ($_POST && isset($_POST['contact_form'])) {
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-24 sm:py-32 bg-gray-50 dark:bg-gray-800 theme-transition">
+    <section id="about" class="py-24 sm:py-32 bg-white dark:bg-gray-900 theme-transition">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+            <div class="mx-auto max-w-2xl text-center scroll-reveal">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl theme-transition">
+                    About <span class="gradient-text">Sky Border Solutions</span>
+                </h2>
+                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">
+                    <?php echo htmlspecialchars($companyInfo['description']); ?>
+                </p>
+            </div>
+            
+            <div class="mx-auto mt-16 max-w-5xl">
+                <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                    <!-- Mission -->
+                    <div class="modern-card rounded-2xl bg-white dark:bg-gray-800 p-8 hover-lift scroll-reveal" style="animation-delay: 0.2s;">
+                        <div class="flex items-center mb-6">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-blue to-brand-teal">
+                                <i class="fas fa-bullseye text-white text-xl"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-semibold text-gray-900 dark:text-white theme-transition">Our Mission</h3>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed theme-transition">
+                            <?php echo htmlspecialchars($companyInfo['mission']); ?>
+                        </p>
+                    </div>
+                    
+                    <!-- Vision -->
+                    <div class="modern-card rounded-2xl bg-white dark:bg-gray-800 p-8 hover-lift scroll-reveal" style="animation-delay: 0.4s;">
+                        <div class="flex items-center mb-6">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-teal to-brand-green">
+                                <i class="fas fa-eye text-white text-xl"></i>
+                            </div>
+                            <h3 class="ml-4 text-xl font-semibold text-gray-900 dark:text-white theme-transition">Our Vision</h3>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed theme-transition">
+                            <?php echo htmlspecialchars($companyInfo['vision']); ?>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Why Choose Us -->
+                <div class="mt-16 scroll-reveal" style="animation-delay: 0.6s;">
+                    <div class="text-center mb-12">
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">Why Choose Us?</h3>
+                        <p class="mt-4 text-lg text-gray-600 dark:text-gray-300 theme-transition">What sets us apart in the recruitment industry</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                        <div class="text-center scroll-reveal" style="animation-delay: 0.8s;">
+                            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 hover-glow animate-scale">
+                                <i class="fas fa-certificate text-brand-blue dark:text-brand-blue-light text-xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white theme-transition">Licensed & Compliant</h4>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 theme-transition">Government-approved recruitment services</p>
+                        </div>
+                        
+                        <div class="text-center scroll-reveal" style="animation-delay: 1s;">
+                            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-teal/10 dark:bg-brand-teal/20 hover-glow animate-scale">
+                                <i class="fas fa-users text-brand-teal text-xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white theme-transition">Expert Team</h4>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 theme-transition">Experienced HR professionals</p>
+                        </div>
+                        
+                        <div class="text-center scroll-reveal" style="animation-delay: 1.2s;">
+                            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-green/10 dark:bg-brand-green/20 hover-glow animate-scale">
+                                <i class="fas fa-clock text-brand-green dark:text-brand-green-light text-xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white theme-transition">Fast Processing</h4>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 theme-transition">Quick visa and permit processing</p>
+                        </div>
+                        
+                        <div class="text-center scroll-reveal" style="animation-delay: 1.4s;">
+                            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-brand-blue to-brand-teal hover-glow animate-scale">
+                                <i class="fas fa-handshake text-white text-xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white theme-transition">Trusted Partner</h4>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 theme-transition">Long-term relationships with clients</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 sm:py-32 bg-gray-50 dark:bg-gray-800 theme-transition">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- Section Header -->
-            <div class="mx-auto max-w-2xl text-center mb-16">
-                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl theme-transition">About Us</h2>
-                <p class="mt-4 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">Leading HR solutions in the Maldives with government licensing and proven expertise</p>
+            <div class="mx-auto max-w-2xl text-center mb-16 scroll-reveal">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl theme-transition">
+                    Our <span class="gradient-text">Services</span>
+                </h2>
+                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">
+                    Comprehensive HR solutions tailored to your business needs
+                </p>
+            </div>
+            
+            <!-- Services Grid -->
+            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                <?php foreach ($services as $index => $service): ?>
+                <div class="modern-card group relative overflow-hidden rounded-2xl bg-white dark:bg-gray-900 p-8 hover-lift scroll-reveal theme-transition" style="animation-delay: <?php echo $index * 0.2; ?>s;">
+                    <!-- Service Icon -->
+                    <div class="mb-6">
+                        <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-r from-brand-blue to-brand-teal group-hover:scale-110 transition-transform duration-300">
+                            <i class="<?php echo htmlspecialchars($service['icon_class']); ?> text-white text-xl"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Service Content -->
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 theme-transition">
+                        <?php echo htmlspecialchars($service['category_name']); ?>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed theme-transition">
+                        <?php echo htmlspecialchars($service['category_description']); ?>
+                    </p>
+                    
+                    <!-- Hover Effect -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-brand-blue/5 to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            
+            <!-- Call to Action -->
+            <div class="mt-16 text-center scroll-reveal" style="animation-delay: 1s;">
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 theme-transition">Need Custom Solutions?</h3>
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 theme-transition">Let's discuss how we can help your business grow</p>
+                <a href="#contact" class="btn-primary inline-flex items-center rounded-lg px-8 py-4 text-sm font-semibold text-white shadow-xl hover-lift">
+                    <i class="fas fa-phone mr-2"></i>
+                    Get in Touch
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-24 sm:py-32 bg-white dark:bg-gray-900 theme-transition">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mx-auto max-w-2xl text-center mb-16 scroll-reveal">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl theme-transition">
+                    Our <span class="gradient-text">Portfolio</span>
+                </h2>
+                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">
+                    Successful placements across diverse industries in the Maldives
+                </p>
+            </div>
+            
+            <!-- Portfolio Grid -->
+            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                <?php foreach ($portfolioCategories as $index => $category): ?>
+                <div class="modern-card group relative overflow-hidden rounded-2xl bg-white dark:bg-gray-800 p-8 text-center hover-lift scroll-reveal theme-transition" style="animation-delay: <?php echo $index * 0.2; ?>s;">
+                    <!-- Category Icon -->
+                    <div class="mb-6">
+                        <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-brand-blue to-brand-teal group-hover:scale-110 transition-transform duration-300 animate-scale">
+                            <i class="<?php echo htmlspecialchars($category['icon_class']); ?> text-white text-2xl"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Category Content -->
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3 theme-transition">
+                        <?php echo htmlspecialchars($category['category_name']); ?>
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 theme-transition">
+                        <?php echo htmlspecialchars($category['description']); ?>
+                    </p>
+                    
+                    <!-- Placement Count -->
+                    <div class="mt-6">
+                        <div class="gradient-border p-1 rounded-lg">
+                            <div class="gradient-border-inner px-4 py-2 rounded">
+                                <span class="text-2xl font-bold gradient-text"><?php echo htmlspecialchars($category['total_placements']); ?>+</span>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Successful Placements</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hover Effect -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-brand-blue/5 to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section id="clients" class="py-24 sm:py-32 bg-gray-50 dark:bg-gray-800 theme-transition">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mx-auto max-w-2xl text-center mb-16 scroll-reveal">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl theme-transition">
+                    Our <span class="gradient-text">Clients</span>
+                </h2>
+                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">
+                    Trusted by leading organizations across the Maldives
+                </p>
             </div>
 
-            <!-- About Content -->
-            <div class="mx-auto max-w-5xl">
-                <!-- Company Overview Card -->
-                <div class="overflow-hidden bg-white dark:bg-gray-900 shadow-sm ring-1 ring-gray-900/5 dark:ring-white/10 sm:rounded-lg mb-8 theme-transition">
-                    <div class="px-4 py-6 sm:px-6">
-                        <h3 class="text-base font-semibold leading-7 text-gray-900 dark:text-white theme-transition">Company Overview</h3>
-                        <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500 dark:text-gray-400 theme-transition">Government-licensed HR consultancy in the Republic of Maldives</p>
+            <!-- Client Categories -->
+            <?php 
+            // Group clients by category (using real database structure)
+            $groupedClients = [];
+            foreach ($clients as $client) {
+                $categoryName = $client['category_name'] ?? 'Other';
+                if (!isset($groupedClients[$categoryName])) {
+                    $groupedClients[$categoryName] = [];
+                }
+                $groupedClients[$categoryName][] = $client;
+            }
+            ?>
+
+            <?php if (!empty($groupedClients)): ?>
+            <div class="space-y-12">
+                <?php foreach ($groupedClients as $categoryName => $categoryClients): ?>
+                <div class="scroll-reveal" style="animation-delay: <?php echo array_search($categoryName, array_keys($groupedClients)) * 0.2; ?>s;">
+                    <!-- Category Header -->
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center theme-transition">
+                            <?php 
+                            $categoryIcon = 'fas fa-building';
+                            switch (strtolower($categoryName)) {
+                                case 'construction':
+                                case 'engineering':
+                                case 'construction & engineering':
+                                    $categoryIcon = 'fas fa-building';
+                                    $categoryColor = 'text-brand-blue dark:text-brand-blue-light';
+                                    break;
+                                case 'tourism':
+                                case 'hospitality':
+                                case 'tourism & hospitality':
+                                    $categoryIcon = 'fas fa-hotel';
+                                    $categoryColor = 'text-brand-teal';
+                                    break;
+                                case 'investment':
+                                case 'trading':
+                                case 'services':
+                                case 'investments, services & trading':
+                                    $categoryIcon = 'fas fa-chart-line';
+                                    $categoryColor = 'text-brand-green dark:text-brand-green-light';
+                                    break;
+                                default:
+                                    $categoryIcon = 'fas fa-briefcase';
+                                    $categoryColor = 'text-gray-600 dark:text-gray-400';
+                            }
+                            ?>
+                            <i class="<?php echo $categoryIcon; ?> mr-3 <?php echo $categoryColor; ?>"></i>
+                            <?php echo htmlspecialchars($categoryName); ?>
+                        </h3>
                     </div>
-                    <div class="border-t border-gray-100 dark:border-gray-700">
-                        <dl class="divide-y divide-gray-100 dark:divide-gray-700">
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                                <dt class="text-sm font-medium leading-6 text-gray-900 dark:text-white theme-transition">Mission</dt>
-                                <dd class="mt-1 text-sm leading-6 text-gray-700 dark:text-gray-300 sm:col-span-2 sm:mt-0 theme-transition">
-                                    <?php echo htmlspecialchars($companyInfo['mission'] ?? 'To foster enduring partnerships with organizations by delivering superior recruitment solutions that align with their strategic goals.'); ?>
-                                </dd>
+
+                    <!-- Clients Grid -->
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                        <?php foreach ($categoryClients as $clientIndex => $client): ?>
+                        <div class="modern-card group relative overflow-hidden bg-white dark:bg-gray-900 shadow-sm ring-1 ring-gray-900/5 dark:ring-white/10 rounded-lg hover-lift theme-transition scroll-reveal" style="animation-delay: <?php echo $clientIndex * 0.1; ?>s;">
+                            <div class="p-4">
+                                <?php if (!empty($client['logo_url'])): ?>
+                                <!-- Company Logo -->
+                                <div class="flex h-16 w-full items-center justify-center mb-3 bg-gray-50 dark:bg-gray-800 rounded-md theme-transition">
+                                    <img src="<?php echo htmlspecialchars($client['logo_url']); ?>" 
+                                         alt="<?php echo htmlspecialchars($client['client_name']); ?>" 
+                                         class="h-12 w-auto object-contain">
+                                </div>
+                                <?php else: ?>
+                                <!-- Placeholder for logo -->
+                                <div class="flex h-16 w-full items-center justify-center mb-3 bg-gray-100 dark:bg-gray-700 rounded-md theme-transition">
+                                    <i class="fas fa-building text-2xl text-gray-400 dark:text-gray-500"></i>
+                                </div>
+                                <?php endif; ?>
+
+                                <!-- Company Name -->
+                                <div class="text-center">
+                                    <h4 class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-brand-blue dark:group-hover:text-brand-blue-light transition-colors theme-transition">
+                                        <?php echo htmlspecialchars($client['client_name']); ?>
+                                    </h4>
+                                </div>
                             </div>
-                            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                            
+                            <!-- Hover Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-brand-blue/5 to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-lg"></div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+            <?php else: ?>
+            <!-- Fallback when no clients in database -->
+            <div class="text-center py-12 scroll-reveal">
+                <div class="mx-auto max-w-md">
+                    <i class="fas fa-users text-4xl text-gray-400 dark:text-gray-600 mb-4"></i>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2 theme-transition">Our Growing Network</h3>
+                    <p class="text-gray-600 dark:text-gray-400 theme-transition">We work with leading companies across various industries in the Maldives.</p>
+                </div>
+            </div>
+            <?php endif; ?>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 sm:py-32 bg-white dark:bg-gray-900 theme-transition">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mx-auto max-w-2xl text-center mb-16 scroll-reveal">
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl theme-transition">
+                    Get in <span class="gradient-text">Touch</span>
+                </h2>
+                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">
+                    Ready to find the perfect talent for your organization? Let's discuss your needs
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2">
+                <!-- Contact Information -->
+                <div class="scroll-reveal" style="animation-delay: 0.2s;">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-8 theme-transition">Contact Information</h3>
+                    
+                    <div class="space-y-6">
+                        <!-- Phone -->
+                        <div class="flex items-center">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-blue to-brand-teal">
+                                <i class="fas fa-phone text-white"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Phone</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 theme-transition"><?php echo htmlspecialchars($companyInfo['phone']); ?></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Hotlines -->
+                        <div class="flex items-center">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-teal to-brand-green">
+                                <i class="fas fa-mobile-alt text-white"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Hotlines</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 theme-transition">
+                                    <?php echo htmlspecialchars($companyInfo['hotline1']); ?> • <?php echo htmlspecialchars($companyInfo['hotline2']); ?>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Email -->
+                        <div class="flex items-center">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-green to-brand-blue">
+                                <i class="fas fa-envelope text-white"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Email</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 theme-transition"><?php echo htmlspecialchars($companyInfo['email']); ?></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Address -->
+                        <div class="flex items-start">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-blue to-brand-green">
+                                <i class="fas fa-map-marker-alt text-white"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Address</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 theme-transition"><?php echo htmlspecialchars($companyInfo['address']); ?></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Business Hours -->
+                        <div class="flex items-start">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-teal to-brand-blue">
+                                <i class="fas fa-clock text-white"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Business Hours</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-300 theme-transition whitespace-pre-line"><?php echo htmlspecialchars($companyInfo['business_hours']); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Form -->
+                <div class="scroll-reveal" style="animation-delay: 0.4s;">
+                    <div class="modern-card rounded-2xl bg-white dark:bg-gray-800 p-8 shadow-xl">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6 theme-transition">Send us a Message</h3>
+                        
+                        <!-- Success/Error Messages -->
+                        <?php if ($contactMessage): ?>
+                        <div class="mb-6 bg-brand-green/10 dark:bg-brand-green/20 border border-brand-green/20 dark:border-brand-green/30 rounded-md p-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-brand-green dark:text-brand-green-light"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-brand-green-dark dark:text-brand-green-light"><?php echo htmlspecialchars($contactMessage); ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                        
+                        <?php if ($contactError): ?>
+                        <div class="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-exclamation-circle text-red-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-red-700 dark:text-red-400"><?php echo htmlspecialchars($contactError); ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                        
+                        <form method="POST" class="space-y-6">
+                            <input type="hidden" name="contact_form" value="1">
+                            
+                            <!-- Name -->
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Name *</label>
+                                <input type="text" name="name" id="name" required 
+                                       value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>"
+                                       class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition">
+                            </div>
+                            
+                            <!-- Email -->
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Email *</label>
+                                <input type="email" name="email" id="email" required
+                                       value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>"
+                                       class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition">
+                            </div>
+                            
+                            <!-- Company -->
+                            <div>
+                                <label for="company" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Company</label>
+                                <input type="text" name="company" id="company"
+                                       value="<?php echo isset($_POST['company']) ? htmlspecialchars($_POST['company']) : ''; ?>"
+                                       class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition">
+                            </div>
+                            
+                            <!-- Message -->
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Message *</label>
+                                <textarea name="message" id="message" rows="4" required
+                                          class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition"><?php echo isset($_POST['message']) ? htmlspecialchars($_POST['message']) : ''; ?></textarea>
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <div>
+                                <button type="submit" class="btn-primary w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xl hover-lift focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue">
+                                    <i class="fas fa-paper-plane mr-2"></i>
+                                    Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 dark:bg-black theme-transition">
+        <div class="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8 lg:py-32">
+            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                <!-- Company Info -->
+                <div class="space-y-8">
+                    <div>
+                        <div class="flex items-center">
+                            <img src="images/logo.svg" alt="Sky Border Solutions" class="h-8 w-auto">
+                            <span class="ml-3 text-xl font-bold text-white"><?php echo htmlspecialchars($companyInfo['company_name']); ?></span>
+                        </div>
+                        <p class="mt-4 text-sm leading-6 text-gray-300">
+                            <?php echo htmlspecialchars($companyInfo['tagline']); ?>
+                        </p>
+                        <p class="mt-2 text-sm leading-6 text-gray-400">
+                            Leading HR consultancy and recruitment firm in the Republic of Maldives.
+                        </p>
+                    </div>
+                    
+                    <!-- Social Links -->
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-brand-blue transition-colors">
+                            <span class="sr-only">Facebook</span>
+                            <i class="fab fa-facebook-f text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-brand-teal transition-colors">
+                            <span class="sr-only">LinkedIn</span>
+                            <i class="fab fa-linkedin-in text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-brand-green transition-colors">
+                            <span class="sr-only">Instagram</span>
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-brand-blue transition-colors">
+                            <span class="sr-only">Twitter</span>
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold leading-6 text-white">Navigation</h3>
+                            <ul role="list" class="mt-6 space-y-4">
+                                <li><a href="#home" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Home</a></li>
+                                <li><a href="#about" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">About</a></li>
+                                <li><a href="#services" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Services</a></li>
+                                <li><a href="#portfolio" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Portfolio</a></li>
+                                <li><a href="#clients" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Clients</a></li>
+                                <li><a href="#contact" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div class="mt-10 md:mt-0">
+                            <h3 class="text-sm font-semibold leading-6 text-white">Services</h3>
+                            <ul role="list" class="mt-6 space-y-4">
+                                <?php foreach (array_slice($services, 0, 4) as $service): ?>
+                                <li><span class="text-sm leading-6 text-gray-300"><?php echo htmlspecialchars($service['category_name']); ?></span></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                        <div>
+                            <h3 class="text-sm font-semibold leading-6 text-white">Contact Info</h3>
+                            <ul role="list" class="mt-6 space-y-4">
+                                <li class="text-sm leading-6 text-gray-300">
+                                    <i class="fas fa-phone mr-2 text-brand-blue"></i>
+                                    <?php echo htmlspecialchars($companyInfo['phone']); ?>
+                                </li>
+                                <li class="text-sm leading-6 text-gray-300">
+                                    <i class="fas fa-envelope mr-2 text-brand-teal"></i>
+                                    <?php echo htmlspecialchars($companyInfo['email']); ?>
+                                </li>
+                                <li class="text-sm leading-6 text-gray-300">
+                                    <i class="fas fa-map-marker-alt mr-2 text-brand-green"></i>
+                                    Malé, Maldives
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mt-10 md:mt-0">
+                            <h3 class="text-sm font-semibold leading-6 text-white">Quick Actions</h3>
+                            <ul role="list" class="mt-6 space-y-4">
+                                <li><a href="#contact" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Get Quote</a></li>
+                                <li><a href="admin/" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Admin</a></li>
+                                <li><a href="check-setup.php" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">System Status</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bottom Section -->
+            <div class="mt-16 border-t border-gray-800 pt-8 sm:mt-20 lg:mt-24">
+                <div class="flex flex-col items-center justify-between sm:flex-row">
+                    <p class="text-xs leading-5 text-gray-400">
+                        &copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars($companyInfo['company_name']); ?>. All rights reserved.
+                    </p>
+                    <p class="mt-4 text-xs leading-5 text-gray-400 sm:mt-0">
+                        Government Licensed HR Consultancy • Licensed & Compliant
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
                                 <dt class="text-sm font-medium leading-6 text-gray-900 dark:text-white theme-transition">Vision</dt>
                                 <dd class="mt-1 text-sm leading-6 text-gray-700 dark:text-gray-300 sm:col-span-2 sm:mt-0 theme-transition">
                                     <?php echo htmlspecialchars($companyInfo['vision'] ?? 'To be the most trusted and recognized recruitment company in the Maldives, known for our professionalism, excellence and ability to deliver outstanding outcomes.'); ?>
