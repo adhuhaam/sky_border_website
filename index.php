@@ -470,88 +470,7 @@ if ($_POST && isset($_POST['contact_form'])) {
         </button>
     </div>
 
-    <!-- Enhanced Navigation -->
-    <header class="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm border-b border-gray-200/20 dark:border-gray-700/30 theme-transition">
-        <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="flex h-20 items-center justify-between">
-                <!-- Enhanced Logo -->
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center space-x-3">
-                        <div class="relative">
-                            <img src="images/logo.svg" alt="<?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>" class="h-12 w-auto transition-transform duration-200 hover:scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-r from-brand-blue/20 to-brand-teal/20 rounded-lg blur opacity-0 hover:opacity-100 transition-opacity duration-200"></div>
-                        </div>
-                        <div class="hidden sm:block">
-                            <h1 class="text-lg font-bold bg-gradient-to-r from-brand-blue to-brand-teal bg-clip-text text-transparent">
-                                Sky Border
-                            </h1>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Solutions</p>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Enhanced Desktop Navigation -->
-                <div class="hidden lg:block">
-                    <div class="flex items-center space-x-1">
-                        <a href="#home" class="nav-link relative px-4 py-2 text-sm font-medium text-gray-900 dark:text-white hover:text-brand-blue dark:hover:text-brand-blue-light rounded-lg transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                            <span class="relative z-10">Home</span>
-                        </a>
-                        <a href="#about" class="nav-link relative px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue-light rounded-lg transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                            <span class="relative z-10">About</span>
-                        </a>
-                        <a href="#services" class="nav-link relative px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue-light rounded-lg transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                            <span class="relative z-10">Services</span>
-                        </a>
-                        <a href="#clients" class="nav-link relative px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue-light rounded-lg transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                            <span class="relative z-10">Clients</span>
-                        </a>
-                        <div class="ml-4 flex items-center space-x-3">
-                            <a href="#contact" class="relative inline-flex items-center px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-brand-blue to-brand-teal rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 dark:focus:ring-offset-gray-900">
-                                <span class="relative z-10">Contact</span>
-                                <div class="absolute inset-0 bg-gradient-to-r from-brand-blue-dark to-brand-teal rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-200"></div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Enhanced Mobile menu button -->
-                <div class="lg:hidden">
-                    <button type="button" class="mobile-menu-button relative inline-flex items-center justify-center p-3 rounded-xl bg-gray-50 dark:bg-gray-800/50 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 dark:focus:ring-offset-gray-900 transition-all duration-200">
-                        <span class="sr-only">Open main menu</span>
-                        <i class="fas fa-bars text-lg"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Enhanced Mobile Navigation Menu -->
-            <div class="mobile-menu hidden lg:hidden">
-                <div class="px-4 pt-4 pb-6 space-y-2 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50 theme-transition rounded-b-2xl shadow-xl">
-                    <a href="#home" class="mobile-nav-link flex items-center px-4 py-3 text-base font-medium text-gray-900 dark:text-white hover:text-brand-blue dark:hover:text-brand-blue-light rounded-xl transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                        <i class="fas fa-home w-5 h-5 mr-3"></i>
-                        Home
-                    </a>
-                    <a href="#about" class="mobile-nav-link flex items-center px-4 py-3 text-base font-medium text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue-light rounded-xl transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                        <i class="fas fa-info-circle w-5 h-5 mr-3"></i>
-                        About
-                    </a>
-                    <a href="#services" class="mobile-nav-link flex items-center px-4 py-3 text-base font-medium text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue-light rounded-xl transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                        <i class="fas fa-cogs w-5 h-5 mr-3"></i>
-                        Services
-                    </a>
-                    <a href="#clients" class="mobile-nav-link flex items-center px-4 py-3 text-base font-medium text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue-light rounded-xl transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                        <i class="fas fa-users w-5 h-5 mr-3"></i>
-                        Clients
-                    </a>
-                    <div class="pt-3">
-                        <a href="#contact" class="mobile-nav-link flex items-center justify-center px-4 py-3 text-base font-semibold text-white bg-gradient-to-r from-brand-blue to-brand-teal rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105">
-                            <i class="fas fa-envelope w-5 h-5 mr-3"></i>
-                            Contact Us
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-    </header>
 
     <!-- Enhanced Hero Section with Catalyst Design -->
     <section id="home" class="relative overflow-hidden bg-gradient-to-b from-white via-gray-50/50 to-white dark:from-gray-900 dark:via-gray-800/30 dark:to-gray-900 theme-transition">
@@ -568,23 +487,9 @@ if ($_POST && isset($_POST['contact_form'])) {
         <!-- Main Content -->
         <div class="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8 lg:py-32">
             <div class="text-center">
-                <!-- Status Badges -->
-                <div class="mx-auto mb-10 flex flex-wrap justify-center gap-3 scroll-reveal">
-                    <div class="group relative inline-flex items-center rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm px-4 py-2 text-sm font-medium text-brand-green-dark dark:text-brand-green-light border border-brand-green/20 dark:border-brand-green/30 hover:border-brand-green/40 dark:hover:border-brand-green/50 transition-all duration-300 hover:scale-105">
-                        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-green/5 to-brand-green/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <i class="fas fa-certificate mr-2 text-brand-green"></i>
-                        <span class="relative z-10">Government Licensed</span>
-                    </div>
-                    <div class="group relative inline-flex items-center rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm px-4 py-2 text-sm font-medium text-brand-blue-dark dark:text-brand-blue-light border border-brand-blue/20 dark:border-brand-blue/30 hover:border-brand-blue/40 dark:hover:border-brand-blue/50 transition-all duration-300 hover:scale-105" style="animation-delay: 0.1s;">
-                        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-blue/5 to-brand-blue/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <i class="fas fa-award mr-2 text-brand-blue"></i>
-                        <span class="relative z-10">HR Consulting & Recruitment</span>
-                    </div>
-                </div>
-
                 <!-- Main Heading -->
                 <div class="scroll-reveal" style="animation-delay: 0.2s;">
-                    <h1 class="mx-auto max-w-5xl text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-7xl">
+                    <h1 class="mx-auto max-w-5xl text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-6xl">
                         <span class="block">
                             <span class="bg-gradient-to-r from-brand-blue via-brand-teal to-brand-green bg-clip-text text-transparent animate-pulse">
                                 <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
@@ -612,6 +517,20 @@ if ($_POST && isset($_POST['contact_form'])) {
                     <p class="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-gray-500 dark:text-gray-400">
                         <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
                     </p>
+                </div>
+
+                <!-- Status Badges -->
+                <div class="mx-auto mt-10 mb-6 flex flex-wrap justify-center gap-3 scroll-reveal" style="animation-delay: 0.7s;">
+                    <div class="group relative inline-flex items-center rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm px-4 py-2 text-sm font-medium text-brand-green-dark dark:text-brand-green-light border border-brand-green/20 dark:border-brand-green/30 hover:border-brand-green/40 dark:hover:border-brand-green/50 transition-all duration-300 hover:scale-105">
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-green/5 to-brand-green/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <i class="fas fa-certificate mr-2 text-brand-green"></i>
+                        <span class="relative z-10">Government Licensed</span>
+                    </div>
+                    <div class="group relative inline-flex items-center rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm px-4 py-2 text-sm font-medium text-brand-blue-dark dark:text-brand-blue-light border border-brand-blue/20 dark:border-brand-blue/30 hover:border-brand-blue/40 dark:hover:border-brand-blue/50 transition-all duration-300 hover:scale-105" style="animation-delay: 0.1s;">
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-blue/5 to-brand-blue/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <i class="fas fa-award mr-2 text-brand-blue"></i>
+                        <span class="relative z-10">HR Consulting & Recruitment</span>
+                    </div>
                 </div>
 
                 <!-- Enhanced CTA Buttons -->
