@@ -15,7 +15,7 @@ $teamCount = count($contentManager->getTeamMembers());
 $clientCount = count($contentManager->getClients());
 ?>
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-50">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,12 +23,47 @@ $clientCount = count($contentManager->getClients());
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; }</style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        // Sky Border Solutions Brand Colors
+                        'brand': {
+                            'green-light': '#9BC53D',
+                            'green': '#5CB85C',
+                            'green-dark': '#4A9649',
+                            'blue-light': '#5CB3CC',
+                            'blue': '#2E86AB',
+                            'blue-dark': '#1E5F7A',
+                            'teal': '#4ECDC4',
+                            'gray-light': '#F8FAFC',
+                            'gray': '#64748B',
+                            'gray-dark': '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .theme-transition { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+    </style>
 </head>
-<body class="h-full">
+<body class="h-full bg-gray-50 dark:bg-gray-900 theme-transition">
+    <!-- Dark Mode Toggle -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="theme-toggle" class="p-2 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 theme-transition">
+            <i id="theme-icon" class="fas fa-moon dark:hidden"></i>
+            <i id="theme-icon-dark" class="fas fa-sun hidden dark:block"></i>
+        </button>
+    </div>
+
     <div class="min-h-full">
         <!-- Navigation -->
-        <nav class="bg-white shadow-sm border-b border-gray-200">
+        <nav class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 theme-transition">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <div class="flex items-center">
@@ -68,14 +103,19 @@ $clientCount = count($contentManager->getClients());
                 <div class="flex-1 flex flex-col min-h-0 bg-white border-r border-gray-200">
                     <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                         <nav class="mt-5 flex-1 px-2 space-y-1">
-                            <a href="dashboard.php" class="bg-indigo-50 text-indigo-700 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-tachometer-alt text-indigo-500 mr-3"></i>
+                            <a href="dashboard.php" class="bg-brand-blue/10 text-brand-blue dark:bg-brand-blue-dark/20 dark:text-brand-blue-light group flex items-center px-2 py-2 text-sm font-medium rounded-md theme-transition">
+                                <i class="fas fa-tachometer-alt text-brand-blue dark:text-brand-blue-light mr-3"></i>
                                 Dashboard
                             </a>
                             
                             <a href="company-info.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
                                 <i class="fas fa-building text-gray-400 mr-3"></i>
                                 Company Info
+                            </a>
+                            
+                            <a href="clients.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                                <i class="fas fa-users text-gray-400 mr-3"></i>
+                                Clients
                             </a>
                             
                             <a href="statistics.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
@@ -254,15 +294,54 @@ $clientCount = count($contentManager->getClients());
 
     <!-- Mobile menu button (you can add mobile menu functionality here) -->
     <script>
+        // Dark mode functionality
+        function initTheme() {
+            const darkMode = localStorage.getItem('darkMode') === 'true' || 
+                           (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            
+            if (darkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('darkMode', 'false');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('darkMode', 'true');
+            }
+        }
+
+        // Initialize theme and interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+            
+            // Theme toggle button
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+            
+            console.log('Sky Border Solutions Admin Dashboard Loaded');
+        });
+
         // Auto-refresh dashboard every 5 minutes
         setTimeout(function() {
             window.location.reload();
         }, 300000);
         
-        // Add active states and interactions
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add hover effects and interactions here
-            console.log('Sky Border Solutions Admin Dashboard Loaded');
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+            if (!localStorage.getItem('darkMode')) {
+                if (e.matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }
         });
     </script>
 </body>

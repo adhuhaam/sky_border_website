@@ -24,7 +24,7 @@ if ($_POST) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-50">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,44 +32,79 @@ if ($_POST) {
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; }</style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        // Sky Border Solutions Brand Colors
+                        'brand': {
+                            'green-light': '#9BC53D',
+                            'green': '#5CB85C',
+                            'green-dark': '#4A9649',
+                            'blue-light': '#5CB3CC',
+                            'blue': '#2E86AB',
+                            'blue-dark': '#1E5F7A',
+                            'teal': '#4ECDC4',
+                            'gray-light': '#F8FAFC',
+                            'gray': '#64748B',
+                            'gray-dark': '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .theme-transition { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+    </style>
 </head>
-<body class="h-full">
+<body class="h-full bg-gray-50 dark:bg-gray-900 theme-transition">
+    <!-- Dark Mode Toggle -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="theme-toggle" class="p-2 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 theme-transition">
+            <i id="theme-icon" class="fas fa-moon dark:hidden"></i>
+            <i id="theme-icon-dark" class="fas fa-sun hidden dark:block"></i>
+        </button>
+    </div>
+
     <div class="min-h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
             <!-- Logo -->
             <div class="flex justify-center">
                 <div class="text-center">
                     <img src="../images/logo.svg" alt="Sky Border Solutions" class="h-16 w-auto mx-auto mb-2">
-                    <p class="text-sm text-gray-600">Admin Portal</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 theme-transition">Admin Portal</p>
                 </div>
             </div>
         </div>
 
         <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-            <div class="bg-white py-8 px-4 shadow-lg ring-1 ring-gray-900/5 sm:rounded-lg sm:px-10">
+            <div class="bg-white dark:bg-gray-800 py-8 px-4 shadow-lg ring-1 ring-gray-900/5 dark:ring-white/10 sm:rounded-lg sm:px-10 theme-transition">
                 <form class="space-y-6" method="POST">
                     <div>
-                        <label for="username" class="block text-sm font-medium text-gray-700">Username or Email</label>
+                        <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Username or Email</label>
                         <div class="mt-1 relative">
                             <input id="username" name="username" type="text" required 
-                                   class="appearance-none block w-full px-3 py-2 pl-10 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                   class="appearance-none block w-full px-3 py-2 pl-10 border border-gray-300 dark:border-gray-600 rounded-md placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-brand-blue focus:border-brand-blue sm:text-sm theme-transition"
                                    placeholder="Enter username or email"
                                    value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-user text-gray-400"></i>
+                                <i class="fas fa-user text-gray-400 dark:text-gray-500"></i>
                             </div>
                         </div>
                     </div>
 
                     <div>
-                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Password</label>
                         <div class="mt-1 relative">
                             <input id="password" name="password" type="password" required 
-                                   class="appearance-none block w-full px-3 py-2 pl-10 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                   class="appearance-none block w-full px-3 py-2 pl-10 border border-gray-300 dark:border-gray-600 rounded-md placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-brand-blue focus:border-brand-blue sm:text-sm theme-transition"
                                    placeholder="Enter password">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <i class="fas fa-lock text-gray-400"></i>
+                                <i class="fas fa-lock text-gray-400 dark:text-gray-500"></i>
                             </div>
                         </div>
                     </div>
@@ -99,9 +134,9 @@ if ($_POST) {
                     </div>
 
                     <div>
-                        <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                        <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-brand-blue to-brand-teal hover:from-brand-blue-dark hover:to-brand-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue theme-transition">
                             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                                <i class="fas fa-sign-in-alt text-indigo-500 group-hover:text-indigo-400"></i>
+                                <i class="fas fa-sign-in-alt text-brand-blue-light group-hover:text-white"></i>
                             </span>
                             Sign In
                         </button>
@@ -119,18 +154,18 @@ if ($_POST) {
                     </div>
 
                     <div class="mt-3 text-center">
-                        <div class="text-xs text-gray-500 bg-gray-50 rounded-md p-3">
+                        <div class="text-xs text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 rounded-md p-3 theme-transition">
                             <p><strong>Username:</strong> admin</p>
                             <p><strong>Password:</strong> password</p>
-                            <p class="mt-1 text-red-600">⚠️ Please change default password after login</p>
+                            <p class="mt-1 text-red-600 dark:text-red-400">⚠️ Please change default password after login</p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="mt-8 text-center">
-                <p class="text-sm text-gray-600">
-                    <a href="../index.html" class="font-medium text-indigo-600 hover:text-indigo-500">
+                <p class="text-sm text-gray-600 dark:text-gray-400 theme-transition">
+                    <a href="../index.html" class="font-medium text-brand-blue hover:text-brand-blue-dark dark:text-brand-blue-light dark:hover:text-brand-blue theme-transition">
                         <i class="fas fa-arrow-left mr-1"></i>
                         Back to Website
                     </a>
@@ -140,8 +175,40 @@ if ($_POST) {
     </div>
 
     <script>
-        // Auto-focus on username field
-        document.getElementById('username').focus();
+        // Dark mode functionality
+        function initTheme() {
+            const darkMode = localStorage.getItem('darkMode') === 'true' || 
+                           (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            
+            if (darkMode) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            
+            if (isDark) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('darkMode', 'false');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('darkMode', 'true');
+            }
+        }
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initTheme();
+            
+            // Theme toggle button
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+            
+            // Auto-focus on username field
+            document.getElementById('username').focus();
+        });
         
         // Handle form submission
         document.querySelector('form').addEventListener('submit', function(e) {
@@ -165,6 +232,17 @@ if ($_POST) {
                 button.innerHTML = originalText;
                 button.disabled = false;
             }, 3000);
+        });
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+            if (!localStorage.getItem('darkMode')) {
+                if (e.matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }
         });
     </script>
 </body>

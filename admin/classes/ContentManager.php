@@ -288,28 +288,18 @@ class ContentManager {
     }
     
     // Client Methods
-    public function getClientCategories() {
-        $query = "SELECT * FROM client_categories WHERE is_active = 1 ORDER BY display_order";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    
-    public function getClients($category_id = null) {
-        $query = "SELECT c.*, cc.category_name 
-                  FROM clients c 
-                  LEFT JOIN client_categories cc ON c.category_id = cc.id 
-                  WHERE c.is_active = 1";
+    public function getClients($category = null) {
+        $query = "SELECT * FROM clients";
         
-        if ($category_id) {
-            $query .= " AND c.category_id = :category_id";
+        if ($category) {
+            $query .= " WHERE category = :category";
         }
         
-        $query .= " ORDER BY c.display_order";
+        $query .= " ORDER BY display_order, name";
         
         $stmt = $this->conn->prepare($query);
-        if ($category_id) {
-            $stmt->bindParam(':category_id', $category_id);
+        if ($category) {
+            $stmt->bindParam(':category', $category);
         }
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -323,37 +313,37 @@ class ContentManager {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
-    public function addClient($data) {
-        $query = "INSERT INTO clients (category_id, client_name, company_type, contact_person, email, phone, address, website, description, partnership_start, total_placements, is_featured, display_order) 
-                  VALUES (:category_id, :client_name, :company_type, :contact_person, :email, :phone, :address, :website, :description, :partnership_start, :total_placements, :is_featured, :display_order)";
+    public function addClient($name, $category, $logo_url = '', $display_order = 0) {
+        $query = "INSERT INTO clients (name, category, logo_url, display_order) 
+                  VALUES (:name, :category, :logo_url, :display_order)";
         $stmt = $this->conn->prepare($query);
-        foreach ($data as $key => $value) {
-            $stmt->bindParam(':' . $key, $value);
-        }
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':category', $category);
+        $stmt->bindParam(':logo_url', $logo_url);
+        $stmt->bindParam(':display_order', $display_order);
         return $stmt->execute();
     }
     
-    public function updateClient($id, $data) {
+    public function updateClient($id, $name, $category, $logo_url = '', $display_order = 0) {
         $query = "UPDATE clients SET 
-                  category_id = :category_id,
-                  client_name = :client_name,
-                  company_type = :company_type,
-                  contact_person = :contact_person,
-                  email = :email,
-                  phone = :phone,
-                  address = :address,
-                  website = :website,
-                  description = :description,
-                  partnership_start = :partnership_start,
-                  total_placements = :total_placements,
-                  is_featured = :is_featured,
+                  name = :name,
+                  category = :category,
+                  logo_url = :logo_url,
                   display_order = :display_order
                   WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
-        foreach ($data as $key => $value) {
-            $stmt->bindParam(':' . $key, $value);
-        }
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':category', $category);
+        $stmt->bindParam(':logo_url', $logo_url);
+        $stmt->bindParam(':display_order', $display_order);
+        return $stmt->execute();
+    }
+    
+    public function deleteClient($id) {
+        $query = "DELETE FROM clients WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
     
