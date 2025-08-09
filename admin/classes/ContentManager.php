@@ -128,20 +128,19 @@ class ContentManager {
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
-            if (!empty($result)) {
-                return $result;
-            }
+            // Return actual database results (can be empty array)
+            return $result;
+            
         } catch (Exception $e) {
             error_log("Get service categories error: " . $e->getMessage());
+            // Only return fallback data on database connection errors
+            return [
+                ['id' => 1, 'category_name' => 'Recruitment Services', 'category_description' => 'Source and screen candidates across multiple sectors', 'icon_class' => 'fas fa-user-tie', 'color_theme' => 'indigo'],
+                ['id' => 2, 'category_name' => 'HR Support Services', 'category_description' => 'Comprehensive post-recruitment support and compliance', 'icon_class' => 'fas fa-users-cog', 'color_theme' => 'green'],
+                ['id' => 3, 'category_name' => 'Permits & Visa Processing', 'category_description' => 'Government approvals for legal expatriate employment', 'icon_class' => 'fas fa-passport', 'color_theme' => 'purple'],
+                ['id' => 4, 'category_name' => 'Insurance Services', 'category_description' => 'Comprehensive insurance coverage for expatriate employees', 'icon_class' => 'fas fa-shield-alt', 'color_theme' => 'blue']
+            ];
         }
-        
-        // Fallback data
-        return [
-            ['id' => 1, 'category_name' => 'Recruitment Services', 'category_description' => 'Source and screen candidates across multiple sectors', 'icon_class' => 'fas fa-user-tie', 'color_theme' => 'indigo'],
-            ['id' => 2, 'category_name' => 'HR Support Services', 'category_description' => 'Comprehensive post-recruitment support and compliance', 'icon_class' => 'fas fa-users-cog', 'color_theme' => 'green'],
-            ['id' => 3, 'category_name' => 'Permits & Visa Processing', 'category_description' => 'Government approvals for legal expatriate employment', 'icon_class' => 'fas fa-passport', 'color_theme' => 'purple'],
-            ['id' => 4, 'category_name' => 'Insurance Services', 'category_description' => 'Comprehensive insurance coverage for expatriate employees', 'icon_class' => 'fas fa-shield-alt', 'color_theme' => 'blue']
-        ];
     }
     
     public function addServiceCategory($data) {
@@ -247,19 +246,34 @@ class ContentManager {
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
-            if (!empty($result)) {
-                return $result;
-            }
+            // Return actual database results (can be empty array)
+            return $result;
+            
         } catch (Exception $e) {
             error_log("Get clients error: " . $e->getMessage());
+            // Only return fallback data on database connection errors
+            return [
+                ['id' => 1, 'client_name' => 'Leading Construction Company', 'category_name' => 'Construction & Engineering', 'category_id' => 1, 'logo_url' => '', 'display_order' => 0],
+                ['id' => 2, 'client_name' => 'Luxury Resort & Spa', 'category_name' => 'Tourism & Hospitality', 'category_id' => 2, 'logo_url' => '', 'display_order' => 1],
+                ['id' => 3, 'client_name' => 'Investment Holdings Group', 'category_name' => 'Investments, Services & Trading', 'category_id' => 3, 'logo_url' => '', 'display_order' => 2]
+            ];
         }
-        
-        // Fallback sample data
-        return [
-            ['client_name' => 'Leading Construction Company', 'category_name' => 'Construction & Engineering', 'logo_url' => ''],
-            ['client_name' => 'Luxury Resort & Spa', 'category_name' => 'Tourism & Hospitality', 'logo_url' => ''],
-            ['client_name' => 'Investment Holdings Group', 'category_name' => 'Investments, Services & Trading', 'logo_url' => '']
-        ];
+    }
+    
+    public function getClient($id) {
+        try {
+            $query = "SELECT c.*, cc.category_name 
+                      FROM clients c 
+                      LEFT JOIN client_categories cc ON c.category_id = cc.id 
+                      WHERE c.id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get client error: " . $e->getMessage());
+            return null;
+        }
     }
     
     public function getClientCategories() {
@@ -269,19 +283,18 @@ class ContentManager {
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
-            if (!empty($result)) {
-                return $result;
-            }
+            // Return actual database results (can be empty array)
+            return $result;
+            
         } catch (Exception $e) {
             error_log("Get client categories error: " . $e->getMessage());
+            // Only return fallback data on database connection errors
+            return [
+                ['id' => 1, 'category_name' => 'Construction & Engineering'],
+                ['id' => 2, 'category_name' => 'Tourism & Hospitality'],
+                ['id' => 3, 'category_name' => 'Investments, Services & Trading']
+            ];
         }
-        
-        // Fallback data
-        return [
-            ['id' => 1, 'category_name' => 'Construction & Engineering'],
-            ['id' => 2, 'category_name' => 'Tourism & Hospitality'],
-            ['id' => 3, 'category_name' => 'Investments, Services & Trading']
-        ];
     }
     
     public function addClient($client_name, $category_id, $logo_url = '', $display_order = 0) {
