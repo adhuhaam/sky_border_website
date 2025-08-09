@@ -1,43 +1,75 @@
 # Sky Border Solutions Admin Panel Configuration
+# Updated for Layout System Architecture
+
+# Enable URL rewriting
+RewriteEngine On
 
 # Set index.php as the default directory index
 DirectoryIndex index.php
 
-# Security: Block access to sensitive files
-<Files "*.log">
-    Order allow,deny
-    Deny from all
-</Files>
+# Security Headers
+<IfModule mod_headers.c>
+    # Prevent clickjacking
+    Header always append X-Frame-Options SAMEORIGIN
+    
+    # Prevent MIME type sniffing
+    Header always set X-Content-Type-Options nosniff
+    
+    # Enable XSS protection
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Referrer policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Content Security Policy (adjust as needed)
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' cdn.tailwindcss.com cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' cdn.tailwindcss.com cdnjs.cloudflare.com fonts.googleapis.com; font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self';"
+</IfModule>
 
-<Files "*.sql">
-    Order allow,deny
-    Deny from all
-</Files>
+# Block access to sensitive files and directories
+<FilesMatch "\.(log|sql|ini|conf|config|bak|backup|old|orig|save|swp|tmp)$">
+    Require all denied
+</FilesMatch>
+
+# Block access to layout system files from direct web access
+<FilesMatch "^(layout-helpers|sidebar)\.php$">
+    Require all denied
+</FilesMatch>
+
+# Protect configuration and class directories
+RewriteRule ^(config|classes|includes|layouts|views|database)/ - [F,L]
+
+# Protect backup and temporary files
+RewriteRule \.(bak|backup|old|orig|save|swp|tmp|log)$ - [F,L]
+
+# Block common exploit attempts
+RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} ^.*(\[|\]|\(|\)|<|>|ê|"|;|\?|\*|=$).* [NC,OR]
+RewriteCond %{QUERY_STRING} ^.*(\\x00|\\x04|\\x08|\\x0d|\\x1b|\\x20|\\x3c|\\x3e|\\x7f).* [NC]
+RewriteRule ^(.*)$ - [F,L]
 
 # Force HTTPS if available (uncomment if you have SSL)
-# RewriteEngine On
 # RewriteCond %{HTTPS} off
 # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Block access to config files from web
-<FilesMatch "\.(ini|log|conf)$">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
+# Prevent access to PHP files in views directory (they should only be included)
+RewriteRule ^views/.*\.php$ - [F,L]
 
-# Prevent access to backup files
-<FilesMatch "\.(bak|backup|old|orig|save|swp|tmp)$">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
+# Error pages (optional - create these files if needed)
+ErrorDocument 403 /admin/index.php?error=403
+ErrorDocument 404 /admin/index.php?error=404
+ErrorDocument 500 /admin/index.php?error=500
 
 # Set proper MIME types
 AddType application/javascript .js
 AddType text/css .css
+AddType image/svg+xml .svg
 
 # Enable compression if available
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
 
 # Set cache headers for static assets
@@ -50,4 +82,35 @@ AddType text/css .css
     ExpiresByType image/jpeg "access plus 1 month"
     ExpiresByType image/gif "access plus 1 month"
     ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/ico "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
 </IfModule>
+
+# Performance: Enable browser caching
+<IfModule mod_headers.c>
+    <FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2)$">
+        Header set Cache-Control "public, max-age=31536000"
+    </FilesMatch>
+</IfModule>
+
+# Deny access to version control directories
+RewriteRule ^\.git - [F,L]
+RewriteRule ^\.svn - [F,L]
+
+# Block access to commonly targeted files
+<FilesMatch "(^#.*#|\.(bak|conf|dist|fla|inc|ini|log|psd|sh|sql|sw[op])|~)$">
+    Require all denied
+</FilesMatch>
+
+# Limit file upload size (adjust as needed)
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
+php_value max_execution_time 300
+php_value max_input_vars 3000
+
+# Session security
+php_value session.cookie_httponly 1
+php_value session.cookie_secure 1
+php_value session.use_only_cookies 1
