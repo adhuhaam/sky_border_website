@@ -328,12 +328,12 @@ INSERT IGNORE INTO client_categories (id, category_name, category_description, i
 (3, 'Healthcare Services', 'Hospitals, clinics, and medical facilities', 'fas fa-hospital', 'red', 3),
 (4, 'Investments, Services & Trading', 'Investment firms and service companies', 'fas fa-chart-line', 'green', 4);
 
--- Sample clients
-INSERT IGNORE INTO clients (id, category_id, client_name, company_type, description, is_featured, display_order) VALUES
-(1, 1, 'Leading Construction Company', 'Construction', 'Major infrastructure development partner', TRUE, 1),
-(2, 2, 'Luxury Resort & Spa', 'Hospitality', 'Premium resort hospitality services', TRUE, 2),
-(3, 3, 'Regional Medical Center', 'Healthcare', 'Leading healthcare facility partner', TRUE, 3),
-(4, 4, 'Investment Holdings Group', 'Investment', 'Financial services and investment management', FALSE, 4);
+-- Sample clients (with placeholder logo paths)
+INSERT IGNORE INTO clients (id, category_id, client_name, company_type, description, logo_url, is_featured, display_order) VALUES
+(1, 1, 'Leading Construction Company', 'Construction', 'Major infrastructure development partner', '', TRUE, 1),
+(2, 2, 'Luxury Resort & Spa', 'Hospitality', 'Premium resort hospitality services', '', TRUE, 2),
+(3, 3, 'Regional Medical Center', 'Healthcare', 'Leading healthcare facility partner', '', TRUE, 3),
+(4, 4, 'Investment Holdings Group', 'Investment', 'Financial services and investment management', '', FALSE, 4);
 
 -- Website settings
 INSERT IGNORE INTO website_settings (setting_name, setting_value, setting_description, setting_type) VALUES

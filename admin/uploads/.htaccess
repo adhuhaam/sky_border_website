@@ -1,0 +1,41 @@
+# Sky Border Solutions - Uploads Security
+# Prevent execution of PHP files in uploads directory
+
+# Deny access to PHP files
+<FilesMatch "\.php$">
+    Require all denied
+</FilesMatch>
+
+# Allow only image files
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg)$">
+    Require all granted
+</FilesMatch>
+
+# Prevent directory browsing
+Options -Indexes
+
+# Set proper MIME types for images
+<IfModule mod_mime.c>
+    AddType image/jpeg .jpg .jpeg
+    AddType image/png .png
+    AddType image/gif .gif
+    AddType image/webp .webp
+    AddType image/svg+xml .svg
+</IfModule>
+
+# Security headers for uploaded files
+<IfModule mod_headers.c>
+    # Prevent XSS attacks
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    
+    # Cache images for better performance
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg)$">
+        Header set Cache-Control "public, max-age=2592000"
+        Header set Expires "access plus 1 month"
+    </FilesMatch>
+</IfModule>
+
+# File size limits (adjust as needed)
+php_value upload_max_filesize 5M
+php_value post_max_size 5M

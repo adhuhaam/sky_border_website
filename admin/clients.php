@@ -6,6 +6,7 @@
 
 require_once 'classes/Auth.php';
 require_once 'classes/ContentManager.php';
+require_once 'classes/FileUploader.php';
 require_once 'includes/layout-helpers.php';
 
 $auth = new Auth();
@@ -24,15 +25,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['add_client'])) {
         $client_name = trim($_POST['client_name'] ?? '');
         $category_id = (int)($_POST['category_id'] ?? 0);
-        $logo_url = trim($_POST['logo_url'] ?? '');
         $display_order = (int)($_POST['display_order'] ?? 0);
+        $logo_url = '';
         
         if (!empty($client_name)) {
-            if ($contentManager->addClient($client_name, $category_id, $logo_url, $display_order)) {
-                $success = 'Client added successfully!';
-                $action = 'list';
-            } else {
-                $error = 'Failed to add client. Please try again.';
+            try {
+                // Handle logo upload if file is provided
+                if (isset($_FILES['logo_file']) && $_FILES['logo_file']['error'] === UPLOAD_ERR_OK) {
+                    $uploader = new FileUploader();
+                    $logo_url = $uploader->upload('logo_file', 'client_');
+                }
+                
+                if ($contentManager->addClient($client_name, $category_id, $logo_url, $display_order)) {
+                    $success = 'Client added successfully!';
+                    $action = 'list';
+                } else {
+                    // If database insert failed and file was uploaded, clean up the file
+                    if (!empty($logo_url)) {
+                        $uploader = new FileUploader();
+                        $uploader->delete($logo_url);
+                    }
+                    $error = 'Failed to add client. Please try again.';
+                }
+            } catch (Exception $e) {
+                $error = 'Upload error: ' . $e->getMessage();
             }
         } else {
             $error = 'Client name is required.';
@@ -43,15 +59,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id = (int)($_POST['client_id'] ?? 0);
         $client_name = trim($_POST['client_name'] ?? '');
         $category_id = (int)($_POST['category_id'] ?? 0);
-        $logo_url = trim($_POST['logo_url'] ?? '');
         $display_order = (int)($_POST['display_order'] ?? 0);
         
         if (!empty($client_name) && $id > 0) {
-            if ($contentManager->updateClient($id, $client_name, $category_id, $logo_url, $display_order)) {
-                $success = 'Client updated successfully!';
-                $action = 'list';
-            } else {
-                $error = 'Failed to update client. Please try again.';
+            try {
+                // Get current client data to preserve existing logo if no new upload
+                $currentClient = $contentManager->getClient($id);
+                $logo_url = $currentClient['logo_url'] ?? '';
+                $old_logo_url = $logo_url;
+                
+                // Handle logo upload if new file is provided
+                if (isset($_FILES['logo_file']) && $_FILES['logo_file']['error'] === UPLOAD_ERR_OK) {
+                    $uploader = new FileUploader();
+                    $new_logo_url = $uploader->upload('logo_file', 'client_');
+                    
+                    // If upload successful, update logo_url and mark old file for deletion
+                    $logo_url = $new_logo_url;
+                }
+                
+                if ($contentManager->updateClient($id, $client_name, $category_id, $logo_url, $display_order)) {
+                    // If update successful and we uploaded a new logo, delete the old one
+                    if (isset($new_logo_url) && !empty($old_logo_url) && $old_logo_url !== $logo_url) {
+                        $uploader = new FileUploader();
+                        $uploader->delete($old_logo_url);
+                    }
+                    
+                    $success = 'Client updated successfully!';
+                    $action = 'list';
+                } else {
+                    // If database update failed and we uploaded a new file, clean up the new file
+                    if (isset($new_logo_url)) {
+                        $uploader = new FileUploader();
+                        $uploader->delete($new_logo_url);
+                    }
+                    $error = 'Failed to update client. Please try again.';
+                }
+            } catch (Exception $e) {
+                $error = 'Upload error: ' . $e->getMessage();
             }
         } else {
             $error = 'Client name is required.';
@@ -61,11 +105,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['delete_client'])) {
         $id = (int)($_POST['client_id'] ?? 0);
         if ($id > 0) {
-            if ($contentManager->deleteClient($id)) {
-                $success = 'Client deleted successfully!';
-                $action = 'list';
-            } else {
-                $error = 'Failed to delete client. Please try again.';
+            try {
+                // Get client data to check for logo file
+                $clientData = $contentManager->getClient($id);
+                
+                if ($contentManager->deleteClient($id)) {
+                    // If deletion successful and client had a logo, delete the file
+                    if (!empty($clientData['logo_url'])) {
+                        $uploader = new FileUploader();
+                        $uploader->delete($clientData['logo_url']);
+                    }
+                    
+                    $success = 'Client deleted successfully!';
+                    $action = 'list';
+                } else {
+                    $error = 'Failed to delete client. Please try again.';
+                }
+            } catch (Exception $e) {
+                $error = 'Error deleting client: ' . $e->getMessage();
             }
         }
     }

@@ -1209,9 +1209,18 @@ if ($_POST && isset($_POST['contact_form'])) {
                                 <?php if (!empty($client['logo_url'])): ?>
                                 <!-- Company Logo -->
                                 <div class="flex h-16 w-full items-center justify-center mb-3 bg-gray-50 dark:bg-gray-800 rounded-md theme-transition">
-                                    <img src="<?php echo htmlspecialchars($client['logo_url']); ?>" 
+                                    <?php 
+                                    // Handle both uploaded files and external URLs
+                                    $logoSrc = $client['logo_url'];
+                                    if (!filter_var($logoSrc, FILTER_VALIDATE_URL)) {
+                                        // It's a local file path, prepend admin directory
+                                        $logoSrc = 'admin/' . ltrim($logoSrc, '/');
+                                    }
+                                    ?>
+                                    <img src="<?php echo htmlspecialchars($logoSrc); ?>" 
                                          alt="<?php echo htmlspecialchars($client['client_name']); ?>" 
-                                         class="h-12 w-auto object-contain">
+                                         class="h-12 w-auto object-contain"
+                                         onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=&quot;fas fa-building text-2xl text-gray-400 dark:text-gray-500&quot;></i>';">
                                 </div>
                                 <?php else: ?>
                                 <!-- Placeholder for logo -->
@@ -1608,9 +1617,18 @@ if ($_POST && isset($_POST['contact_form'])) {
                                 <?php if (!empty($client['logo_url'])): ?>
                                 <!-- Company Logo -->
                                 <div class="flex h-16 w-full items-center justify-center mb-3 bg-gray-50 dark:bg-gray-800 rounded-md theme-transition">
-                                    <img src="<?php echo htmlspecialchars($client['logo_url']); ?>" 
+                                    <?php 
+                                    // Handle both uploaded files and external URLs
+                                    $logoSrc = $client['logo_url'];
+                                    if (!filter_var($logoSrc, FILTER_VALIDATE_URL)) {
+                                        // It's a local file path, prepend admin directory
+                                        $logoSrc = 'admin/' . ltrim($logoSrc, '/');
+                                    }
+                                    ?>
+                                    <img src="<?php echo htmlspecialchars($logoSrc); ?>" 
                                          alt="<?php echo htmlspecialchars($client['client_name']); ?>" 
-                                         class="h-12 w-auto object-contain">
+                                         class="h-12 w-auto object-contain"
+                                         onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=&quot;fas fa-building text-2xl text-gray-400 dark:text-gray-500&quot;></i>';">
                                 </div>
                                 <?php else: ?>
                                 <!-- Placeholder for logo -->
