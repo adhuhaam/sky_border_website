@@ -188,6 +188,14 @@ if ($_POST && isset($_POST['contact_form'])) {
             -webkit-text-fill-color: transparent; 
             background-clip: text; 
         }
+        .gradient-text-animated {
+            background: linear-gradient(45deg, #2E86AB, #4ECDC4, #5CB85C, #9BC53D, #2E86AB);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-flow 3s ease-in-out infinite;
+        }
         .gradient-border {
             background: linear-gradient(135deg, #2E86AB, #4ECDC4, #5CB85C);
             border-radius: 0.75rem;
@@ -230,6 +238,11 @@ if ($_POST && isset($_POST['contact_form'])) {
         @keyframes shimmer {
             0% { background-position: -200% 0; }
             100% { background-position: 200% 0; }
+        }
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         @keyframes ripple-animation {
             to {
@@ -464,17 +477,10 @@ if ($_POST && isset($_POST['contact_form'])) {
                 </div>
 
                 <!-- Enhanced Main Heading -->
-                <h1 class="mx-auto max-w-4xl text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-7xl theme-transition scroll-reveal animate-fadeInUp" style="animation-delay: 0.4s;">
-                    <?php 
-                    $companyName = $companyInfo['company_name'] ?? 'Sky Border Solutions';
-                    $nameParts = explode(' ', $companyName);
-                    if (count($nameParts) >= 2) {
-                        echo htmlspecialchars(implode(' ', array_slice($nameParts, 0, -1))) . ' ';
-                        echo '<span class="gradient-text animate-shimmer">' . htmlspecialchars(end($nameParts)) . '</span>';
-                    } else {
-                        echo '<span class="gradient-text animate-shimmer">' . htmlspecialchars($companyName) . '</span>';
-                    }
-                    ?>
+                <h1 class="mx-auto max-w-4xl text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl theme-transition scroll-reveal animate-fadeInUp" style="animation-delay: 0.4s;">
+                    <span class="gradient-text-animated">
+                        <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
+                    </span>
                 </h1>
 
                 <!-- Enhanced Tagline -->
@@ -626,48 +632,316 @@ if ($_POST && isset($_POST['contact_form'])) {
     <section id="services" class="py-24 sm:py-32 bg-gray-50 dark:bg-gray-800 theme-transition">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- Section Header -->
-            <div class="mx-auto max-w-2xl text-center mb-16 scroll-reveal">
-                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl theme-transition">
-                    Our <span class="gradient-text">Services</span>
+            <div class="mx-auto max-w-3xl text-center mb-20 scroll-reveal">
+                <h2 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl theme-transition">
+                    Our <span class="gradient-text-animated">Services</span>
                 </h2>
-                <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">
-                    Comprehensive HR solutions tailored to your business needs
+                <p class="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-300 theme-transition">
+                    Comprehensive HR solutions tailored to your business needs across the Maldives
                 </p>
+                <div class="mt-8 h-1 w-24 bg-gradient-to-r from-brand-blue to-brand-teal mx-auto rounded-full"></div>
             </div>
             
-            <!-- Services Grid -->
-            <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                <?php foreach ($services as $index => $service): ?>
-                <div class="modern-card group relative overflow-hidden rounded-2xl bg-white dark:bg-gray-900 p-8 hover-lift scroll-reveal theme-transition" style="animation-delay: <?php echo $index * 0.2; ?>s;">
-                    <!-- Service Icon -->
-                    <div class="mb-6">
-                        <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-r from-brand-blue to-brand-teal group-hover:scale-110 transition-transform duration-300">
-                            <i class="<?php echo htmlspecialchars($service['icon_class']); ?> text-white text-xl"></i>
+            <!-- Main Services Grid -->
+            <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 xl:grid-cols-2 mb-20">
+                
+                <!-- Recruitment Services -->
+                <div class="modern-card group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 p-8 hover-lift scroll-reveal theme-transition" style="animation-delay: 0.1s;">
+                    <div class="flex items-center mb-6">
+                        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-brand-blue to-brand-teal group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-user-tie text-white text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">Recruitment Services</h3>
+                            <p class="text-brand-blue dark:text-brand-blue-light font-medium">End-to-end talent acquisition</p>
                         </div>
                     </div>
                     
-                    <!-- Service Content -->
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 theme-transition">
-                        <?php echo htmlspecialchars($service['category_name']); ?>
-                    </h3>
-                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed theme-transition">
-                        <?php echo htmlspecialchars($service['category_description']); ?>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 theme-transition">
+                        Sky Border Solution offers customized recruitment solutions for employers across Maldives. We source and screen candidates ranging from professional specialists to semi-skilled laborers, based on client needs.
                     </p>
                     
+                    <div class="space-y-4">
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-brand-green mr-3"></i>
+                            Wide database and strong international links
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-brand-green mr-3"></i>
+                            Timely placements and ethical recruitment practices
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-brand-green mr-3"></i>
+                            Professional specialists to semi-skilled laborers
+                        </div>
+                    </div>
+                    
                     <!-- Hover Effect -->
-                    <div class="absolute inset-0 bg-gradient-to-r from-brand-blue/5 to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-brand-blue/5 to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
                 </div>
-                <?php endforeach; ?>
+
+                <!-- HR Support Services -->
+                <div class="modern-card group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 p-8 hover-lift scroll-reveal theme-transition" style="animation-delay: 0.2s;">
+                    <div class="flex items-center mb-6">
+                        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-brand-teal to-brand-green group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-users-cog text-white text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">HR Support Services</h3>
+                            <p class="text-brand-teal font-medium">Comprehensive post-recruitment support</p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 theme-transition">
+                        We deliver comprehensive post-recruitment support tailored to ensure expatriate employees are onboarded efficiently and in full compliance with Maldivian labour and immigration laws.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-brand-teal mr-3"></i>
+                            Employee Documentation & Compliance
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-brand-teal mr-3"></i>
+                            Medical Clearance Coordination
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-brand-teal mr-3"></i>
+                            Bank Account Opening & Orientation
+                        </div>
+                    </div>
+                    
+                    <!-- Hover Effect -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-brand-teal/5 to-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
+                </div>
+
+                <!-- Permits & Visa Processing -->
+                <div class="modern-card group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 p-8 hover-lift scroll-reveal theme-transition" style="animation-delay: 0.3s;">
+                    <div class="flex items-center mb-6">
+                        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-brand-green to-brand-blue group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-passport text-white text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">Permits & Visa Processing</h3>
+                            <p class="text-brand-green dark:text-brand-green-light font-medium">Government approvals & compliance</p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 theme-transition">
+                        We oversee the full spectrum of government approvals required for legal expatriate employment, in close coordination with the Ministry of Economic Development and Maldives Immigration.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-brand-green mr-3"></i>
+                            Employment Quotas & Work Permit Applications
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-brand-green mr-3"></i>
+                            Visa Endorsement & Processing
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-brand-green mr-3"></i>
+                            Renewals, Transfers & Cancellations
+                        </div>
+                    </div>
+                    
+                    <!-- Hover Effect -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-brand-green/5 to-brand-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
+                </div>
+
+                <!-- Insurance Services -->
+                <div class="modern-card group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 p-8 hover-lift scroll-reveal theme-transition" style="animation-delay: 0.4s;">
+                    <div class="flex items-center mb-6">
+                        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-purple-500 to-brand-blue group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-shield-alt text-white text-2xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">Insurance Services</h3>
+                            <p class="text-purple-600 dark:text-purple-400 font-medium">Comprehensive coverage solutions</p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 theme-transition">
+                        End-to-end support in securing and managing comprehensive insurance coverage for expatriate employees, in line with mandatory requirements set forth by Maldives Immigration.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-purple-500 mr-3"></i>
+                            Work Visa Medical Insurance (Mandatory)
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-purple-500 mr-3"></i>
+                            Emergency care and hospitalization
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-check-circle text-purple-500 mr-3"></i>
+                            Work-related injury protection
+                        </div>
+                    </div>
+                    
+                    <!-- Hover Effect -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-brand-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
+                </div>
+            </div>
+            
+            <!-- Industries & Positions Section -->
+            <div class="mt-24 scroll-reveal" style="animation-delay: 0.6s;">
+                <div class="text-center mb-16">
+                    <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 theme-transition">
+                        Industries & <span class="gradient-text">Positions We Cover</span>
+                    </h3>
+                    <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto theme-transition">
+                        From professional specialists to skilled laborers across diverse sectors
+                    </p>
+                </div>
+
+                <!-- Industries Grid -->
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    
+                    <!-- Construction & Engineering -->
+                    <div class="modern-card bg-white dark:bg-gray-900 rounded-2xl p-6 hover-lift scroll-reveal theme-transition" style="animation-delay: 0.7s;">
+                        <div class="flex items-center mb-4">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-amber-500 to-orange-500">
+                                <i class="fas fa-hard-hat text-white"></i>
+                            </div>
+                            <h4 class="ml-3 text-lg font-semibold text-gray-900 dark:text-white theme-transition">Construction & Engineering</h4>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-900/20 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-400">Carpenter</span>
+                                <span class="inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-900/20 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-400">Mason</span>
+                                <span class="inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-900/20 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-400">Electrician</span>
+                                <span class="inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-900/20 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-400">Welder</span>
+                                <span class="inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-900/20 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-400">Civil Engineer</span>
+                                <span class="inline-flex items-center rounded-full bg-amber-100 dark:bg-amber-900/20 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:text-amber-400">Project Manager</span>
+                                <span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-400">+11 more</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Healthcare -->
+                    <div class="modern-card bg-white dark:bg-gray-900 rounded-2xl p-6 hover-lift scroll-reveal theme-transition" style="animation-delay: 0.8s;">
+                        <div class="flex items-center mb-4">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500">
+                                <i class="fas fa-user-md text-white"></i>
+                            </div>
+                            <h4 class="ml-3 text-lg font-semibold text-gray-900 dark:text-white theme-transition">Healthcare</h4>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-900/20 px-2.5 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-400">General Practitioners</span>
+                                <span class="inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-900/20 px-2.5 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-400">Nurses</span>
+                                <span class="inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-900/20 px-2.5 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-400">Surgeons</span>
+                                <span class="inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-900/20 px-2.5 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-400">Pharmacists</span>
+                                <span class="inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-900/20 px-2.5 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-400">Physiotherapists</span>
+                                <span class="inline-flex items-center rounded-full bg-emerald-100 dark:bg-emerald-900/20 px-2.5 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-400">Radiologists</span>
+                                <span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-400">+12 more</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tourism & Hospitality -->
+                    <div class="modern-card bg-white dark:bg-gray-900 rounded-2xl p-6 hover-lift scroll-reveal theme-transition" style="animation-delay: 0.9s;">
+                        <div class="flex items-center mb-4">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500">
+                                <i class="fas fa-concierge-bell text-white"></i>
+                            </div>
+                            <h4 class="ml-3 text-lg font-semibold text-gray-900 dark:text-white theme-transition">Tourism & Hospitality</h4>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/20 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-400">Head Chefs</span>
+                                <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/20 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-400">Spa Therapists</span>
+                                <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/20 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-400">Bartenders</span>
+                                <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/20 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-400">Resort Managers</span>
+                                <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/20 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-400">Diving Instructors</span>
+                                <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/20 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-400">Boat Captains</span>
+                                <span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-400">+15 more</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Industries -->
+                    <div class="modern-card bg-white dark:bg-gray-900 rounded-2xl p-6 hover-lift scroll-reveal theme-transition" style="animation-delay: 1.0s;">
+                        <div class="flex items-center mb-4">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-violet-500 to-purple-500">
+                                <i class="fas fa-briefcase text-white"></i>
+                            </div>
+                            <h4 class="ml-3 text-lg font-semibold text-gray-900 dark:text-white theme-transition">Administration & Office</h4>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="inline-flex items-center rounded-full bg-violet-100 dark:bg-violet-900/20 px-2.5 py-0.5 text-xs font-medium text-violet-800 dark:text-violet-400">HR Assistants</span>
+                                <span class="inline-flex items-center rounded-full bg-violet-100 dark:bg-violet-900/20 px-2.5 py-0.5 text-xs font-medium text-violet-800 dark:text-violet-400">Secretaries</span>
+                                <span class="inline-flex items-center rounded-full bg-violet-100 dark:bg-violet-900/20 px-2.5 py-0.5 text-xs font-medium text-violet-800 dark:text-violet-400">Admin Officers</span>
+                                <span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-400">+6 more</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modern-card bg-white dark:bg-gray-900 rounded-2xl p-6 hover-lift scroll-reveal theme-transition" style="animation-delay: 1.1s;">
+                        <div class="flex items-center mb-4">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-rose-500 to-pink-500">
+                                <i class="fas fa-truck text-white"></i>
+                            </div>
+                            <h4 class="ml-3 text-lg font-semibold text-gray-900 dark:text-white theme-transition">Transport & Logistics</h4>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="inline-flex items-center rounded-full bg-rose-100 dark:bg-rose-900/20 px-2.5 py-0.5 text-xs font-medium text-rose-800 dark:text-rose-400">Heavy Vehicle Drivers</span>
+                                <span class="inline-flex items-center rounded-full bg-rose-100 dark:bg-rose-900/20 px-2.5 py-0.5 text-xs font-medium text-rose-800 dark:text-rose-400">Warehouse Assistants</span>
+                                <span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-400">+6 more</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modern-card bg-white dark:bg-gray-900 rounded-2xl p-6 hover-lift scroll-reveal theme-transition" style="animation-delay: 1.2s;">
+                        <div class="flex items-center mb-4">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-indigo-500 to-blue-500">
+                                <i class="fas fa-graduation-cap text-white"></i>
+                            </div>
+                            <h4 class="ml-3 text-lg font-semibold text-gray-900 dark:text-white theme-transition">Education & More</h4>
+                        </div>
+                        <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="inline-flex items-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 px-2.5 py-0.5 text-xs font-medium text-indigo-800 dark:text-indigo-400">Teachers</span>
+                                <span class="inline-flex items-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 px-2.5 py-0.5 text-xs font-medium text-indigo-800 dark:text-indigo-400">Retail & Customer Service</span>
+                                <span class="inline-flex items-center rounded-full bg-indigo-100 dark:bg-indigo-900/20 px-2.5 py-0.5 text-xs font-medium text-indigo-800 dark:text-indigo-400">Facility Management</span>
+                                <span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-400">Many more</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Roles Notice -->
+                <div class="mt-12 text-center scroll-reveal" style="animation-delay: 1.3s;">
+                    <div class="modern-card bg-gradient-to-r from-brand-blue/10 to-brand-teal/10 dark:from-brand-blue/20 dark:to-brand-teal/20 rounded-2xl p-6 max-w-2xl mx-auto">
+                        <p class="text-gray-700 dark:text-gray-300 theme-transition">
+                            <i class="fas fa-info-circle text-brand-blue mr-2"></i>
+                            <strong>Additional roles available upon request</strong>, including both skilled and unskilled labour tailored to specific project or business needs.
+                        </p>
+                    </div>
+                </div>
             </div>
             
             <!-- Call to Action -->
-            <div class="mt-16 text-center scroll-reveal" style="animation-delay: 1s;">
-                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 theme-transition">Need Custom Solutions?</h3>
-                <p class="text-lg text-gray-600 dark:text-gray-300 mb-8 theme-transition">Let's discuss how we can help your business grow</p>
-                <a href="#contact" class="btn-primary inline-flex items-center rounded-lg px-8 py-4 text-sm font-semibold text-white shadow-xl hover-lift">
-                    <i class="fas fa-phone mr-2"></i>
-                    Get in Touch
-                </a>
+            <div class="mt-20 text-center scroll-reveal" style="animation-delay: 1.4s;">
+                <div class="modern-card bg-white dark:bg-gray-900 rounded-3xl p-8 max-w-4xl mx-auto">
+                    <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 theme-transition">Ready to Build Your Team?</h3>
+                    <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 theme-transition">Let's discuss how we can help you find the perfect talent for your organization</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="#contact" class="btn-primary inline-flex items-center rounded-lg px-8 py-4 text-sm font-semibold text-white shadow-xl hover-lift">
+                            <i class="fas fa-phone mr-2"></i>
+                            Get in Touch
+                        </a>
+                        <a href="https://skybordersolutions.com/profile.pdf" target="_blank" class="modern-card inline-flex items-center rounded-lg px-8 py-4 text-sm font-semibold text-gray-900 dark:text-white hover-lift">
+                            <i class="fas fa-download mr-2"></i>
+                            Download Company Profile
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
