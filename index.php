@@ -158,15 +158,19 @@ if ($_POST && isset($_POST['contact_form'])) {
     <meta name="description" content="<?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in Maldives. Government-licensed professional workforce solutions.'); ?>">
     
     <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com" defer></script>
     
     <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
     
     <!-- Google Fonts - Inter (same as Catalyst) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Preload critical resources -->
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//cdn.tailwindcss.com">
     
     <style>
         body { 
@@ -343,6 +347,11 @@ if ($_POST && isset($_POST['contact_form'])) {
             transform: translateY(0);
         }
         
+        /* Ensure immediate visibility for elements with animation-delay */
+        .scroll-reveal.revealed[style*="animation-delay"] {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
         /* Parallax Background */
         .parallax {
             background-attachment: fixed;
@@ -478,26 +487,26 @@ if ($_POST && isset($_POST['contact_form'])) {
                 </div>
 
                 <!-- Enhanced Main Heading -->
-                <h1 class="mx-auto max-w-4xl text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl theme-transition scroll-reveal animate-fadeInUp" style="animation-delay: 0.4s;">
+                <h1 class="mx-auto max-w-4xl text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl theme-transition scroll-reveal" style="animation-delay: 0.4s;">
                     <span class="gradient-text-animated">
                         <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
                     </span>
                 </h1>
 
                 <!-- Enhanced Tagline -->
-                <p class="mx-auto mt-8 max-w-2xl text-xl leading-8 text-gray-600 dark:text-gray-300 theme-transition scroll-reveal animate-fadeInUp" style="animation-delay: 0.6s;">
+                <p class="mx-auto mt-8 max-w-2xl text-xl leading-8 text-gray-600 dark:text-gray-300 theme-transition scroll-reveal" style="animation-delay: 0.6s;">
                     <i class="fas fa-quote-left text-brand-blue/60 mr-2"></i>
                     <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
                     <i class="fas fa-quote-right text-brand-blue/60 ml-2"></i>
                 </p>
 
                 <!-- Enhanced Description -->
-                <p class="mx-auto mt-8 max-w-3xl text-lg leading-8 text-gray-500 dark:text-gray-400 theme-transition scroll-reveal animate-fadeInUp" style="animation-delay: 0.8s;">
+                <p class="mx-auto mt-8 max-w-3xl text-lg leading-8 text-gray-500 dark:text-gray-400 theme-transition scroll-reveal" style="animation-delay: 0.8s;">
                     <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
                 </p>
 
                 <!-- Enhanced CTA Buttons -->
-                <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 scroll-reveal animate-fadeInUp" style="animation-delay: 1s;">
+                <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 scroll-reveal" style="animation-delay: 1s;">
                     <a href="#contact" class="btn-primary rounded-lg px-8 py-4 text-sm font-semibold text-white shadow-xl hover-lift focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue">
                         <i class="fas fa-comments mr-2"></i>
                         Get Started
@@ -509,10 +518,10 @@ if ($_POST && isset($_POST['contact_form'])) {
                 </div>
 
                 <!-- Enhanced Stats -->
-                <div class="mx-auto mt-20 max-w-5xl scroll-reveal animate-fadeInUp" style="animation-delay: 1.2s;">
+                <div class="mx-auto mt-20 max-w-5xl scroll-reveal" style="animation-delay: 1.2s;">
                     <div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
                         <?php foreach ($stats as $index => $stat): ?>
-                        <div class="modern-card bg-white dark:bg-gray-800 px-6 py-8 text-center hover-lift theme-transition animate-fadeInUp" style="animation-delay: <?php echo 1.4 + ($index * 0.2); ?>s;">
+                        <div class="modern-card bg-white dark:bg-gray-800 px-6 py-8 text-center hover-lift theme-transition scroll-reveal" style="animation-delay: <?php echo 1.4 + ($index * 0.2); ?>s;">
                             <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-brand-blue to-brand-teal animate-scale">
                                 <i class="fas fa-<?php 
                                     switch($stat['stat_name']) {
@@ -1513,7 +1522,7 @@ if ($_POST && isset($_POST['contact_form'])) {
             <div class="mt-16 border-t border-gray-800 pt-8 sm:mt-20 lg:mt-24">
                 <div class="flex flex-col items-center justify-between sm:flex-row">
                     <p class="text-xs leading-5 text-gray-400">
-                        &copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars($companyInfo['company_name']); ?>. All rights reserved.
+                        &copy; <span id="year"><?php echo date('Y'); ?></span> <?php echo htmlspecialchars($companyInfo['company_name']); ?>. All rights reserved.
                     </p>
                     <p class="mt-4 text-xs leading-5 text-gray-400 sm:mt-0">
                         Government Licensed HR Consultancy • Licensed & Compliant
@@ -1548,60 +1557,82 @@ if ($_POST && isset($_POST['contact_form'])) {
         
         document.addEventListener('DOMContentLoaded', function() {
             // Theme toggle button
-            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', toggleTheme);
+            }
             
             // Update footer year
-            document.getElementById('year').textContent = new Date().getFullYear();
+            const yearElement = document.getElementById('year');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
 
             // Mobile menu toggle
             const mobileMenuButton = document.querySelector('.mobile-menu-button');
             const mobileMenu = document.querySelector('.mobile-menu');
             
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
 
             // Navigation functionality
             document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
                 link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    
-                    if (targetElement) {
-                        const headerOffset = 80; // Account for fixed header
-                        const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
                         
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                        
-                        // Close mobile menu after clicking
-                        mobileMenu.classList.add('hidden');
+                        if (targetElement) {
+                            const headerOffset = 80; // Account for fixed header
+                            const elementPosition = targetElement.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                            
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Close mobile menu after clicking
+                            if (mobileMenu) {
+                                mobileMenu.classList.add('hidden');
+                            }
+                        }
                     }
                 });
             });
 
-            // Scroll animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
+            // Scroll animations with fallback
+            if ('IntersectionObserver' in window) {
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-fadeInUp');
-                    }
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                            // Unobserve once revealed to prevent multiple triggers
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, observerOptions);
+
+                // Observe all scroll-reveal elements
+                document.querySelectorAll('.scroll-reveal').forEach(el => {
+                    observer.observe(el);
                 });
-            }, observerOptions);
-
-            // Observe all scroll-reveal elements
-            document.querySelectorAll('.scroll-reveal').forEach(el => {
-                observer.observe(el);
-            });
+            } else {
+                // Fallback: immediately show all scroll-reveal elements
+                document.querySelectorAll('.scroll-reveal').forEach(el => {
+                    el.classList.add('revealed');
+                });
+            }
         });
     </script>
 
