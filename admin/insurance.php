@@ -162,33 +162,33 @@ require_once 'layouts/admin.php';
     <?php endif; ?>
 
     <!-- Enhanced Page Header -->
-    <div class="mb-8">
-        <div class="sm:flex sm:items-center sm:justify-between">
-            <div>
+    <div class="mb-6 admin-header">
+        <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+            <div class="flex-1 min-w-0">
                 <div class="flex items-center space-x-3 mb-2">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500">
-                        <i class="fas fa-shield-alt text-white text-lg"></i>
+                    <div class="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 flex-shrink-0">
+                        <i class="fas fa-shield-alt text-white text-base sm:text-lg"></i>
                     </div>
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Insurance Providers</h1>
+                    <h1 class="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white truncate">Insurance Providers</h1>
                 </div>
-                <p class="text-sm text-gray-600 dark:text-gray-400">Manage insurance provider companies and their logos</p>
-                <div class="mt-2 flex items-center space-x-4 text-xs">
-                    <span class="flex items-center text-green-600 dark:text-green-400">
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Manage insurance provider companies and their logos</p>
+                <div class="flex flex-wrap items-center gap-3 text-xs">
+                    <span class="flex items-center text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full">
                         <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                        Active Providers: <span id="activeCount" class="font-semibold ml-1"><?php echo count($providers); ?></span>
+                        Active: <span id="activeCount" class="font-semibold ml-1"><?php echo count($providers); ?></span>
                     </span>
-                    <span class="flex items-center text-blue-600 dark:text-blue-400">
+                    <span class="flex items-center text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-2 py-1 rounded-full">
                         <i class="fas fa-star mr-1"></i>
                         Featured: <span id="featuredCount" class="font-semibold ml-1"><?php echo count(array_filter($providers, function($p) { return $p['is_featured']; })); ?></span>
                     </span>
                 </div>
             </div>
-            <div class="mt-4 sm:mt-0 flex space-x-3">
-                <button type="button" onclick="refreshProviders()" class="btn-secondary" title="Refresh List">
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 flex-shrink-0">
+                <button type="button" onclick="refreshProviders()" class="btn-secondary flex items-center justify-center" title="Refresh List">
                     <i class="fas fa-sync-alt mr-2"></i>
-                    Refresh
+                    <span class="hidden sm:inline">Refresh</span>
                 </button>
-                <button type="button" onclick="openAddModal()" class="btn-primary relative overflow-hidden">
+                <button type="button" onclick="openAddModal()" class="btn-primary relative overflow-hidden flex items-center justify-center">
                     <span class="relative z-10 flex items-center">
                         <i class="fas fa-plus mr-2"></i>
                         Add Provider
@@ -200,7 +200,7 @@ require_once 'layouts/admin.php';
     </div>
 
     <!-- Providers Grid -->
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
         <?php if (empty($providers)): ?>
         <div class="col-span-full">
             <div class="text-center py-12">
@@ -215,7 +215,7 @@ require_once 'layouts/admin.php';
         </div>
         <?php else: ?>
             <?php foreach ($providers as $provider): ?>
-            <div class="group relative modern-card bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+            <div class="group relative modern-card bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                 <!-- Status Indicator -->
                 <div class="absolute top-3 right-3">
                     <div class="w-3 h-3 bg-green-500 rounded-full shadow-sm"></div>
@@ -232,54 +232,55 @@ require_once 'layouts/admin.php';
                 <?php endif; ?>
                 
                 <!-- Logo Section -->
-                <div class="flex justify-center mb-4 mt-2">
+                <div class="flex justify-center mb-3 mt-1">
                     <div class="relative group">
                         <?php if (!empty($provider['logo_url']) && file_exists($provider['logo_url'])): ?>
-                        <div class="h-16 w-20 bg-gray-50 dark:bg-gray-700 rounded-lg flex items-center justify-center p-2 group-hover:bg-gray-100 dark:group-hover:bg-gray-600 transition-colors duration-200">
+                        <div class="h-12 w-16 bg-gray-50 dark:bg-gray-700 rounded-lg flex items-center justify-center p-1.5 group-hover:bg-gray-100 dark:group-hover:bg-gray-600 transition-colors duration-200">
                             <img src="<?php echo htmlspecialchars($provider['logo_url']); ?>" 
                                  alt="<?php echo htmlspecialchars($provider['provider_name']); ?>" 
                                  class="h-full w-full object-contain">
                         </div>
                         <?php else: ?>
-                        <div class="h-16 w-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow duration-200">
-                            <i class="fas fa-shield-alt text-white text-xl"></i>
+                        <div class="h-12 w-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow duration-200">
+                            <i class="fas fa-shield-alt text-white text-lg"></i>
                         </div>
                         <?php endif; ?>
                         
                         <!-- Hover overlay for logo preview -->
                         <div class="absolute inset-0 bg-black bg-opacity-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
-                            <i class="fas fa-search-plus text-white text-sm"></i>
+                            <i class="fas fa-search-plus text-white text-xs"></i>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Provider Info -->
                 <div class="text-center">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2" title="<?php echo htmlspecialchars($provider['provider_name']); ?>">
+                    <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2" title="<?php echo htmlspecialchars($provider['provider_name']); ?>">
                         <?php echo htmlspecialchars($provider['provider_name']); ?>
                     </h3>
                     
-                    <div class="flex items-center justify-center space-x-3 mb-4">
-                        <div class="flex items-center text-xs text-gray-500 dark:text-gray-400">
+                    <div class="flex items-center justify-center space-x-2 mb-3 text-xs text-gray-500 dark:text-gray-400">
+                        <span class="flex items-center">
                             <i class="fas fa-sort-numeric-up mr-1"></i>
-                            Order: <?php echo $provider['display_order']; ?>
-                        </div>
-                        <div class="flex items-center text-xs text-gray-500 dark:text-gray-400">
+                            <?php echo $provider['display_order']; ?>
+                        </span>
+                        <span>•</span>
+                        <span class="flex items-center">
                             <i class="fas fa-calendar mr-1"></i>
                             <?php echo date('M j', strtotime($provider['created_at'] ?? 'now')); ?>
-                        </div>
+                        </span>
                     </div>
                 </div>
                 
                 <!-- Actions -->
-                <div class="flex justify-center space-x-2">
+                <div class="flex justify-center space-x-1">
                     <button type="button" onclick="editProvider(<?php echo htmlspecialchars(json_encode($provider)); ?>)" 
-                            class="flex items-center px-3 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors duration-200">
+                            class="flex items-center px-2 py-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors duration-200">
                         <i class="fas fa-edit mr-1"></i>
                         Edit
                     </button>
                     <button type="button" onclick="deleteProvider(<?php echo $provider['id']; ?>, '<?php echo htmlspecialchars($provider['provider_name']); ?>')" 
-                            class="flex items-center px-3 py-2 text-sm font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors duration-200">
+                            class="flex items-center px-2 py-1.5 text-xs font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 rounded-md hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors duration-200">
                         <i class="fas fa-trash mr-1"></i>
                         Delete
                     </button>
@@ -296,7 +297,7 @@ require_once 'layouts/admin.php';
 <!-- Enhanced Add/Edit Provider Modal -->
 <div id="providerModal" class="modal hidden">
     <div class="modal-overlay bg-black bg-opacity-50 backdrop-blur-sm"></div>
-    <div class="modal-content max-w-lg transform transition-all duration-300 scale-95 opacity-0" id="modalContainer">
+    <div class="modal-content max-w-2xl w-full mx-4 transform transition-all duration-300 scale-95 opacity-0" id="modalContainer">
         <div class="modal-header bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-t-lg">
             <div class="flex items-center space-x-3">
                 <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-opacity-20">
@@ -813,16 +814,57 @@ document.getElementById('providerForm').addEventListener('submit', function(e) {
 /* Responsive Improvements */
 @media (max-width: 640px) {
     .modern-card {
-        margin-bottom: 1rem;
+        margin-bottom: 0.75rem;
+        padding: 1rem;
     }
     
     .modal-content {
-        margin: 1rem;
-        max-width: calc(100vw - 2rem);
+        margin: 0.5rem;
+        max-width: calc(100vw - 1rem);
+        max-height: calc(100vh - 1rem);
+        overflow-y: auto;
     }
     
     .logo-upload-area {
-        min-height: 100px;
+        min-height: 80px;
+    }
+    
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    
+    /* Compact header on mobile */
+    .admin-header {
+        padding: 1rem;
+    }
+    
+    .admin-header h1 {
+        font-size: 1.25rem;
+    }
+    
+    /* Smaller buttons on mobile */
+    .btn-primary, .btn-secondary {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Better spacing for tablets */
+    .grid {
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    
+    .modal-content {
+        max-width: calc(100vw - 2rem);
+    }
+}
+
+@media (min-width: 1536px) {
+    /* Better layout for large screens */
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
 }
 </style>
