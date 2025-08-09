@@ -157,7 +157,7 @@ if ($_POST && isset($_POST['contact_form'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-50">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -165,7 +165,7 @@ if ($_POST && isset($_POST['contact_form'])) {
     <meta name="description" content="<?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in Maldives. Government-licensed professional workforce solutions.'); ?>">
     
     <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
@@ -269,6 +269,17 @@ if ($_POST && isset($_POST['contact_form'])) {
         .animate-fadeInRight { animation: fadeInRight 0.8s ease-out; }
         .animate-scale { animation: scale 2s ease-in-out infinite; }
         .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        
+        /* Enhanced Mobile Animations */
+        @media (max-width: 768px) {
+            .animate-float { animation: float 2s ease-in-out infinite; }
+            .animate-scale { animation: scale 1.5s ease-in-out infinite; }
+            .scroll-reveal { 
+                opacity: 0;
+                transform: translateY(30px);
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+        }
         .animate-shimmer {
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
             background-size: 200% 100%;
@@ -316,6 +327,30 @@ if ($_POST && isset($_POST['contact_form'])) {
         }
         .dark .modern-card:hover {
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Mobile-specific optimizations */
+        @media (max-width: 768px) {
+            .hover-lift:hover { 
+                transform: translateY(-2px);
+            }
+            .modern-card:hover { 
+                transform: translateY(-1px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            }
+            .dark .modern-card:hover {
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            }
+            /* Touch-friendly interactive elements */
+            .nav-link, .mobile-nav-link {
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+            }
+            /* Improved mobile spacing */
+            .scroll-reveal {
+                animation-delay: 0s !important;
+            }
         }
         
         /* Enhanced Button Styles - Darker Shades */
@@ -389,10 +424,14 @@ if ($_POST && isset($_POST['contact_form'])) {
     <script>
         // Early theme initialization to prevent flash
         (function() {
-            const darkMode = localStorage.getItem('darkMode') === 'true' || 
-                           (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            const savedTheme = localStorage.getItem('darkMode');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const darkMode = savedTheme === 'true' || (savedTheme === null && prefersDark);
+            
             if (darkMode) {
                 document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
             }
         })();
         
@@ -421,124 +460,205 @@ if ($_POST && isset($_POST['contact_form'])) {
     </script>
 </head>
 
-<body class="h-full bg-white dark:bg-gray-900 theme-transition">
-    <!-- Dark Mode Toggle -->
+<body class="h-full bg-gray-50 dark:bg-gray-900 theme-transition">
+    <!-- Enhanced Dark Mode Toggle -->
     <div class="fixed top-4 right-4 z-50">
-        <button id="theme-toggle" class="p-3 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-lg border border-gray-200/50 dark:border-gray-700/50 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 hover:scale-105 active:scale-95 theme-transition focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 dark:focus:ring-offset-gray-800" aria-label="Toggle dark mode" title="Toggle dark/light mode">
-            <i id="theme-icon" class="fas fa-moon text-lg transition-all duration-200" aria-hidden="true"></i>
-            <i id="theme-icon-dark" class="fas fa-sun text-lg hidden transition-all duration-200" aria-hidden="true"></i>
+        <button id="theme-toggle" class="group relative p-3 rounded-2xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-lg border border-gray-200/50 dark:border-gray-700/50 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 hover:scale-105 active:scale-95 theme-transition focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 dark:focus:ring-offset-gray-800 sm:p-4" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-brand-blue/10 to-brand-teal/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <i id="theme-icon" class="relative z-10 fas fa-moon text-lg sm:text-xl transition-all duration-200" aria-hidden="true"></i>
+            <i id="theme-icon-dark" class="relative z-10 fas fa-sun text-lg sm:text-xl hidden transition-all duration-200" aria-hidden="true"></i>
         </button>
     </div>
 
-    <!-- Navigation -->
-    <header class="sticky top-0 z-40 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-sm ring-1 ring-gray-900/10 dark:ring-white/10 theme-transition">
+    <!-- Enhanced Navigation -->
+    <header class="sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-sm border-b border-gray-200/20 dark:border-gray-700/30 theme-transition">
         <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="flex h-16 items-center justify-between">
-                <!-- Logo -->
+            <div class="flex h-20 items-center justify-between">
+                <!-- Enhanced Logo -->
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center space-x-3">
-                        <img src="images/logo.svg" alt="<?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>" class="h-10 w-auto">
+                        <div class="relative">
+                            <img src="images/logo.svg" alt="<?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>" class="h-12 w-auto transition-transform duration-200 hover:scale-105">
+                            <div class="absolute inset-0 bg-gradient-to-r from-brand-blue/20 to-brand-teal/20 rounded-lg blur opacity-0 hover:opacity-100 transition-opacity duration-200"></div>
+                        </div>
+                        <div class="hidden sm:block">
+                            <h1 class="text-lg font-bold bg-gradient-to-r from-brand-blue to-brand-teal bg-clip-text text-transparent">
+                                Sky Border
+                            </h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 font-medium">Solutions</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Desktop Navigation -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#home" class="nav-link text-gray-900 dark:text-white hover:text-brand-blue dark:hover:text-brand-blue-light px-3 py-2 rounded-md text-sm font-medium theme-transition">Home</a>
-                        <a href="#about" class="nav-link text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light px-3 py-2 rounded-md text-sm font-medium theme-transition">About</a>
-                        <a href="#services" class="nav-link text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light px-3 py-2 rounded-md text-sm font-medium theme-transition">Services</a>
-                        <a href="#clients" class="nav-link text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light px-3 py-2 rounded-md text-sm font-medium theme-transition">Clients</a>
-                        <a href="#contact" class="bg-gradient-to-r from-brand-blue to-brand-teal text-white hover:from-brand-blue-dark hover:to-brand-blue px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg">Contact</a>
+                <!-- Enhanced Desktop Navigation -->
+                <div class="hidden lg:block">
+                    <div class="flex items-center space-x-1">
+                        <a href="#home" class="nav-link relative px-4 py-2 text-sm font-medium text-gray-900 dark:text-white hover:text-brand-blue dark:hover:text-brand-blue-light rounded-lg transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                            <span class="relative z-10">Home</span>
+                        </a>
+                        <a href="#about" class="nav-link relative px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue-light rounded-lg transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                            <span class="relative z-10">About</span>
+                        </a>
+                        <a href="#services" class="nav-link relative px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue-light rounded-lg transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                            <span class="relative z-10">Services</span>
+                        </a>
+                        <a href="#clients" class="nav-link relative px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue-light rounded-lg transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                            <span class="relative z-10">Clients</span>
+                        </a>
+                        <div class="ml-4 flex items-center space-x-3">
+                            <a href="#contact" class="relative inline-flex items-center px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-brand-blue to-brand-teal rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 dark:focus:ring-offset-gray-900">
+                                <span class="relative z-10">Contact</span>
+                                <div class="absolute inset-0 bg-gradient-to-r from-brand-blue-dark to-brand-teal rounded-lg opacity-0 hover:opacity-100 transition-opacity duration-200"></div>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Mobile menu button -->
-                <div class="md:hidden">
-                    <button type="button" class="mobile-menu-button bg-gray-100 dark:bg-gray-800 p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-blue theme-transition">
-                        <i class="fas fa-bars h-6 w-6"></i>
+                <!-- Enhanced Mobile menu button -->
+                <div class="lg:hidden">
+                    <button type="button" class="mobile-menu-button relative inline-flex items-center justify-center p-3 rounded-xl bg-gray-50 dark:bg-gray-800/50 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 dark:focus:ring-offset-gray-900 transition-all duration-200">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fas fa-bars text-lg"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Mobile Navigation Menu -->
-            <div class="mobile-menu hidden md:hidden">
-                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 theme-transition">
-                    <a href="#home" class="mobile-nav-link text-gray-900 dark:text-white hover:text-brand-blue dark:hover:text-brand-blue-light block px-3 py-2 rounded-md text-base font-medium theme-transition">Home</a>
-                    <a href="#about" class="mobile-nav-link text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light block px-3 py-2 rounded-md text-base font-medium theme-transition">About</a>
-                    <a href="#services" class="mobile-nav-link text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light block px-3 py-2 rounded-md text-base font-medium theme-transition">Services</a>
-                    <a href="#clients" class="mobile-nav-link text-gray-500 dark:text-gray-400 hover:text-brand-blue dark:hover:text-brand-blue-light block px-3 py-2 rounded-md text-base font-medium theme-transition">Clients</a>
-                    <a href="#contact" class="mobile-nav-link bg-gradient-to-r from-brand-blue to-brand-teal text-white hover:from-brand-blue-dark hover:to-brand-blue block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            <!-- Enhanced Mobile Navigation Menu -->
+            <div class="mobile-menu hidden lg:hidden">
+                <div class="px-4 pt-4 pb-6 space-y-2 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50 theme-transition rounded-b-2xl shadow-xl">
+                    <a href="#home" class="mobile-nav-link flex items-center px-4 py-3 text-base font-medium text-gray-900 dark:text-white hover:text-brand-blue dark:hover:text-brand-blue-light rounded-xl transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                        <i class="fas fa-home w-5 h-5 mr-3"></i>
+                        Home
+                    </a>
+                    <a href="#about" class="mobile-nav-link flex items-center px-4 py-3 text-base font-medium text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue-light rounded-xl transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                        <i class="fas fa-info-circle w-5 h-5 mr-3"></i>
+                        About
+                    </a>
+                    <a href="#services" class="mobile-nav-link flex items-center px-4 py-3 text-base font-medium text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue-light rounded-xl transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                        <i class="fas fa-cogs w-5 h-5 mr-3"></i>
+                        Services
+                    </a>
+                    <a href="#clients" class="mobile-nav-link flex items-center px-4 py-3 text-base font-medium text-gray-600 dark:text-gray-300 hover:text-brand-blue dark:hover:text-brand-blue-light rounded-xl transition-all duration-200 hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                        <i class="fas fa-users w-5 h-5 mr-3"></i>
+                        Clients
+                    </a>
+                    <div class="pt-3">
+                        <a href="#contact" class="mobile-nav-link flex items-center justify-center px-4 py-3 text-base font-semibold text-white bg-gradient-to-r from-brand-blue to-brand-teal rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105">
+                            <i class="fas fa-envelope w-5 h-5 mr-3"></i>
+                            Contact Us
+                        </a>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Enhanced Hero Section -->
-    <section id="home" class="relative overflow-hidden bg-white dark:bg-gray-900 theme-transition">
-        <!-- Animated Background Elements -->
+    <!-- Enhanced Hero Section with Catalyst Design -->
+    <section id="home" class="relative overflow-hidden bg-gradient-to-b from-white via-gray-50/50 to-white dark:from-gray-900 dark:via-gray-800/30 dark:to-gray-900 theme-transition">
+        <!-- Modern Background Pattern -->
         <div class="absolute inset-0 -z-20">
-            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-brand-blue/8 via-brand-teal/8 to-brand-green/8 dark:from-brand-blue/15 dark:via-brand-teal/15 dark:to-brand-green/15"></div>
-            <div class="absolute top-10 left-10 w-72 h-72 bg-brand-blue/15 rounded-full mix-blend-multiply filter blur-xl opacity-80 animate-float"></div>
-            <div class="absolute top-0 right-4 w-72 h-72 bg-brand-teal/15 rounded-full mix-blend-multiply filter blur-xl opacity-80 animate-float" style="animation-delay: 2s;"></div>
-            <div class="absolute -bottom-8 left-20 w-72 h-72 bg-brand-green/15 rounded-full mix-blend-multiply filter blur-xl opacity-80 animate-float" style="animation-delay: 4s;"></div>
+            <!-- Grid Pattern -->
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
+            <!-- Animated Orbs -->
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-brand-blue/10 to-brand-teal/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
+            <div class="absolute top-20 right-1/4 w-96 h-96 bg-gradient-to-l from-brand-teal/10 to-brand-green/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style="animation-delay: 2s;"></div>
+            <div class="absolute -bottom-20 left-1/2 w-96 h-96 bg-gradient-to-t from-brand-green/10 to-brand-blue/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style="animation-delay: 4s;"></div>
         </div>
         
-        <!-- Enhanced Background gradient -->
-        <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-            <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-brand-blue via-brand-teal to-brand-green opacity-40 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem] animate-pulse-glow" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
-        </div>
-        
-        <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+        <!-- Main Content -->
+        <div class="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8 lg:py-32">
             <div class="text-center">
-                <!-- Enhanced Badges -->
-                <div class="mx-auto mb-8 flex flex-wrap justify-center gap-4 scroll-reveal">
-                    <div class="inline-flex items-center rounded-full bg-brand-green/10 dark:bg-brand-green/20 px-4 py-2 text-sm font-medium text-brand-green-dark dark:text-brand-green-light ring-1 ring-inset ring-brand-green/20 dark:ring-brand-green/30 hover-glow hover-lift animate-fadeInLeft">
-                        <i class="fas fa-certificate mr-2 animate-pulse"></i>
-                        Government Licensed
+                <!-- Status Badges -->
+                <div class="mx-auto mb-10 flex flex-wrap justify-center gap-3 scroll-reveal">
+                    <div class="group relative inline-flex items-center rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm px-4 py-2 text-sm font-medium text-brand-green-dark dark:text-brand-green-light border border-brand-green/20 dark:border-brand-green/30 hover:border-brand-green/40 dark:hover:border-brand-green/50 transition-all duration-300 hover:scale-105">
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-green/5 to-brand-green/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <i class="fas fa-certificate mr-2 text-brand-green"></i>
+                        <span class="relative z-10">Government Licensed</span>
                     </div>
-                    <div class="inline-flex items-center rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 px-4 py-2 text-sm font-medium text-brand-blue-dark dark:text-brand-blue-light ring-1 ring-inset ring-brand-blue/20 dark:ring-brand-blue/30 hover-glow hover-lift animate-fadeInRight" style="animation-delay: 0.2s;">
-                        <i class="fas fa-award mr-2 animate-pulse"></i>
-                        HR Consulting & Recruitment Agency
+                    <div class="group relative inline-flex items-center rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm px-4 py-2 text-sm font-medium text-brand-blue-dark dark:text-brand-blue-light border border-brand-blue/20 dark:border-brand-blue/30 hover:border-brand-blue/40 dark:hover:border-brand-blue/50 transition-all duration-300 hover:scale-105" style="animation-delay: 0.1s;">
+                        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-blue/5 to-brand-blue/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <i class="fas fa-award mr-2 text-brand-blue"></i>
+                        <span class="relative z-10">HR Consulting & Recruitment</span>
                     </div>
                 </div>
 
-                <!-- Enhanced Main Heading -->
-                <h1 class="mx-auto max-w-4xl text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl theme-transition scroll-reveal" style="animation-delay: 0.4s;">
-                    <span class="gradient-text-animated">
-                        <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
-                    </span>
-                </h1>
+                <!-- Main Heading -->
+                <div class="scroll-reveal" style="animation-delay: 0.2s;">
+                    <h1 class="mx-auto max-w-5xl text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-7xl">
+                        <span class="block">
+                            <span class="bg-gradient-to-r from-brand-blue via-brand-teal to-brand-green bg-clip-text text-transparent animate-pulse">
+                                <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
+                            </span>
+                        </span>
+                        <span class="mt-2 block text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-600 dark:text-gray-300">
+                            Professional Workforce Solutions
+                        </span>
+                    </h1>
+                </div>
 
-                <!-- Enhanced Tagline -->
-                <p class="mx-auto mt-8 max-w-2xl text-xl leading-8 text-gray-600 dark:text-gray-300 theme-transition scroll-reveal" style="animation-delay: 0.6s;">
-                    <i class="fas fa-quote-left text-brand-blue/60 mr-2"></i>
-                    <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
-                    <i class="fas fa-quote-right text-brand-blue/60 ml-2"></i>
-                </p>
+                <!-- Tagline -->
+                <div class="scroll-reveal" style="animation-delay: 0.4s;">
+                    <p class="mx-auto mt-8 max-w-2xl text-xl leading-8 text-gray-600 dark:text-gray-300">
+                        <span class="relative">
+                            <span class="absolute -left-4 top-0 text-brand-blue/40 text-lg">"</span>
+                            <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
+                            <span class="absolute -right-4 bottom-0 text-brand-blue/40 text-lg">"</span>
+                        </span>
+                    </p>
+                </div>
 
-                <!-- Enhanced Description -->
-                <p class="mx-auto mt-8 max-w-3xl text-lg leading-8 text-gray-500 dark:text-gray-400 theme-transition scroll-reveal" style="animation-delay: 0.8s;">
-                    <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
-                </p>
+                <!-- Description -->
+                <div class="scroll-reveal" style="animation-delay: 0.6s;">
+                    <p class="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-gray-500 dark:text-gray-400">
+                        <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
+                    </p>
+                </div>
 
                 <!-- Enhanced CTA Buttons -->
-                <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 scroll-reveal" style="animation-delay: 1s;">
-                    <a href="#contact" class="btn-primary rounded-lg px-8 py-4 text-sm font-semibold text-white shadow-xl hover-lift focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue">
-                        <i class="fas fa-comments mr-2"></i>
-                        Get Started
+                <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 scroll-reveal" style="animation-delay: 0.8s;">
+                    <a href="#contact" class="group relative inline-flex items-center justify-center px-8 py-4 text-sm font-semibold text-white bg-gradient-to-r from-brand-blue to-brand-teal rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 dark:focus:ring-offset-gray-900 w-full sm:w-auto">
+                        <span class="absolute inset-0 rounded-xl bg-gradient-to-r from-brand-blue-dark to-brand-teal opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                        <i class="fas fa-comments mr-3 relative z-10"></i>
+                        <span class="relative z-10">Get Started Today</span>
+                        <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-1 relative z-10"></i>
                     </a>
-                    <a href="#services" class="group modern-card rounded-lg px-8 py-4 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 theme-transition hover-lift">
-                        <i class="fas fa-arrow-down mr-2 transition-transform group-hover:translate-y-1"></i>
-                        Our Services
+                    <a href="#services" class="group inline-flex items-center justify-center px-8 py-4 text-sm font-semibold text-gray-900 dark:text-white bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 w-full sm:w-auto">
+                        <i class="fas fa-eye mr-3 transition-transform group-hover:scale-110"></i>
+                        <span>Explore Services</span>
+                        <i class="fas fa-arrow-down ml-3 transition-transform group-hover:translate-y-1"></i>
                     </a>
                 </div>
 
-                <!-- Enhanced Stats -->
-                <div class="mx-auto mt-20 max-w-5xl scroll-reveal" style="animation-delay: 1.2s;">
-                    <div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
+                <!-- Enhanced Stats with Catalyst Design -->
+                <div class="mx-auto mt-20 max-w-5xl scroll-reveal" style="animation-delay: 1s;">
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:gap-8">
                         <?php foreach ($stats as $index => $stat): ?>
-                        <div class="modern-card bg-white dark:bg-gray-800 px-6 py-8 text-center hover-lift theme-transition scroll-reveal" style="animation-delay: <?php echo 1.4 + ($index * 0.2); ?>s;">
-                            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-brand-blue to-brand-teal animate-scale">
+                        <div class="group relative bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-8 text-center border border-gray-200/50 dark:border-gray-700/50 hover:border-gray-300/70 dark:hover:border-gray-600/70 transition-all duration-300 hover:scale-105 scroll-reveal" style="animation-delay: <?php echo 1.2 + ($index * 0.1); ?>s;">
+                            <!-- Background Gradient -->
+                            <div class="absolute inset-0 rounded-2xl bg-gradient-to-br <?php 
+                                switch($stat['stat_name']) {
+                                    case 'placements': echo 'from-brand-blue/5 to-brand-teal/5';
+                                        break;
+                                    case 'partners': echo 'from-brand-teal/5 to-brand-green/5';
+                                        break;
+                                    case 'compliance': echo 'from-brand-green/5 to-brand-blue/5';
+                                        break;
+                                    default: echo 'from-gray-100/50 to-gray-200/50 dark:from-gray-700/50 dark:to-gray-600/50';
+                                }
+                            ?> opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            
+                            <!-- Icon -->
+                            <div class="relative z-10 mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r <?php 
+                                switch($stat['stat_name']) {
+                                    case 'placements': echo 'from-brand-blue to-brand-teal';
+                                        break;
+                                    case 'partners': echo 'from-brand-teal to-brand-green';
+                                        break;
+                                    case 'compliance': echo 'from-brand-green to-brand-blue';
+                                        break;
+                                    default: echo 'from-gray-400 to-gray-600';
+                                }
+                            ?> shadow-lg group-hover:shadow-xl transition-shadow duration-300">
                                 <i class="fas fa-<?php 
                                     switch($stat['stat_name']) {
                                         case 'placements': echo 'users';
@@ -549,69 +669,105 @@ if ($_POST && isset($_POST['contact_form'])) {
                                             break;
                                         default: echo 'chart-line';
                                     }
-                                ?> text-white text-xl"></i>
+                                ?> text-white text-xl group-hover:scale-110 transition-transform duration-300"></i>
                             </div>
-                            <p class="text-4xl font-bold tracking-tight gradient-text"><?php echo htmlspecialchars($stat['stat_value']); ?></p>
-                            <p class="mt-2 text-sm font-medium leading-6 text-gray-500 dark:text-gray-400"><?php echo htmlspecialchars($stat['stat_label']); ?></p>
+                            
+                            <!-- Value -->
+                            <div class="relative z-10">
+                                <p class="text-4xl font-bold tracking-tight bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 bg-clip-text text-transparent">
+                                    <?php echo htmlspecialchars($stat['stat_value']); ?>
+                                </p>
+                                <p class="mt-3 text-sm font-medium text-gray-600 dark:text-gray-300">
+                                    <?php echo htmlspecialchars($stat['stat_label']); ?>
+                                </p>
+                            </div>
                         </div>
                         <?php endforeach; ?>
                     </div>
                 </div>
 
-                <!-- Scroll Indicator -->
-                <div class="mt-16">
-                    <a href="#about" class="inline-block text-gray-400 dark:text-gray-500 hover:text-brand-blue dark:hover:text-brand-blue-light transition-colors">
-                        <i class="fas fa-chevron-down text-2xl animate-bounce"></i>
-                    </a>
+                <!-- Enhanced Scroll Indicator -->
+                <div class="mt-20">
+                    <div class="flex flex-col items-center">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Learn more about us</p>
+                        <a href="#about" class="group inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:text-brand-blue dark:hover:text-brand-blue-light hover:border-brand-blue/30 dark:hover:border-brand-blue/30 transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-chevron-down text-lg animate-bounce group-hover:translate-y-1 transition-transform duration-300"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-24 sm:py-32 bg-white dark:bg-gray-900 theme-transition">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <!-- Enhanced About Section -->
+    <section id="about" class="relative py-24 sm:py-32 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 theme-transition overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 bg-grid-gray-100/25 dark:bg-grid-gray-800/25 [mask-image:linear-gradient(0deg,transparent,black,transparent)]"></div>
+        
+        <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
             <div class="mx-auto max-w-4xl text-center scroll-reveal">
-                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl theme-transition">
-                    About <span class="gradient-text">Sky Border Solutions</span>
+                <div class="inline-flex items-center rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 px-4 py-2 text-sm font-medium text-brand-blue-dark dark:text-brand-blue-light mb-6">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    About Our Company
+                </div>
+                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl lg:text-5xl">
+                    About <span class="bg-gradient-to-r from-brand-blue to-brand-teal bg-clip-text text-transparent">Sky Border Solutions</span>
                 </h2>
                 <?php if (!empty($companyInfo['about_us'])): ?>
-                    <div class="mt-8 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">
+                    <div class="mt-8 text-lg leading-8 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
                         <?php echo nl2br(htmlspecialchars($companyInfo['about_us'])); ?>
                     </div>
                 <?php else: ?>
-                    <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">
+                    <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
                         <?php echo htmlspecialchars($companyInfo['description']); ?>
                     </p>
                 <?php endif; ?>
             </div>
             
-            <div class="mx-auto mt-16 max-w-5xl">
+            <!-- Mission & Vision Cards -->
+            <div class="mx-auto mt-20 max-w-6xl">
                 <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
-                    <!-- Mission -->
-                    <div class="modern-card rounded-2xl bg-white dark:bg-gray-800 p-8 hover-lift scroll-reveal" style="animation-delay: 0.2s;">
-                        <div class="flex items-center mb-6">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-blue to-brand-teal">
-                                <i class="fas fa-bullseye text-white text-xl"></i>
+                    <!-- Mission Card -->
+                    <div class="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50 dark:border-gray-700/50 hover:border-gray-300/70 dark:hover:border-gray-600/70 transition-all duration-300 hover:scale-105 scroll-reveal" style="animation-delay: 0.2s;">
+                        <!-- Background Gradient -->
+                        <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-blue/5 to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex items-center mb-6">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-brand-blue to-brand-teal shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                                    <i class="fas fa-bullseye text-white text-xl group-hover:scale-110 transition-transform duration-300"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Our Mission</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">What drives us forward</p>
+                                </div>
                             </div>
-                            <h3 class="ml-4 text-xl font-semibold text-gray-900 dark:text-white theme-transition">Our Mission</h3>
+                            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                <?php echo htmlspecialchars($companyInfo['mission']); ?>
+                            </p>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed theme-transition">
-                            <?php echo htmlspecialchars($companyInfo['mission']); ?>
-                        </p>
                     </div>
                     
-                    <!-- Vision -->
-                    <div class="modern-card rounded-2xl bg-white dark:bg-gray-800 p-8 hover-lift scroll-reveal" style="animation-delay: 0.4s;">
-                        <div class="flex items-center mb-6">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-teal to-brand-green">
-                                <i class="fas fa-eye text-white text-xl"></i>
+                    <!-- Vision Card -->
+                    <div class="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50 dark:border-gray-700/50 hover:border-gray-300/70 dark:hover:border-gray-600/70 transition-all duration-300 hover:scale-105 scroll-reveal" style="animation-delay: 0.4s;">
+                        <!-- Background Gradient -->
+                        <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-teal/5 to-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex items-center mb-6">
+                                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-brand-teal to-brand-green shadow-lg group-hover:shadow-xl transition-shadow duration-300">
+                                    <i class="fas fa-eye text-white text-xl group-hover:scale-110 transition-transform duration-300"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Our Vision</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Where we're heading</p>
+                                </div>
                             </div>
-                            <h3 class="ml-4 text-xl font-semibold text-gray-900 dark:text-white theme-transition">Our Vision</h3>
+                            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                <?php echo htmlspecialchars($companyInfo['vision']); ?>
+                            </p>
                         </div>
-                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed theme-transition">
-                            <?php echo htmlspecialchars($companyInfo['vision']); ?>
-                        </p>
                     </div>
                 </div>
                 
@@ -651,7 +807,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                             <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-brand-blue to-brand-teal hover-glow animate-scale">
                                 <i class="fas fa-handshake text-white text-xl"></i>
                             </div>
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white theme-transition">Trusted Partner</h4>
+                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white theme-transition">Trusted Partners</h4>
                             <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 theme-transition">Long-term relationships with clients</p>
                         </div>
                     </div>
@@ -1552,8 +1708,9 @@ if ($_POST && isset($_POST['contact_form'])) {
     <script>
         // Dark mode functionality
         function initTheme() {
-            const darkMode = localStorage.getItem('darkMode') === 'true' || 
-                           (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            const savedTheme = localStorage.getItem('darkMode');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const darkMode = savedTheme === 'true' || (savedTheme === null && prefersDark);
             
             if (darkMode) {
                 document.documentElement.classList.add('dark');
@@ -1568,30 +1725,19 @@ if ($_POST && isset($_POST['contact_form'])) {
         function toggleTheme() {
             const isDark = document.documentElement.classList.contains('dark');
             const newDarkMode = !isDark;
-            const themeToggle = document.getElementById('theme-toggle');
             
-            // Add brief loading state
-            if (themeToggle) {
-                themeToggle.style.opacity = '0.7';
-                themeToggle.style.transform = 'scale(0.95)';
-            }
-            
+            // Save preference
             localStorage.setItem('darkMode', newDarkMode.toString());
             
+            // Toggle dark class
             if (newDarkMode) {
                 document.documentElement.classList.add('dark');
             } else {
                 document.documentElement.classList.remove('dark');
             }
             
-            // Update theme icons with slight delay for smooth transition
-            setTimeout(() => {
-                updateThemeIcons();
-                if (themeToggle) {
-                    themeToggle.style.opacity = '';
-                    themeToggle.style.transform = '';
-                }
-            }, 100);
+            // Update theme icons immediately
+            updateThemeIcons();
         }
         
         function updateThemeIcons() {
@@ -1602,15 +1748,18 @@ if ($_POST && isset($_POST['contact_form'])) {
             if (moonIcon && sunIcon) {
                 if (isDark) {
                     // Dark mode: show sun icon (to switch to light)
-                    moonIcon.classList.add('hidden');
-                    sunIcon.classList.remove('hidden');
+                    moonIcon.style.display = 'none';
+                    sunIcon.style.display = 'block';
                 } else {
                     // Light mode: show moon icon (to switch to dark)
-                    moonIcon.classList.remove('hidden');
-                    sunIcon.classList.add('hidden');
+                    moonIcon.style.display = 'block';
+                    sunIcon.style.display = 'none';
                 }
             } else {
-                console.warn('Sky Border: Theme icons not found');
+                console.warn('Sky Border: Theme icons not found', {
+                    moonIcon: !!moonIcon,
+                    sunIcon: !!sunIcon
+                });
             }
         }
         
@@ -1629,9 +1778,14 @@ if ($_POST && isset($_POST['contact_form'])) {
         // Initialize theme on page load (early to prevent flash)
         initTheme();
         
-        document.addEventListener('DOMContentLoaded', function() {
-            // Re-initialize theme to ensure icons are updated
+        // Also initialize on window load to ensure everything is ready
+        window.addEventListener('load', function() {
             initTheme();
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Force theme initialization
+            setTimeout(initTheme, 100);
             
             // Theme toggle button
             const themeToggle = document.getElementById('theme-toggle');
