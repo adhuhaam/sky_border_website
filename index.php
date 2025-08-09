@@ -290,19 +290,20 @@ if ($_POST && isset($_POST['contact_form'])) {
 
             <!-- Client Categories -->
             <?php 
-            $clientCategories = [];
+            // Group clients by category (simple structure)
+            $groupedClients = [];
             foreach ($clients as $client) {
-                $category = $client['category'];
-                if (!isset($clientCategories[$category])) {
-                    $clientCategories[$category] = [];
+                $categoryName = $client['category'];
+                if (!isset($groupedClients[$categoryName])) {
+                    $groupedClients[$categoryName] = [];
                 }
-                $clientCategories[$category][] = $client;
+                $groupedClients[$categoryName][] = $client;
             }
             ?>
 
-            <?php if (!empty($clientCategories)): ?>
+            <?php if (!empty($groupedClients)): ?>
             <div class="space-y-12">
-                <?php foreach ($clientCategories as $categoryName => $categoryClients): ?>
+                <?php foreach ($groupedClients as $categoryName => $categoryClients): ?>
                 <div>
                     <!-- Category Header -->
                     <div class="mb-8">
@@ -348,7 +349,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                                 <!-- Company Logo -->
                                 <div class="flex h-16 w-full items-center justify-center mb-3 bg-gray-50 dark:bg-gray-800 rounded-md theme-transition">
                                     <img src="<?php echo htmlspecialchars($client['logo_url']); ?>" 
-                                         alt="<?php echo htmlspecialchars($client['name']); ?>" 
+                                         alt="<?php echo htmlspecialchars($client['client_name']); ?>" 
                                          class="h-12 w-auto object-contain">
                                 </div>
                                 <?php else: ?>
@@ -361,7 +362,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                                 <!-- Company Name -->
                                 <div class="text-center">
                                     <h4 class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-brand-blue dark:group-hover:text-brand-blue-light transition-colors theme-transition">
-                                        <?php echo htmlspecialchars($client['name']); ?>
+                                        <?php echo htmlspecialchars($client['client_name']); ?>
                                     </h4>
                                 </div>
                             </div>

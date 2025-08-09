@@ -289,13 +289,13 @@ class ContentManager {
     
     // Client Methods
     public function getClients($category = null) {
-        $query = "SELECT * FROM clients";
+        $query = "SELECT * FROM clients WHERE is_active = 1";
         
         if ($category) {
-            $query .= " WHERE category = :category";
+            $query .= " AND category_id = (SELECT id FROM client_categories WHERE category_name = :category)";
         }
         
-        $query .= " ORDER BY display_order, name";
+        $query .= " ORDER BY display_order, client_name";
         
         $stmt = $this->conn->prepare($query);
         if ($category) {
@@ -313,38 +313,46 @@ class ContentManager {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
-    public function addClient($name, $category, $logo_url = '', $display_order = 0) {
-        $query = "INSERT INTO clients (name, category, logo_url, display_order) 
-                  VALUES (:name, :category, :logo_url, :display_order)";
+    public function addClient($client_name, $category_id, $logo_url = '', $display_order = 0) {
+        $query = "INSERT INTO clients (client_name, category_id, logo_url, display_order) 
+                  VALUES (:client_name, :category_id, :logo_url, :display_order)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':category', $category);
+        $stmt->bindParam(':client_name', $client_name);
+        $stmt->bindParam(':category_id', $category_id);
         $stmt->bindParam(':logo_url', $logo_url);
         $stmt->bindParam(':display_order', $display_order);
         return $stmt->execute();
     }
     
-    public function updateClient($id, $name, $category, $logo_url = '', $display_order = 0) {
+    public function updateClient($id, $client_name, $category_id, $logo_url = '', $display_order = 0) {
         $query = "UPDATE clients SET 
-                  name = :name,
-                  category = :category,
+                  client_name = :client_name,
+                  category_id = :category_id,
                   logo_url = :logo_url,
                   display_order = :display_order
                   WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':category', $category);
+        $stmt->bindParam(':client_name', $client_name);
+        $stmt->bindParam(':category_id', $category_id);
         $stmt->bindParam(':logo_url', $logo_url);
         $stmt->bindParam(':display_order', $display_order);
         return $stmt->execute();
     }
     
     public function deleteClient($id) {
-        $query = "DELETE FROM clients WHERE id = :id";
+        $query = "UPDATE clients SET is_active = 0 WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
+    }
+    
+    // Client Categories Methods
+    public function getClientCategories() {
+        $query = "SELECT * FROM client_categories WHERE is_active = 1 ORDER BY display_order";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
     // Contact Messages Methods
