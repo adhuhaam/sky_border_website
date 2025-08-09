@@ -1,9 +1,10 @@
--- Sky Border Solutions Database Schema
-CREATE DATABASE IF NOT EXISTS skydfcaf_sky_border;
+-- Sky Border Solutions CMS Database Schema
+-- This schema creates all the necessary tables for the CMS
+
 USE skydfcaf_sky_border;
 
 -- Admin Users Table
-CREATE TABLE admin_users (
+CREATE TABLE IF NOT EXISTS admin_users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
@@ -17,7 +18,7 @@ CREATE TABLE admin_users (
 );
 
 -- Company Information Table
-CREATE TABLE company_info (
+CREATE TABLE IF NOT EXISTS company_info (
     id INT AUTO_INCREMENT PRIMARY KEY,
     company_name VARCHAR(100) NOT NULL DEFAULT 'Sky Border Solutions',
     tagline VARCHAR(200) NOT NULL DEFAULT 'Where compliance meets competence',
@@ -34,7 +35,7 @@ CREATE TABLE company_info (
 );
 
 -- Statistics Table
-CREATE TABLE statistics (
+CREATE TABLE IF NOT EXISTS statistics (
     id INT AUTO_INCREMENT PRIMARY KEY,
     stat_name VARCHAR(50) NOT NULL,
     stat_value VARCHAR(20) NOT NULL,
@@ -44,23 +45,8 @@ CREATE TABLE statistics (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Team Members Table
-CREATE TABLE team_members (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    position VARCHAR(100) NOT NULL,
-    department VARCHAR(100),
-    description TEXT,
-    expertise TEXT,
-    photo_url VARCHAR(255),
-    display_order INT DEFAULT 0,
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
 -- Service Categories Table
-CREATE TABLE service_categories (
+CREATE TABLE IF NOT EXISTS service_categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(100) NOT NULL,
     category_description TEXT,
@@ -72,35 +58,8 @@ CREATE TABLE service_categories (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Services Table
-CREATE TABLE services (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    category_id INT,
-    service_name VARCHAR(100) NOT NULL,
-    service_description TEXT,
-    features TEXT,
-    icon_class VARCHAR(50),
-    display_order INT DEFAULT 0,
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES service_categories(id) ON DELETE SET NULL
-);
-
--- Job Roles Table
-CREATE TABLE job_roles (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    service_id INT,
-    role_name VARCHAR(100) NOT NULL,
-    category VARCHAR(50),
-    display_order INT DEFAULT 0,
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
-);
-
 -- Portfolio Categories Table
-CREATE TABLE portfolio_categories (
+CREATE TABLE IF NOT EXISTS portfolio_categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(100) NOT NULL,
     category_slug VARCHAR(50) NOT NULL,
@@ -115,26 +74,8 @@ CREATE TABLE portfolio_categories (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Portfolio Projects Table
-CREATE TABLE portfolio_projects (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    category_id INT,
-    project_name VARCHAR(200) NOT NULL,
-    client_name VARCHAR(100),
-    description TEXT,
-    placements_count INT DEFAULT 0,
-    project_status ENUM('completed', 'in_progress', 'planned') DEFAULT 'completed',
-    completion_date DATE,
-    featured BOOLEAN DEFAULT FALSE,
-    display_order INT DEFAULT 0,
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES portfolio_categories(id) ON DELETE SET NULL
-);
-
 -- Client Categories Table
-CREATE TABLE client_categories (
+CREATE TABLE IF NOT EXISTS client_categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(100) NOT NULL,
     category_description TEXT,
@@ -147,7 +88,7 @@ CREATE TABLE client_categories (
 );
 
 -- Clients Table
-CREATE TABLE clients (
+CREATE TABLE IF NOT EXISTS clients (
     id INT AUTO_INCREMENT PRIMARY KEY,
     category_id INT,
     client_name VARCHAR(200) NOT NULL,
@@ -170,7 +111,7 @@ CREATE TABLE clients (
 );
 
 -- Contact Messages Table
-CREATE TABLE contact_messages (
+CREATE TABLE IF NOT EXISTS contact_messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
@@ -188,19 +129,8 @@ CREATE TABLE contact_messages (
     FOREIGN KEY (replied_by) REFERENCES admin_users(id) ON DELETE SET NULL
 );
 
--- Website Settings Table
-CREATE TABLE website_settings (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    setting_key VARCHAR(100) UNIQUE NOT NULL,
-    setting_value TEXT,
-    setting_type ENUM('text', 'textarea', 'number', 'boolean', 'json') DEFAULT 'text',
-    setting_group VARCHAR(50) DEFAULT 'general',
-    description TEXT,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
--- Activity Log Table
-CREATE TABLE activity_log (
+-- Activity Log Table (for tracking admin actions)
+CREATE TABLE IF NOT EXISTS activity_log (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     action VARCHAR(100) NOT NULL,
@@ -214,49 +144,48 @@ CREATE TABLE activity_log (
     FOREIGN KEY (user_id) REFERENCES admin_users(id) ON DELETE SET NULL
 );
 
--- Insert Default Data
-INSERT INTO admin_users (username, email, password_hash, full_name, role) VALUES
-('admin', 'admin@skybordersolutions.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'System Administrator', 'super_admin');
+-- Insert Default Data (only if not exists)
 
-INSERT INTO company_info (company_name, tagline, description, mission, vision, phone, hotline1, hotline2, email, address, business_hours) VALUES
-('Sky Border Solutions', 
- 'Where compliance meets competence',
- 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.',
- 'To foster enduring partnerships with organizations by delivering superior recruitment solutions that align with their strategic goals. We are committed to offering unparalleled client service, acting as a seamless extension of our clients\' human resource operations.',
- 'To be the most trusted and recognized recruitment company in the Maldives, known for our professionalism, excellence and ability to deliver outstanding outcomes for both employers and candidates.',
- '+960 4000-444',
- '+960 755-9001',
- '+960 911-1409',
- 'info@skybordersolutions.com',
- 'H. Dhoorihaa (5A), Kalaafaanu Hingun, Male\' City, Republic of Maldives',
- 'Sunday - Thursday: 8:00 AM - 5:00 PM\nSaturday: 9:00 AM - 1:00 PM\nFriday: Closed');
+-- Default admin user (password: admin123)
+INSERT IGNORE INTO admin_users (id, username, email, password_hash, full_name, role) VALUES
+(1, 'admin', 'admin@skybordersolutions.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'System Administrator', 'super_admin');
 
-INSERT INTO statistics (stat_name, stat_value, stat_label, display_order) VALUES
-('placements', '1000+', 'Successful Placements', 1),
-('partners', '50+', 'Partner Companies', 2),
-('compliance', '100%', 'Licensed & Compliant', 3);
+-- Default company information
+INSERT IGNORE INTO company_info (id, company_name, tagline, description, mission, vision, phone, hotline1, hotline2, email, address, business_hours) VALUES
+(1, 'Sky Border Solutions', 
+'Where compliance meets competence',
+'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.',
+'To foster enduring partnerships with organizations by delivering superior recruitment solutions that align with their strategic goals. We are committed to offering unparalleled client service, acting as a seamless extension of our clients\' human resource operations.',
+'To be the most trusted and recognized recruitment company in the Maldives, known for our professionalism, excellence and ability to deliver outstanding outcomes for both employers and candidates.',
+'+960 4000-444',
+'+960 755-9001', 
+'+960 911-1409',
+'info@skybordersolutions.com',
+'H. Dhoorihaa (5A), Kalaafaanu Hingun, Male\' City, Republic of Maldives',
+'Sunday - Thursday: 8:00 AM - 5:00 PM\nSaturday: 9:00 AM - 1:00 PM\nFriday: Closed');
 
-INSERT INTO service_categories (category_name, category_description, icon_class, color_theme, display_order) VALUES
-('Recruitment Services', 'Source and screen candidates across multiple sectors', 'fas fa-user-tie', 'indigo', 1),
-('HR Support Services', 'Comprehensive post-recruitment support and compliance', 'fas fa-users-cog', 'green', 2),
-('Permits & Visa Processing', 'Government approvals for legal expatriate employment', 'fas fa-passport', 'purple', 3),
-('Insurance Services', 'Comprehensive insurance coverage for expatriate employees', 'fas fa-shield-alt', 'blue', 4);
+-- Default statistics
+INSERT IGNORE INTO statistics (id, stat_name, stat_value, stat_label, display_order) VALUES
+(1, 'placements', '1000+', 'Successful Placements', 1),
+(2, 'partners', '50+', 'Partner Companies', 2),
+(3, 'compliance', '100%', 'Licensed & Compliant', 3);
 
-INSERT INTO portfolio_categories (category_name, category_slug, description, icon_class, color_theme, total_placements, total_projects, display_order) VALUES
-('Construction & Engineering', 'construction', 'Major construction and infrastructure projects', 'fas fa-hard-hat', 'blue', 200, 15, 1),
-('Tourism & Hospitality', 'hospitality', 'Leading resorts and hotels', 'fas fa-concierge-bell', 'yellow', 150, 25, 2),
-('Healthcare Services', 'healthcare', 'Hospitals, clinics, and medical facilities', 'fas fa-user-md', 'red', 80, 10, 3),
-('Professional Services', 'professional', 'IT, finance, administration, and consultancy', 'fas fa-laptop-code', 'green', 120, 30, 4);
+-- Default service categories
+INSERT IGNORE INTO service_categories (id, category_name, category_description, icon_class, color_theme, display_order) VALUES
+(1, 'Recruitment Services', 'Source and screen candidates across multiple sectors', 'fas fa-user-tie', 'indigo', 1),
+(2, 'HR Support Services', 'Comprehensive post-recruitment support and compliance', 'fas fa-users-cog', 'green', 2),
+(3, 'Permits & Visa Processing', 'Government approvals for legal expatriate employment', 'fas fa-passport', 'purple', 3),
+(4, 'Insurance Services', 'Comprehensive insurance coverage for expatriate employees', 'fas fa-shield-alt', 'blue', 4);
 
-INSERT INTO client_categories (category_name, category_description, icon_class, color_theme, display_order) VALUES
-('Construction & Engineering', 'Construction and engineering companies', 'fas fa-building', 'blue', 1),
-('Tourism & Hospitality', 'Hotels, resorts, and hospitality businesses', 'fas fa-hotel', 'yellow', 2),
-('Investments, Services & Trading', 'Investment firms and service companies', 'fas fa-chart-line', 'green', 3);
+-- Default portfolio categories
+INSERT IGNORE INTO portfolio_categories (id, category_name, category_slug, description, icon_class, color_theme, total_placements, total_projects, display_order) VALUES
+(1, 'Construction & Engineering', 'construction', 'Major construction and infrastructure projects', 'fas fa-hard-hat', 'blue', 200, 15, 1),
+(2, 'Tourism & Hospitality', 'hospitality', 'Leading resorts and hotels', 'fas fa-concierge-bell', 'yellow', 150, 25, 2),
+(3, 'Healthcare Services', 'healthcare', 'Hospitals, clinics, and medical facilities', 'fas fa-user-md', 'red', 80, 10, 3),
+(4, 'Professional Services', 'professional', 'IT, finance, administration, and consultancy', 'fas fa-laptop-code', 'green', 120, 30, 4);
 
-INSERT INTO website_settings (setting_key, setting_value, setting_type, setting_group, description) VALUES
-('site_maintenance', 'false', 'boolean', 'general', 'Enable maintenance mode'),
-('contact_form_enabled', 'true', 'boolean', 'contact', 'Enable contact form submissions'),
-('google_analytics_id', '', 'text', 'analytics', 'Google Analytics tracking ID'),
-('meta_description', 'Leading HR consultancy and recruitment firm in Maldives. Government-licensed professional workforce solutions.', 'textarea', 'seo', 'Site meta description'),
-('social_facebook', '', 'text', 'social', 'Facebook page URL'),
-('social_linkedin', '', 'text', 'social', 'LinkedIn page URL');
+-- Default client categories
+INSERT IGNORE INTO client_categories (id, category_name, category_description, icon_class, color_theme, display_order) VALUES
+(1, 'Construction & Engineering', 'Construction and engineering companies', 'fas fa-building', 'blue', 1),
+(2, 'Tourism & Hospitality', 'Hotels, resorts, and hospitality businesses', 'fas fa-hotel', 'yellow', 2),
+(3, 'Investments, Services & Trading', 'Investment firms and service companies', 'fas fa-chart-line', 'green', 3);

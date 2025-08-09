@@ -1,4 +1,9 @@
 <?php
+/**
+ * Company Information Management
+ * Sky Border Solutions CMS
+ */
+
 require_once 'classes/Auth.php';
 require_once 'classes/ContentManager.php';
 
@@ -6,31 +11,36 @@ $auth = new Auth();
 $auth->requireLogin();
 
 $contentManager = new ContentManager();
-$user = $auth->getCurrentUser();
+$currentUser = $auth->getCurrentUser();
 
 $success = '';
 $error = '';
 
 // Handle form submission
-if ($_POST) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = [
-        'company_name' => $_POST['company_name'] ?? '',
-        'tagline' => $_POST['tagline'] ?? '',
-        'description' => $_POST['description'] ?? '',
-        'mission' => $_POST['mission'] ?? '',
-        'vision' => $_POST['vision'] ?? '',
-        'phone' => $_POST['phone'] ?? '',
-        'hotline1' => $_POST['hotline1'] ?? '',
-        'hotline2' => $_POST['hotline2'] ?? '',
-        'email' => $_POST['email'] ?? '',
-        'address' => $_POST['address'] ?? '',
-        'business_hours' => $_POST['business_hours'] ?? ''
+        'company_name' => trim($_POST['company_name'] ?? ''),
+        'tagline' => trim($_POST['tagline'] ?? ''),
+        'description' => trim($_POST['description'] ?? ''),
+        'mission' => trim($_POST['mission'] ?? ''),
+        'vision' => trim($_POST['vision'] ?? ''),
+        'phone' => trim($_POST['phone'] ?? ''),
+        'hotline1' => trim($_POST['hotline1'] ?? ''),
+        'hotline2' => trim($_POST['hotline2'] ?? ''),
+        'email' => trim($_POST['email'] ?? ''),
+        'address' => trim($_POST['address'] ?? ''),
+        'business_hours' => trim($_POST['business_hours'] ?? '')
     ];
     
-    if ($contentManager->updateCompanyInfo($data)) {
-        $success = 'Company information updated successfully!';
+    // Validate required fields
+    if (empty($data['company_name']) || empty($data['email'])) {
+        $error = 'Company name and email are required.';
     } else {
-        $error = 'Failed to update company information.';
+        if ($contentManager->updateCompanyInfo($data)) {
+            $success = 'Company information updated successfully!';
+        } else {
+            $error = 'Failed to update company information. Please try again.';
+        }
     }
 }
 
@@ -42,285 +52,299 @@ $companyInfo = $contentManager->getCompanyInfo();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company Information - Sky Border Solutions Admin</title>
+    <title>Company Information - Sky Border Solutions CMS</title>
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; }</style>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .theme-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .modern-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .dark .modern-card {
+            background: linear-gradient(145deg, #1f2937 0%, #111827 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': {
+                            'green-light': '#9BC53D',
+                            'green': '#5CB85C',
+                            'green-dark': '#4A9649',
+                            'blue-light': '#5CB3CC',
+                            'blue': '#2E86AB',
+                            'blue-dark': '#1E5F7A',
+                            'teal': '#4ECDC4',
+                            'gray-light': '#F8FAFC',
+                            'gray': '#64748B',
+                            'gray-dark': '#334155'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="h-full">
+<body class="h-full bg-gray-50 dark:bg-gray-900 theme-transition">
+    <!-- Dark Mode Toggle -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="theme-toggle" class="p-2 rounded-lg bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 theme-transition">
+            <i id="theme-icon" class="fas fa-moon dark:hidden"></i>
+            <i id="theme-icon-dark" class="fas fa-sun hidden dark:block"></i>
+        </button>
+    </div>
+
     <div class="min-h-full">
         <!-- Navigation -->
-        <nav class="bg-white shadow-sm border-b border-gray-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0 flex items-center space-x-3">
-                            <img src="../images/logo.svg" alt="Sky Border Solutions" class="h-10 w-auto">
-                            <div>
-                                <p class="text-xs text-gray-500">Admin Panel</p>
-                            </div>
+        <nav class="bg-white dark:bg-gray-800 shadow-sm theme-transition">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex h-16 justify-between">
+                    <div class="flex">
+                        <div class="flex flex-shrink-0 items-center">
+                            <img src="../images/logo.svg" alt="Sky Border Solutions" class="h-8 w-auto">
+                            <span class="ml-3 text-xl font-bold text-gray-900 dark:text-white theme-transition">CMS Dashboard</span>
+                        </div>
+                        <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                            <a href="dashboard.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
+                                <i class="fas fa-tachometer-alt mr-2"></i>
+                                Dashboard
+                            </a>
+                            <a href="company-info.php" class="border-brand-blue text-gray-900 dark:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
+                                <i class="fas fa-building mr-2"></i>
+                                Company Info
+                            </a>
+                            <a href="services.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
+                                <i class="fas fa-cogs mr-2"></i>
+                                Services
+                            </a>
+                            <a href="clients.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
+                                <i class="fas fa-users mr-2"></i>
+                                Clients
+                            </a>
+                            <a href="messages.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
+                                <i class="fas fa-envelope mr-2"></i>
+                                Messages
+                            </a>
                         </div>
                     </div>
-                    
-                    <div class="flex items-center space-x-4">
-                        <div class="flex items-center space-x-3">
-                            <div class="text-right">
-                                <p class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($user['name']); ?></p>
-                                <p class="text-xs text-gray-500"><?php echo htmlspecialchars($user['role']); ?></p>
-                            </div>
-                            <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                <i class="fas fa-user text-indigo-600"></i>
+                    <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                        <div class="relative ml-3">
+                            <div class="flex items-center space-x-4">
+                                <span class="text-sm text-gray-700 dark:text-gray-300 theme-transition">
+                                    Welcome, <?php echo htmlspecialchars($currentUser['full_name']); ?>
+                                </span>
+                                <a href="logout.php" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                    <i class="fas fa-sign-out-alt mr-1"></i>
+                                    Logout
+                                </a>
                             </div>
                         </div>
-                        
-                        <a href="logout.php" class="text-gray-400 hover:text-gray-500 transition-colors" title="Logout">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </a>
                     </div>
                 </div>
             </div>
         </nav>
 
-        <div class="flex">
-            <!-- Sidebar -->
-            <div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 pt-16">
-                <div class="flex-1 flex flex-col min-h-0 bg-white border-r border-gray-200">
-                    <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-                        <nav class="mt-5 flex-1 px-2 space-y-1">
-                            <a href="dashboard.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-tachometer-alt text-gray-400 mr-3"></i>
-                                Dashboard
-                            </a>
-                            
-                            <a href="company-info.php" class="bg-indigo-50 text-indigo-700 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-building text-indigo-500 mr-3"></i>
-                                Company Info
-                            </a>
-                            
-                            <a href="statistics.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-chart-bar text-gray-400 mr-3"></i>
-                                Statistics
-                            </a>
-                            
-                            <a href="team.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-users text-gray-400 mr-3"></i>
-                                Team Members
-                            </a>
-                            
-                            <a href="services.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-cogs text-gray-400 mr-3"></i>
-                                Services
-                            </a>
-                            
-                            <a href="portfolio.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-briefcase text-gray-400 mr-3"></i>
-                                Portfolio
-                            </a>
-                            
-                            <a href="clients.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-handshake text-gray-400 mr-3"></i>
-                                Clients
-                            </a>
-                            
-                            <a href="messages.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-envelope text-gray-400 mr-3"></i>
-                                Messages
-                            </a>
-                            
-                            <a href="settings.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-cog text-gray-400 mr-3"></i>
-                                Settings
-                            </a>
-                        </nav>
+        <!-- Main Content -->
+        <div class="py-10">
+            <header>
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="flex items-center">
+                        <a href="dashboard.php" class="text-brand-blue hover:text-brand-blue-dark mr-4">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        <div>
+                            <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white theme-transition">Company Information</h1>
+                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 theme-transition">
+                                Update your company details that appear on the website
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Main content -->
-            <div class="md:pl-64 flex flex-col flex-1">
-                <main class="flex-1">
-                    <div class="py-6">
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                            <!-- Header -->
-                            <div class="mb-8">
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <h1 class="text-2xl font-bold text-gray-900">Company Information</h1>
-                                        <p class="mt-1 text-sm text-gray-600">Manage your company details and contact information</p>
-                                    </div>
-                                    <a href="../index.html" target="_blank" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                                        <i class="fas fa-external-link-alt mr-2"></i>
-                                        View Website
-                                    </a>
+            </header>
+            
+            <main>
+                <div class="mx-auto max-w-4xl sm:px-6 lg:px-8">
+                    <div class="mt-8">
+                        <!-- Success/Error Messages -->
+                        <?php if ($success): ?>
+                        <div class="mb-6 rounded-md bg-green-50 dark:bg-green-900/20 p-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-green-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-green-800 dark:text-green-400"><?php echo htmlspecialchars($success); ?></p>
                                 </div>
                             </div>
+                        </div>
+                        <?php endif; ?>
 
-                            <!-- Success/Error Messages -->
-                            <?php if ($success): ?>
-                            <div class="mb-6 bg-green-50 border border-green-200 rounded-md p-4">
-                                <div class="flex">
-                                    <div class="flex-shrink-0">
-                                        <i class="fas fa-check-circle text-green-400"></i>
-                                    </div>
-                                    <div class="ml-3">
-                                        <p class="text-sm text-green-800"><?php echo htmlspecialchars($success); ?></p>
-                                    </div>
+                        <?php if ($error): ?>
+                        <div class="mb-6 rounded-md bg-red-50 dark:bg-red-900/20 p-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-exclamation-circle text-red-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-medium text-red-800 dark:text-red-400"><?php echo htmlspecialchars($error); ?></p>
                                 </div>
                             </div>
-                            <?php endif; ?>
+                        </div>
+                        <?php endif; ?>
 
-                            <?php if ($error): ?>
-                            <div class="mb-6 bg-red-50 border border-red-200 rounded-md p-4">
-                                <div class="flex">
-                                    <div class="flex-shrink-0">
-                                        <i class="fas fa-exclamation-circle text-red-400"></i>
-                                    </div>
-                                    <div class="ml-3">
-                                        <p class="text-sm text-red-800"><?php echo htmlspecialchars($error); ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php endif; ?>
-
-                            <!-- Company Information Form -->
-                            <div class="bg-white shadow-sm ring-1 ring-gray-900/5 rounded-lg">
-                                <form method="POST" class="space-y-6 p-6">
+                        <!-- Form -->
+                        <div class="modern-card bg-white dark:bg-gray-800 shadow theme-transition">
+                            <form method="POST" class="space-y-6 p-6">
+                                <!-- Basic Information -->
+                                <div>
+                                    <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4 theme-transition">Basic Information</h3>
                                     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                                        <!-- Company Name -->
-                                        <div class="sm:col-span-2">
-                                            <label for="company_name" class="block text-sm font-medium text-gray-700">Company Name</label>
-                                            <input type="text" id="company_name" name="company_name" required
-                                                   value="<?php echo htmlspecialchars($companyInfo['company_name'] ?? ''); ?>"
-                                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                        </div>
-
-                                        <!-- Tagline -->
-                                        <div class="sm:col-span-2">
-                                            <label for="tagline" class="block text-sm font-medium text-gray-700">Tagline</label>
-                                            <input type="text" id="tagline" name="tagline"
-                                                   value="<?php echo htmlspecialchars($companyInfo['tagline'] ?? ''); ?>"
-                                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                        </div>
-
-                                        <!-- Description -->
-                                        <div class="sm:col-span-2">
-                                            <label for="description" class="block text-sm font-medium text-gray-700">Company Description</label>
-                                            <textarea id="description" name="description" rows="3"
-                                                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"><?php echo htmlspecialchars($companyInfo['description'] ?? ''); ?></textarea>
-                                        </div>
-
-                                        <!-- Mission -->
-                                        <div class="sm:col-span-2">
-                                            <label for="mission" class="block text-sm font-medium text-gray-700">Mission Statement</label>
-                                            <textarea id="mission" name="mission" rows="3"
-                                                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"><?php echo htmlspecialchars($companyInfo['mission'] ?? ''); ?></textarea>
-                                        </div>
-
-                                        <!-- Vision -->
-                                        <div class="sm:col-span-2">
-                                            <label for="vision" class="block text-sm font-medium text-gray-700">Vision Statement</label>
-                                            <textarea id="vision" name="vision" rows="3"
-                                                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"><?php echo htmlspecialchars($companyInfo['vision'] ?? ''); ?></textarea>
-                                        </div>
-
-                                        <!-- Phone -->
                                         <div>
-                                            <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-                                            <input type="text" id="phone" name="phone"
-                                                   value="<?php echo htmlspecialchars($companyInfo['phone'] ?? ''); ?>"
-                                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                            <label for="company_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Company Name *</label>
+                                            <input type="text" name="company_name" id="company_name" required
+                                                   value="<?php echo htmlspecialchars($companyInfo['company_name']); ?>"
+                                                   class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
                                         </div>
 
-                                        <!-- Email -->
                                         <div>
-                                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                            <input type="email" id="email" name="email"
-                                                   value="<?php echo htmlspecialchars($companyInfo['email'] ?? ''); ?>"
-                                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                        </div>
-
-                                        <!-- Hotline 1 -->
-                                        <div>
-                                            <label for="hotline1" class="block text-sm font-medium text-gray-700">Hotline 1</label>
-                                            <input type="text" id="hotline1" name="hotline1"
-                                                   value="<?php echo htmlspecialchars($companyInfo['hotline1'] ?? ''); ?>"
-                                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                        </div>
-
-                                        <!-- Hotline 2 -->
-                                        <div>
-                                            <label for="hotline2" class="block text-sm font-medium text-gray-700">Hotline 2</label>
-                                            <input type="text" id="hotline2" name="hotline2"
-                                                   value="<?php echo htmlspecialchars($companyInfo['hotline2'] ?? ''); ?>"
-                                                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                        </div>
-
-                                        <!-- Address -->
-                                        <div class="sm:col-span-2">
-                                            <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
-                                            <textarea id="address" name="address" rows="2"
-                                                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"><?php echo htmlspecialchars($companyInfo['address'] ?? ''); ?></textarea>
-                                        </div>
-
-                                        <!-- Business Hours -->
-                                        <div class="sm:col-span-2">
-                                            <label for="business_hours" class="block text-sm font-medium text-gray-700">Business Hours</label>
-                                            <textarea id="business_hours" name="business_hours" rows="3"
-                                                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"><?php echo htmlspecialchars($companyInfo['business_hours'] ?? ''); ?></textarea>
+                                            <label for="tagline" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Tagline</label>
+                                            <input type="text" name="tagline" id="tagline"
+                                                   value="<?php echo htmlspecialchars($companyInfo['tagline']); ?>"
+                                                   class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
                                         </div>
                                     </div>
 
-                                    <!-- Submit Button -->
-                                    <div class="flex justify-end">
-                                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    <div class="mt-6">
+                                        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Description</label>
+                                        <textarea name="description" id="description" rows="3"
+                                                  class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition"><?php echo htmlspecialchars($companyInfo['description']); ?></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Mission & Vision -->
+                                <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+                                    <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4 theme-transition">Mission & Vision</h3>
+                                    <div class="space-y-6">
+                                        <div>
+                                            <label for="mission" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Mission Statement</label>
+                                            <textarea name="mission" id="mission" rows="3"
+                                                      class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition"><?php echo htmlspecialchars($companyInfo['mission']); ?></textarea>
+                                        </div>
+
+                                        <div>
+                                            <label for="vision" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Vision Statement</label>
+                                            <textarea name="vision" id="vision" rows="3"
+                                                      class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition"><?php echo htmlspecialchars($companyInfo['vision']); ?></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Contact Information -->
+                                <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+                                    <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-white mb-4 theme-transition">Contact Information</h3>
+                                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                                        <div>
+                                            <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Main Phone</label>
+                                            <input type="text" name="phone" id="phone"
+                                                   value="<?php echo htmlspecialchars($companyInfo['phone']); ?>"
+                                                   class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
+                                        </div>
+
+                                        <div>
+                                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Email Address *</label>
+                                            <input type="email" name="email" id="email" required
+                                                   value="<?php echo htmlspecialchars($companyInfo['email']); ?>"
+                                                   class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
+                                        </div>
+
+                                        <div>
+                                            <label for="hotline1" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Hotline 1</label>
+                                            <input type="text" name="hotline1" id="hotline1"
+                                                   value="<?php echo htmlspecialchars($companyInfo['hotline1']); ?>"
+                                                   class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
+                                        </div>
+
+                                        <div>
+                                            <label for="hotline2" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Hotline 2</label>
+                                            <input type="text" name="hotline2" id="hotline2"
+                                                   value="<?php echo htmlspecialchars($companyInfo['hotline2']); ?>"
+                                                   class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-6">
+                                        <label for="address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Address</label>
+                                        <textarea name="address" id="address" rows="3"
+                                                  class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition"><?php echo htmlspecialchars($companyInfo['address']); ?></textarea>
+                                    </div>
+
+                                    <div class="mt-6">
+                                        <label for="business_hours" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Business Hours</label>
+                                        <textarea name="business_hours" id="business_hours" rows="3"
+                                                  class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition"><?php echo htmlspecialchars($companyInfo['business_hours']); ?></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+                                    <div class="flex justify-end space-x-3">
+                                        <a href="dashboard.php" class="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md py-2 px-4 inline-flex justify-center text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 theme-transition">
+                                            Cancel
+                                        </a>
+                                        <button type="submit" class="bg-gradient-to-r from-brand-blue to-brand-teal border border-transparent rounded-md py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:from-brand-blue-dark hover:to-brand-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-blue">
                                             <i class="fas fa-save mr-2"></i>
                                             Save Changes
                                         </button>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </main>
-            </div>
+                </div>
+            </main>
         </div>
     </div>
 
     <script>
-        // Auto-save form data to localStorage
-        const form = document.querySelector('form');
-        const inputs = form.querySelectorAll('input, textarea');
-        
-        inputs.forEach(input => {
-            input.addEventListener('input', function() {
-                localStorage.setItem('companyInfo_' + this.name, this.value);
-            });
-        });
-        
-        // Form validation
-        form.addEventListener('submit', function(e) {
-            const companyName = document.getElementById('company_name').value.trim();
+        // Dark mode functionality
+        function initTheme() {
+            const darkMode = localStorage.getItem('darkMode') === 'true' || 
+                           (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
             
-            if (!companyName) {
-                e.preventDefault();
-                alert('Company name is required');
-                return;
+            if (darkMode) {
+                document.documentElement.classList.add('dark');
             }
-            
-            // Show loading state
-            const button = form.querySelector('button[type="submit"]');
-            const originalText = button.innerHTML;
-            button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Saving...';
-            button.disabled = true;
-            
-            // Clear localStorage on successful save
-            setTimeout(() => {
-                inputs.forEach(input => {
-                    localStorage.removeItem('companyInfo_' + input.name);
-                });
-            }, 1000);
-        });
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        // Initialize theme on page load
+        initTheme();
+
+        // Theme toggle button
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
     </script>
 </body>
 </html>

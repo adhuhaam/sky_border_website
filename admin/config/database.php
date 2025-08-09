@@ -1,5 +1,9 @@
 <?php
-// Database configuration
+/**
+ * Database Configuration
+ * Sky Border Solutions CMS
+ */
+
 class Database {
     private $host = 'localhost';
     private $db_name = 'skydfcaf_sky_border';
@@ -12,17 +16,30 @@ class Database {
         
         try {
             $this->conn = new PDO(
-                "mysql:host=" . $this->host . ";dbname=" . $this->db_name,
+                "mysql:host=" . $this->host . ";dbname=" . $this->db_name . ";charset=utf8mb4",
                 $this->username,
                 $this->password,
-                array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION)
+                [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES => false,
+                ]
             );
-            $this->conn->exec("set names utf8");
         } catch(PDOException $exception) {
-            echo "Connection error: " . $exception->getMessage();
+            error_log("Database connection error: " . $exception->getMessage());
+            throw new Exception("Database connection failed");
         }
         
         return $this->conn;
+    }
+    
+    public function testConnection() {
+        try {
+            $conn = $this->getConnection();
+            return $conn !== null;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }
 ?>

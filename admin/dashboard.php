@@ -1,4 +1,9 @@
 <?php
+/**
+ * Admin Dashboard
+ * Sky Border Solutions CMS
+ */
+
 require_once 'classes/Auth.php';
 require_once 'classes/ContentManager.php';
 
@@ -6,30 +11,59 @@ $auth = new Auth();
 $auth->requireLogin();
 
 $contentManager = new ContentManager();
-$user = $auth->getCurrentUser();
+$currentUser = $auth->getCurrentUser();
 
-// Get dashboard stats
-$stats = $contentManager->getStatistics();
+// Get dashboard statistics
+$companyInfo = $contentManager->getCompanyInfo();
+$statistics = $contentManager->getStatistics();
 $recentMessages = $contentManager->getContactMessages('new', 5);
-$teamCount = count($contentManager->getTeamMembers());
-$clientCount = count($contentManager->getClients());
+$totalClients = count($contentManager->getClients());
+$totalServices = count($contentManager->getServiceCategories());
 ?>
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full bg-gray-50">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Sky Border Solutions</title>
+    <title>Dashboard - Sky Border Solutions CMS</title>
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .theme-transition { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .modern-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dark .modern-card {
+            background: linear-gradient(145deg, #1f2937 0%, #111827 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .modern-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        // Sky Border Solutions Brand Colors
                         'brand': {
                             'green-light': '#9BC53D',
                             'green': '#5CB85C',
@@ -47,10 +81,6 @@ $clientCount = count($contentManager->getClients());
             }
         }
     </script>
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .theme-transition { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
-    </style>
 </head>
 <body class="h-full bg-gray-50 dark:bg-gray-900 theme-transition">
     <!-- Dark Mode Toggle -->
@@ -63,236 +93,258 @@ $clientCount = count($contentManager->getClients());
 
     <div class="min-h-full">
         <!-- Navigation -->
-        <nav class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 theme-transition">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0 flex items-center space-x-3">
-                            <img src="../images/logo.svg" alt="Sky Border Solutions" class="h-10 w-auto">
-                            <div>
-                                <p class="text-xs text-gray-500">Admin Panel</p>
-                            </div>
+        <nav class="bg-white dark:bg-gray-800 shadow-sm theme-transition">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex h-16 justify-between">
+                    <div class="flex">
+                        <div class="flex flex-shrink-0 items-center">
+                            <img src="../images/logo.svg" alt="Sky Border Solutions" class="h-8 w-auto">
+                            <span class="ml-3 text-xl font-bold text-gray-900 dark:text-white theme-transition">CMS Dashboard</span>
+                        </div>
+                        <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                            <a href="dashboard.php" class="border-brand-blue text-gray-900 dark:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
+                                <i class="fas fa-tachometer-alt mr-2"></i>
+                                Dashboard
+                            </a>
+                            <a href="company-info.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
+                                <i class="fas fa-building mr-2"></i>
+                                Company Info
+                            </a>
+                            <a href="services.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
+                                <i class="fas fa-cogs mr-2"></i>
+                                Services
+                            </a>
+                            <a href="clients.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
+                                <i class="fas fa-users mr-2"></i>
+                                Clients
+                            </a>
+                            <a href="messages.php" class="border-transparent text-gray-500 dark:text-gray-300 hover:border-gray-300 hover:text-gray-700 dark:hover:text-white inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium theme-transition">
+                                <i class="fas fa-envelope mr-2"></i>
+                                Messages
+                                <?php if (count($recentMessages) > 0): ?>
+                                <span class="ml-1 bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full"><?php echo count($recentMessages); ?></span>
+                                <?php endif; ?>
+                            </a>
                         </div>
                     </div>
-                    
-                    <div class="flex items-center space-x-4">
-                        <!-- User Menu -->
-                        <div class="relative">
-                            <div class="flex items-center space-x-3">
-                                <div class="text-right">
-                                    <p class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($user['name']); ?></p>
-                                    <p class="text-xs text-gray-500"><?php echo htmlspecialchars($user['role']); ?></p>
-                                </div>
-                                <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                    <i class="fas fa-user text-indigo-600"></i>
-                                </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                        <div class="relative ml-3">
+                            <div class="flex items-center space-x-4">
+                                <span class="text-sm text-gray-700 dark:text-gray-300 theme-transition">
+                                    Welcome, <?php echo htmlspecialchars($currentUser['full_name']); ?>
+                                </span>
+                                <a href="logout.php" class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                                    <i class="fas fa-sign-out-alt mr-1"></i>
+                                    Logout
+                                </a>
                             </div>
                         </div>
-                        
-                        <a href="logout.php" class="text-gray-400 hover:text-gray-500 transition-colors" title="Logout">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </a>
                     </div>
                 </div>
             </div>
         </nav>
 
-        <div class="flex">
-            <!-- Sidebar -->
-            <div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 pt-16">
-                <div class="flex-1 flex flex-col min-h-0 bg-white border-r border-gray-200">
-                    <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-                        <nav class="mt-5 flex-1 px-2 space-y-1">
-                            <a href="dashboard.php" class="bg-brand-blue/10 text-brand-blue dark:bg-brand-blue-dark/20 dark:text-brand-blue-light group flex items-center px-2 py-2 text-sm font-medium rounded-md theme-transition">
-                                <i class="fas fa-tachometer-alt text-brand-blue dark:text-brand-blue-light mr-3"></i>
-                                Dashboard
-                            </a>
-                            
-                            <a href="company-info.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-building text-gray-400 mr-3"></i>
-                                Company Info
-                            </a>
-                            
-                            <a href="clients.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-users text-gray-400 mr-3"></i>
-                                Clients
-                            </a>
-                            
-                            <a href="statistics.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-chart-bar text-gray-400 mr-3"></i>
-                                Statistics
-                            </a>
-                            
-                            <a href="team.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-users text-gray-400 mr-3"></i>
-                                Team Members
-                            </a>
-                            
-                            <a href="services.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-cogs text-gray-400 mr-3"></i>
-                                Services
-                            </a>
-                            
-                            <a href="portfolio.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-briefcase text-gray-400 mr-3"></i>
-                                Portfolio
-                            </a>
-                            
-                            <a href="clients.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-handshake text-gray-400 mr-3"></i>
-                                Clients
-                            </a>
-                            
-                            <a href="messages.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-envelope text-gray-400 mr-3"></i>
-                                Messages
-                                <?php if (count($recentMessages) > 0): ?>
-                                <span class="ml-auto bg-red-100 text-red-800 text-xs font-medium px-2 py-0.5 rounded-full"><?php echo count($recentMessages); ?></span>
-                                <?php endif; ?>
-                            </a>
-                            
-                            <a href="settings.php" class="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                                <i class="fas fa-cog text-gray-400 mr-3"></i>
-                                Settings
-                            </a>
-                        </nav>
-                    </div>
+        <!-- Main Content -->
+        <div class="py-10">
+            <header>
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <h1 class="text-3xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white theme-transition">Dashboard</h1>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 theme-transition">
+                        Manage your website content and monitor activity
+                    </p>
                 </div>
-            </div>
-
-            <!-- Main content -->
-            <div class="md:pl-64 flex flex-col flex-1">
-                <main class="flex-1">
-                    <div class="py-6">
-                        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                            <!-- Dashboard Header -->
-                            <div class="mb-8">
-                                <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
-                                <p class="mt-1 text-sm text-gray-600">Welcome back, <?php echo htmlspecialchars($user['name']); ?>! Here's what's happening with Sky Border Solutions.</p>
+            </header>
+            
+            <main>
+                <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    <!-- Stats Cards -->
+                    <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                        <!-- Website Stats -->
+                        <div class="modern-card overflow-hidden rounded-lg bg-white dark:bg-gray-800 px-4 py-5 shadow theme-transition">
+                            <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400">Total Statistics</dt>
+                            <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white"><?php echo count($statistics); ?></dd>
+                            <div class="mt-2 flex items-center text-sm text-gray-600 dark:text-gray-300">
+                                <i class="fas fa-chart-bar text-brand-blue mr-1"></i>
+                                Website metrics
                             </div>
+                        </div>
 
-                            <!-- Stats Grid -->
-                            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-                                <!-- Website Stats -->
-                                <?php foreach ($stats as $stat): ?>
-                                <div class="bg-white overflow-hidden shadow-sm ring-1 ring-gray-900/5 rounded-lg">
-                                    <div class="p-5">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                                                    <i class="fas fa-chart-line text-indigo-600"></i>
-                                                </div>
-                                            </div>
-                                            <div class="ml-5 w-0 flex-1">
-                                                <dl>
-                                                    <dt class="text-sm font-medium text-gray-500 truncate"><?php echo htmlspecialchars($stat['stat_label']); ?></dt>
-                                                    <dd class="text-lg font-medium text-gray-900"><?php echo htmlspecialchars($stat['stat_value']); ?></dd>
-                                                </dl>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php endforeach; ?>
-
-                                <!-- Admin Stats -->
-                                <div class="bg-white overflow-hidden shadow-sm ring-1 ring-gray-900/5 rounded-lg">
-                                    <div class="p-5">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0">
-                                                <div class="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center">
-                                                    <i class="fas fa-users text-green-600"></i>
-                                                </div>
-                                            </div>
-                                            <div class="ml-5 w-0 flex-1">
-                                                <dl>
-                                                    <dt class="text-sm font-medium text-gray-500 truncate">Team Members</dt>
-                                                    <dd class="text-lg font-medium text-gray-900"><?php echo $teamCount; ?></dd>
-                                                </dl>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- Services -->
+                        <div class="modern-card overflow-hidden rounded-lg bg-white dark:bg-gray-800 px-4 py-5 shadow theme-transition">
+                            <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400">Active Services</dt>
+                            <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white"><?php echo $totalServices; ?></dd>
+                            <div class="mt-2 flex items-center text-sm text-gray-600 dark:text-gray-300">
+                                <i class="fas fa-cogs text-brand-teal mr-1"></i>
+                                Service categories
                             </div>
+                        </div>
 
-                            <!-- Recent Activity Grid -->
-                            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                                <!-- Recent Contact Messages -->
-                                <div class="bg-white shadow-sm ring-1 ring-gray-900/5 rounded-lg">
-                                    <div class="px-4 py-5 sm:p-6">
-                                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Recent Contact Messages</h3>
-                                        <?php if (empty($recentMessages)): ?>
-                                            <p class="text-gray-500 text-sm">No new messages</p>
-                                        <?php else: ?>
-                                            <div class="space-y-3">
-                                                <?php foreach ($recentMessages as $message): ?>
-                                                <div class="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg">
-                                                    <div class="flex-shrink-0">
-                                                        <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-                                                            <i class="fas fa-envelope text-blue-600 text-sm"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="min-w-0 flex-1">
-                                                        <p class="text-sm font-medium text-gray-900"><?php echo htmlspecialchars($message['name']); ?></p>
-                                                        <p class="text-sm text-gray-500"><?php echo htmlspecialchars($message['email']); ?></p>
-                                                        <p class="text-sm text-gray-600 mt-1"><?php echo htmlspecialchars(substr($message['message'], 0, 100)) . '...'; ?></p>
-                                                        <p class="text-xs text-gray-400 mt-1"><?php echo date('M j, Y g:i A', strtotime($message['created_at'])); ?></p>
-                                                    </div>
-                                                </div>
-                                                <?php endforeach; ?>
-                                            </div>
-                                            <div class="mt-4">
-                                                <a href="messages.php" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                                                    View all messages <i class="fas fa-arrow-right ml-1"></i>
-                                                </a>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
+                        <!-- Clients -->
+                        <div class="modern-card overflow-hidden rounded-lg bg-white dark:bg-gray-800 px-4 py-5 shadow theme-transition">
+                            <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400">Total Clients</dt>
+                            <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white"><?php echo $totalClients; ?></dd>
+                            <div class="mt-2 flex items-center text-sm text-gray-600 dark:text-gray-300">
+                                <i class="fas fa-users text-brand-green mr-1"></i>
+                                Active clients
+                            </div>
+                        </div>
 
-                                <!-- Quick Actions -->
-                                <div class="bg-white shadow-sm ring-1 ring-gray-900/5 rounded-lg">
-                                    <div class="px-4 py-5 sm:p-6">
-                                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Quick Actions</h3>
-                                        <div class="grid grid-cols-2 gap-4">
-                                            <a href="company-info.php" class="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                                                <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center mb-2">
-                                                    <i class="fas fa-building text-indigo-600"></i>
-                                                </div>
-                                                <span class="text-sm font-medium text-gray-900">Company Info</span>
-                                            </a>
-                                            
-                                            <a href="team.php" class="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                                                <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center mb-2">
-                                                    <i class="fas fa-users text-green-600"></i>
-                                                </div>
-                                                <span class="text-sm font-medium text-gray-900">Team</span>
-                                            </a>
-                                            
-                                            <a href="services.php" class="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                                                <div class="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center mb-2">
-                                                    <i class="fas fa-cogs text-purple-600"></i>
-                                                </div>
-                                                <span class="text-sm font-medium text-gray-900">Services</span>
-                                            </a>
-                                            
-                                            <a href="clients.php" class="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                                                <div class="h-10 w-10 rounded-full bg-yellow-100 flex items-center justify-center mb-2">
-                                                    <i class="fas fa-handshake text-yellow-600"></i>
-                                                </div>
-                                                <span class="text-sm font-medium text-gray-900">Clients</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- Messages -->
+                        <div class="modern-card overflow-hidden rounded-lg bg-white dark:bg-gray-800 px-4 py-5 shadow theme-transition">
+                            <dt class="truncate text-sm font-medium text-gray-500 dark:text-gray-400">New Messages</dt>
+                            <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900 dark:text-white"><?php echo count($recentMessages); ?></dd>
+                            <div class="mt-2 flex items-center text-sm text-gray-600 dark:text-gray-300">
+                                <i class="fas fa-envelope text-orange-500 mr-1"></i>
+                                Unread messages
                             </div>
                         </div>
                     </div>
-                </main>
-            </div>
+
+                    <!-- Quick Actions -->
+                    <div class="mt-8">
+                        <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4 theme-transition">Quick Actions</h2>
+                        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                            <a href="company-info.php" class="modern-card group block rounded-lg bg-white dark:bg-gray-800 p-6 hover:shadow-md theme-transition">
+                                <div class="flex items-center">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-brand-blue to-brand-teal">
+                                        <i class="fas fa-building text-white"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-brand-blue theme-transition">Edit Company Info</h3>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Update company details</p>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a href="services.php" class="modern-card group block rounded-lg bg-white dark:bg-gray-800 p-6 hover:shadow-md theme-transition">
+                                <div class="flex items-center">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-brand-teal to-brand-green">
+                                        <i class="fas fa-cogs text-white"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-brand-teal theme-transition">Manage Services</h3>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Add or edit services</p>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a href="clients.php" class="modern-card group block rounded-lg bg-white dark:bg-gray-800 p-6 hover:shadow-md theme-transition">
+                                <div class="flex items-center">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-brand-green to-brand-blue">
+                                        <i class="fas fa-users text-white"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-brand-green theme-transition">Manage Clients</h3>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Add or edit clients</p>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a href="messages.php" class="modern-card group block rounded-lg bg-white dark:bg-gray-800 p-6 hover:shadow-md theme-transition">
+                                <div class="flex items-center">
+                                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-orange-400 to-red-500">
+                                        <i class="fas fa-envelope text-white"></i>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h3 class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-orange-500 theme-transition">View Messages</h3>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Check contact messages</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Recent Messages -->
+                    <?php if (!empty($recentMessages)): ?>
+                    <div class="mt-8">
+                        <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4 theme-transition">Recent Messages</h2>
+                        <div class="modern-card overflow-hidden bg-white dark:bg-gray-800 shadow theme-transition">
+                            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <?php foreach ($recentMessages as $message): ?>
+                                <li class="px-6 py-4">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-brand-blue/10">
+                                                <i class="fas fa-user text-brand-blue"></i>
+                                            </div>
+                                            <div class="ml-4">
+                                                <p class="text-sm font-medium text-gray-900 dark:text-white theme-transition">
+                                                    <?php echo htmlspecialchars($message['name']); ?>
+                                                </p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400 theme-transition">
+                                                    <?php echo htmlspecialchars($message['email']); ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="text-sm text-gray-900 dark:text-white theme-transition">
+                                                <?php echo date('M j, Y', strtotime($message['created_at'])); ?>
+                                            </p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 theme-transition">
+                                                <?php echo date('g:i A', strtotime($message['created_at'])); ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <p class="text-sm text-gray-600 dark:text-gray-300 theme-transition">
+                                            <?php echo htmlspecialchars(substr($message['message'], 0, 100)) . (strlen($message['message']) > 100 ? '...' : ''); ?>
+                                        </p>
+                                    </div>
+                                </li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 theme-transition">
+                                <a href="messages.php" class="text-sm font-medium text-brand-blue hover:text-brand-blue-dark theme-transition">
+                                    View all messages →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <!-- System Status -->
+                    <div class="mt-8">
+                        <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4 theme-transition">System Status</h2>
+                        <div class="modern-card bg-white dark:bg-gray-800 p-6 theme-transition">
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                                <div class="text-center">
+                                    <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/20">
+                                        <i class="fas fa-database text-green-600 dark:text-green-400"></i>
+                                    </div>
+                                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white theme-transition">Database</h3>
+                                    <p class="text-xs text-green-600 dark:text-green-400">Connected</p>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/20">
+                                        <i class="fas fa-globe text-green-600 dark:text-green-400"></i>
+                                    </div>
+                                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white theme-transition">Website</h3>
+                                    <p class="text-xs text-green-600 dark:text-green-400">Online</p>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/20">
+                                        <i class="fas fa-shield-alt text-green-600 dark:text-green-400"></i>
+                                    </div>
+                                    <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white theme-transition">Security</h3>
+                                    <p class="text-xs text-green-600 dark:text-green-400">Protected</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 text-center">
+                                <a href="../check-setup.php" target="_blank" class="text-sm text-brand-blue hover:text-brand-blue-dark theme-transition">
+                                    <i class="fas fa-external-link-alt mr-1"></i>
+                                    View Detailed System Status
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
 
-    <!-- Mobile menu button (you can add mobile menu functionality here) -->
     <script>
         // Dark mode functionality
         function initTheme() {
@@ -301,48 +353,19 @@ $clientCount = count($contentManager->getClients());
             
             if (darkMode) {
                 document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
             }
         }
 
         function toggleTheme() {
-            const isDark = document.documentElement.classList.contains('dark');
-            
-            if (isDark) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('darkMode', 'false');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('darkMode', 'true');
-            }
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
         }
 
-        // Initialize theme and interactions
-        document.addEventListener('DOMContentLoaded', function() {
-            initTheme();
-            
-            // Theme toggle button
-            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-            
-            console.log('Sky Border Solutions Admin Dashboard Loaded');
-        });
+        // Initialize theme on page load
+        initTheme();
 
-        // Auto-refresh dashboard every 5 minutes
-        setTimeout(function() {
-            window.location.reload();
-        }, 300000);
-        
-        // Listen for system theme changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-            if (!localStorage.getItem('darkMode')) {
-                if (e.matches) {
-                    document.documentElement.classList.add('dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                }
-            }
-        });
+        // Theme toggle button
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
     </script>
 </body>
 </html>
