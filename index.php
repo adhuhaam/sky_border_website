@@ -968,39 +968,69 @@ if ($_POST && isset($_POST['contact_form'])) {
                             Our Insurance Partners
                         </h4>
                         
-                        <!-- Insurance Providers Grid -->
+                        <!-- Dynamic Insurance Providers Grid -->
                         <div class="grid grid-cols-2 gap-4 md:grid-cols-4 mb-6">
-                            <!-- Provider 1 - Placeholder -->
-                            <div class="flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors theme-transition">
-                                <div class="h-12 w-20 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center mb-3">
-                                    <i class="fas fa-shield-alt text-gray-400 text-lg"></i>
+                            <?php 
+                            // Get insurance providers for display
+                            $displayProviders = [];
+                            if ($databaseAvailable && $contentManager) {
+                                try {
+                                    $allInsuranceProviders = $contentManager->getInsuranceProviders();
+                                    // Get featured providers first, then others
+                                    $featured = array_filter($allInsuranceProviders, function($p) { return $p['is_featured'] == 1; });
+                                    $others = array_filter($allInsuranceProviders, function($p) { return $p['is_featured'] != 1; });
+                                    $displayProviders = array_merge($featured, $others);
+                                    $displayProviders = array_slice($displayProviders, 0, 4); // Show max 4
+                                } catch (Exception $e) {
+                                    $displayProviders = [];
+                                }
+                            }
+                            
+                            // Fallback providers if none from database
+                            if (empty($displayProviders)) {
+                                $displayProviders = [
+                                    ['provider_name' => 'Maldivian Health Insurance', 'logo_url' => '', 'is_featured' => 1],
+                                    ['provider_name' => 'Allied Insurance Maldives', 'logo_url' => '', 'is_featured' => 1],
+                                    ['provider_name' => 'Maldives Travel Insurance', 'logo_url' => '', 'is_featured' => 0],
+                                    ['provider_name' => 'Professional Coverage Ltd', 'logo_url' => '', 'is_featured' => 0]
+                                ];
+                            }
+                            
+                            foreach ($displayProviders as $provider): ?>
+                            <div class="group flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300 hover:scale-105 theme-transition">
+                                <?php if (!empty($provider['logo_url']) && file_exists($provider['logo_url'])): ?>
+                                <div class="h-12 w-20 bg-white dark:bg-gray-700 rounded-lg flex items-center justify-center mb-3 p-2 group-hover:shadow-md transition-shadow duration-200">
+                                    <img src="<?php echo htmlspecialchars($provider['logo_url']); ?>" 
+                                         alt="<?php echo htmlspecialchars($provider['provider_name']); ?>" 
+                                         class="h-full w-full object-contain">
                                 </div>
-                                <p class="text-xs font-medium text-gray-600 dark:text-gray-400 text-center">Insurance Provider 1</p>
-                            </div>
-
-                            <!-- Provider 2 - Placeholder -->
-                            <div class="flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors theme-transition">
-                                <div class="h-12 w-20 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center mb-3">
-                                    <i class="fas fa-shield-alt text-gray-400 text-lg"></i>
+                                <?php else: ?>
+                                <div class="h-12 w-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center mb-3 group-hover:shadow-lg transition-shadow duration-200">
+                                    <i class="fas fa-shield-alt text-white text-lg"></i>
                                 </div>
-                                <p class="text-xs font-medium text-gray-600 dark:text-gray-400 text-center">Insurance Provider 2</p>
-                            </div>
-
-                            <!-- Provider 3 - Placeholder -->
-                            <div class="flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors theme-transition">
-                                <div class="h-12 w-20 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center mb-3">
-                                    <i class="fas fa-shield-alt text-gray-400 text-lg"></i>
+                                <?php endif; ?>
+                                
+                                <p class="text-xs font-medium text-gray-600 dark:text-gray-400 text-center line-clamp-2" title="<?php echo htmlspecialchars($provider['provider_name']); ?>">
+                                    <?php echo htmlspecialchars($provider['provider_name']); ?>
+                                </p>
+                                
+                                <?php if (isset($provider['is_featured']) && $provider['is_featured']): ?>
+                                <div class="mt-1 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400">
+                                    <i class="fas fa-star mr-1 text-xs"></i>
+                                    Featured
                                 </div>
-                                <p class="text-xs font-medium text-gray-600 dark:text-gray-400 text-center">Insurance Provider 3</p>
+                                <?php endif; ?>
                             </div>
-
-                            <!-- Provider 4 - Placeholder -->
-                            <div class="flex flex-col items-center p-4 rounded-xl bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors theme-transition">
-                                <div class="h-12 w-20 bg-gray-200 dark:bg-gray-600 rounded-lg flex items-center justify-center mb-3">
-                                    <i class="fas fa-shield-alt text-gray-400 text-lg"></i>
-                                </div>
-                                <p class="text-xs font-medium text-gray-600 dark:text-gray-400 text-center">Insurance Provider 4</p>
-                            </div>
+                            <?php endforeach; ?>
+                        </div>
+                        
+                        <!-- View All Providers Link -->
+                        <div class="text-center mb-6">
+                            <a href="/insurance-providers.php" class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/40 transition-colors duration-200">
+                                <i class="fas fa-eye mr-2"></i>
+                                View All Insurance Partners
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
                         </div>
 
                         <!-- Comprehensive Coverage Areas -->
