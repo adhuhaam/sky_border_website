@@ -69,10 +69,192 @@ if ($_POST && isset($_POST['contact_form'])) {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .theme-transition { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
-        .gradient-bg { background: linear-gradient(135deg, #2E86AB 0%, #4ECDC4 100%); }
-        .gradient-text { background: linear-gradient(135deg, #2E86AB 0%, #4ECDC4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            scroll-behavior: smooth;
+        }
+        
+        /* Enhanced Transitions */
+        .theme-transition { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        
+        /* Modern Gradients */
+        .gradient-bg { 
+            background: linear-gradient(135deg, #2E86AB 0%, #4ECDC4 50%, #5CB85C 100%); 
+        }
+        .gradient-text { 
+            background: linear-gradient(135deg, #2E86AB 0%, #4ECDC4 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text; 
+        }
+        .gradient-border {
+            background: linear-gradient(135deg, #2E86AB, #4ECDC4, #5CB85C);
+            border-radius: 0.75rem;
+            padding: 2px;
+        }
+        .gradient-border-inner {
+            background: white;
+            border-radius: 0.625rem;
+            height: 100%;
+        }
+        .dark .gradient-border-inner {
+            background: rgb(17 24 39);
+        }
+        
+        /* Advanced Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(46, 134, 171, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(46, 134, 171, 0.6); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        .animate-fadeInUp { animation: fadeInUp 0.8s ease-out; }
+        .animate-fadeInLeft { animation: fadeInLeft 0.8s ease-out; }
+        .animate-fadeInRight { animation: fadeInRight 0.8s ease-out; }
+        .animate-scale { animation: scale 2s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        .animate-shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        /* Enhanced Hover Effects */
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .hover-glow:hover {
+            box-shadow: 0 0 30px rgba(46, 134, 171, 0.3);
+        }
+        
+        /* Glass Morphism Effect */
+        .glass {
+            backdrop-filter: blur(16px) saturate(180%);
+            background-color: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.125);
+        }
+        .dark .glass {
+            background-color: rgba(17, 24, 39, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Modern Card Styles */
+        .modern-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .dark .modern-card {
+            background: linear-gradient(145deg, #1f2937 0%, #111827 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .modern-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        .dark .modern-card:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Enhanced Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #2E86AB 0%, #4ECDC4 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(46, 134, 171, 0.4);
+        }
+        
+        /* Scroll Reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Parallax Background */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #2E86AB, #4ECDC4);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #1E5F7A, #2E86AB);
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
     </style>
     
     <script>
@@ -153,65 +335,93 @@ if ($_POST && isset($_POST['contact_form'])) {
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Enhanced Hero Section -->
     <section id="home" class="relative overflow-hidden bg-white dark:bg-gray-900 theme-transition">
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0 -z-20">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-brand-blue/5 via-brand-teal/5 to-brand-green/5 dark:from-brand-blue/10 dark:via-brand-teal/10 dark:to-brand-green/10"></div>
+            <div class="absolute top-10 left-10 w-72 h-72 bg-brand-blue/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
+            <div class="absolute top-0 right-4 w-72 h-72 bg-brand-teal/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style="animation-delay: 2s;"></div>
+            <div class="absolute -bottom-8 left-20 w-72 h-72 bg-brand-green/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style="animation-delay: 4s;"></div>
+        </div>
+        
+        <!-- Enhanced Background gradient -->
+        <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
+            <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-brand-blue via-brand-teal to-brand-green opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem] animate-pulse-glow" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+        </div>
+        
         <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
             <div class="text-center">
-                <!-- Badges -->
-                <div class="mx-auto mb-6 flex justify-center space-x-4">
-                    <div class="inline-flex items-center rounded-full bg-brand-green/10 dark:bg-brand-green/20 px-3 py-1 text-sm font-medium text-brand-green-dark dark:text-brand-green-light ring-1 ring-inset ring-brand-green/20 dark:ring-brand-green/30">
-                        <i class="fas fa-certificate mr-2"></i>
+                <!-- Enhanced Badges -->
+                <div class="mx-auto mb-8 flex flex-wrap justify-center gap-4 scroll-reveal">
+                    <div class="inline-flex items-center rounded-full bg-brand-green/10 dark:bg-brand-green/20 px-4 py-2 text-sm font-medium text-brand-green-dark dark:text-brand-green-light ring-1 ring-inset ring-brand-green/20 dark:ring-brand-green/30 hover-glow hover-lift animate-fadeInLeft">
+                        <i class="fas fa-certificate mr-2 animate-pulse"></i>
                         Government Licensed
                     </div>
-                    <div class="inline-flex items-center rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 px-3 py-1 text-sm font-medium text-brand-blue-dark dark:text-brand-blue-light ring-1 ring-inset ring-brand-blue/20 dark:ring-brand-blue/30">
-                        <i class="fas fa-award mr-2"></i>
+                    <div class="inline-flex items-center rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 px-4 py-2 text-sm font-medium text-brand-blue-dark dark:text-brand-blue-light ring-1 ring-inset ring-brand-blue/20 dark:ring-brand-blue/30 hover-glow hover-lift animate-fadeInRight" style="animation-delay: 0.2s;">
+                        <i class="fas fa-award mr-2 animate-pulse"></i>
                         HR Consulting & Recruitment Agency
                     </div>
                 </div>
 
-                <!-- Main Heading -->
-                <h1 class="mx-auto max-w-4xl text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-7xl theme-transition">
+                <!-- Enhanced Main Heading -->
+                <h1 class="mx-auto max-w-4xl text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-7xl theme-transition scroll-reveal animate-fadeInUp" style="animation-delay: 0.4s;">
                     <?php 
                     $companyName = $companyInfo['company_name'] ?? 'Sky Border Solutions';
                     $nameParts = explode(' ', $companyName);
                     if (count($nameParts) >= 2) {
                         echo htmlspecialchars(implode(' ', array_slice($nameParts, 0, -1))) . ' ';
-                        echo '<span class="gradient-text">' . htmlspecialchars(end($nameParts)) . '</span>';
+                        echo '<span class="gradient-text animate-shimmer">' . htmlspecialchars(end($nameParts)) . '</span>';
                     } else {
-                        echo '<span class="gradient-text">' . htmlspecialchars($companyName) . '</span>';
+                        echo '<span class="gradient-text animate-shimmer">' . htmlspecialchars($companyName) . '</span>';
                     }
                     ?>
                 </h1>
 
-                <!-- Tagline -->
-                <p class="mx-auto mt-6 max-w-2xl text-xl leading-8 text-gray-600 dark:text-gray-300 theme-transition">
+                <!-- Enhanced Tagline -->
+                <p class="mx-auto mt-8 max-w-2xl text-xl leading-8 text-gray-600 dark:text-gray-300 theme-transition scroll-reveal animate-fadeInUp" style="animation-delay: 0.6s;">
+                    <i class="fas fa-quote-left text-brand-blue/60 mr-2"></i>
                     <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
+                    <i class="fas fa-quote-right text-brand-blue/60 ml-2"></i>
                 </p>
 
-                <!-- Description -->
-                <p class="mx-auto mt-4 max-w-3xl text-lg leading-8 text-gray-500 dark:text-gray-400 theme-transition">
+                <!-- Enhanced Description -->
+                <p class="mx-auto mt-8 max-w-3xl text-lg leading-8 text-gray-500 dark:text-gray-400 theme-transition scroll-reveal animate-fadeInUp" style="animation-delay: 0.8s;">
                     <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
                 </p>
 
-                <!-- CTA Buttons -->
-                <div class="mt-10 flex items-center justify-center gap-x-6">
-                    <a href="#contact" class="rounded-lg bg-gradient-to-r from-brand-blue to-brand-teal px-6 py-3 text-sm font-semibold text-white shadow-lg hover:from-brand-blue-dark hover:to-brand-blue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue transition-all duration-200 transform hover:scale-105">
-                        <i class="fas fa-phone mr-2"></i>
+                <!-- Enhanced CTA Buttons -->
+                <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6 scroll-reveal animate-fadeInUp" style="animation-delay: 1s;">
+                    <a href="#contact" class="btn-primary rounded-lg px-8 py-4 text-sm font-semibold text-white shadow-xl hover-lift focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue">
+                        <i class="fas fa-comments mr-2"></i>
                         Get Started
                     </a>
-                    <a href="#services" class="rounded-lg bg-white dark:bg-gray-800 px-6 py-3 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 theme-transition">
-                        <i class="fas fa-arrow-down mr-2"></i>
+                    <a href="#services" class="group modern-card rounded-lg px-8 py-4 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 theme-transition hover-lift">
+                        <i class="fas fa-arrow-down mr-2 transition-transform group-hover:translate-y-1"></i>
                         Our Services
                     </a>
                 </div>
 
-                <!-- Stats -->
-                <div class="mx-auto mt-16 max-w-5xl">
-                    <div class="grid grid-cols-1 gap-px bg-gray-900/5 dark:bg-white/5 sm:grid-cols-3">
-                        <?php foreach ($stats as $stat): ?>
-                        <div class="bg-white dark:bg-gray-800 px-4 py-6 text-center theme-transition">
-                            <p class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white"><?php echo htmlspecialchars($stat['stat_value']); ?></p>
-                            <p class="text-sm font-medium leading-6 text-gray-500 dark:text-gray-400"><?php echo htmlspecialchars($stat['stat_label']); ?></p>
+                <!-- Enhanced Stats -->
+                <div class="mx-auto mt-20 max-w-5xl scroll-reveal animate-fadeInUp" style="animation-delay: 1.2s;">
+                    <div class="grid grid-cols-1 gap-8 sm:grid-cols-3">
+                        <?php foreach ($stats as $index => $stat): ?>
+                        <div class="modern-card bg-white dark:bg-gray-800 px-6 py-8 text-center hover-lift theme-transition animate-fadeInUp" style="animation-delay: <?php echo 1.4 + ($index * 0.2); ?>s;">
+                            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-brand-blue to-brand-teal animate-scale">
+                                <i class="fas fa-<?php 
+                                    switch($stat['stat_name']) {
+                                        case 'placements': echo 'users';
+                                            break;
+                                        case 'partners': echo 'handshake';
+                                            break;
+                                        case 'compliance': echo 'shield-alt';
+                                            break;
+                                        default: echo 'chart-line';
+                                    }
+                                ?> text-white text-xl"></i>
+                            </div>
+                            <p class="text-4xl font-bold tracking-tight gradient-text"><?php echo htmlspecialchars($stat['stat_value']); ?></p>
+                            <p class="mt-2 text-sm font-medium leading-6 text-gray-500 dark:text-gray-400"><?php echo htmlspecialchars($stat['stat_label']); ?></p>
                         </div>
                         <?php endforeach; ?>
                     </div>
@@ -290,10 +500,10 @@ if ($_POST && isset($_POST['contact_form'])) {
 
             <!-- Client Categories -->
             <?php 
-            // Group clients by category (simple structure)
+            // Group clients by category (using real database structure)
             $groupedClients = [];
             foreach ($clients as $client) {
-                $categoryName = $client['category'];
+                $categoryName = $client['category_name'] ?? 'Other';
                 if (!isset($groupedClients[$categoryName])) {
                     $groupedClients[$categoryName] = [];
                 }
@@ -697,6 +907,76 @@ if ($_POST && isset($_POST['contact_form'])) {
                         block: 'start'
                     });
                 }
+            });
+        });
+        
+        // Enhanced Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all scroll-reveal elements
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Enhanced button interactions with ripple effect
+        document.querySelectorAll('.btn-primary').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple-animation 0.6s linear';
+                ripple.style.pointerEvents = 'none';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Add enhanced hover effects for cards
+        document.querySelectorAll('.modern-card, .hover-lift').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+        
+        // Parallax effect for floating elements
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            document.querySelectorAll('.animate-float').forEach((element, index) => {
+                const speed = 0.5 + (index * 0.1);
+                element.style.transform = `translateY(${rate * speed}px)`;
             });
         });
     </script>
