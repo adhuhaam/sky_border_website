@@ -280,14 +280,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                 transform: translateX(0%);
             }
         }
-        @keyframes counterPulse {
-            0%, 100% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 0.3;
-            }
-        }
+
         
         .animate-float { animation: float 3s ease-in-out infinite; }
         .animate-fadeInUp { animation: fadeInUp 0.8s ease-out; }
@@ -297,7 +290,7 @@ if ($_POST && isset($_POST['contact_form'])) {
         .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
         .animate-countUp { animation: countUp 0.6s ease-out; }
         .animate-progressFill { animation: progressFill 2s ease-out; }
-        .animate-counterPulse { animation: counterPulse 1s ease-in-out infinite; }
+
         
         /* Enhanced Mobile Animations */
         @media (max-width: 768px) {
@@ -577,99 +570,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                     </a>
                 </div>
 
-                <!-- Enhanced Stats with Real-time Count Animation -->
-                <div class="mx-auto mt-16 max-w-7xl scroll-reveal" style="animation-delay: 1s;">
-                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
-                        <?php foreach ($stats as $index => $stat): ?>
-                        <div class="group relative bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-6 text-center border border-gray-200/50 dark:border-gray-700/50 hover:border-gray-300/70 dark:hover:border-gray-600/70 transition-all duration-300 hover:scale-105 hover:shadow-lg scroll-reveal" style="animation-delay: <?php echo 1.2 + ($index * 0.1); ?>s;">
-                            <!-- Background Gradient -->
-                            <div class="absolute inset-0 rounded-xl bg-gradient-to-br <?php 
-                                switch($stat['stat_name']) {
-                                    case 'placements': echo 'from-brand-blue/5 to-brand-teal/5';
-                                        break;
-                                    case 'partners': echo 'from-brand-teal/5 to-brand-green/5';
-                                        break;
-                                    case 'compliance': echo 'from-brand-green/5 to-brand-blue/5';
-                                        break;
-                                    default: echo 'from-gray-100/50 to-gray-200/50 dark:from-gray-700/50 dark:to-gray-600/50';
-                                }
-                            ?> opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                            
-                            <!-- Icon -->
-                            <div class="relative z-10 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r <?php 
-                                switch($stat['stat_name']) {
-                                    case 'placements': echo 'from-brand-blue to-brand-teal';
-                                        break;
-                                    case 'partners': echo 'from-brand-teal to-brand-green';
-                                        break;
-                                    case 'compliance': echo 'from-brand-green to-brand-blue';
-                                        break;
-                                    default: echo 'from-gray-400 to-gray-600';
-                                }
-                            ?> shadow-md group-hover:shadow-lg transition-all duration-300">
-                                <i class="fas fa-<?php 
-                                    switch($stat['stat_name']) {
-                                        case 'placements': echo 'users';
-                                            break;
-                                        case 'partners': echo 'handshake';
-                                            break;
-                                        case 'compliance': echo 'shield-alt';
-                                            break;
-                                        default: echo 'chart-line';
-                                    }
-                                ?> text-white text-lg group-hover:scale-110 transition-transform duration-300"></i>
-                            </div>
-                            
-                            <!-- Animated Value -->
-                            <div class="relative z-10">
-                                <?php 
-                                // Extract numeric value for animation
-                                $numericValue = preg_replace('/[^0-9]/', '', $stat['stat_value']);
-                                $suffix = preg_replace('/[0-9]/', '', $stat['stat_value']);
-                                ?>
-                                <div class="relative overflow-hidden">
-                                    <p class="text-3xl sm:text-4xl font-bold tracking-tight bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 bg-clip-text text-transparent">
-                                        <span class="counter-value" 
-                                              data-target="<?php echo $numericValue; ?>" 
-                                              data-suffix="<?php echo htmlspecialchars($suffix); ?>"
-                                              data-duration="2000">0<?php echo htmlspecialchars($suffix); ?></span>
-                                    </p>
-                                    <!-- Pulse effect during counting -->
-                                    <div class="absolute inset-0 bg-gradient-to-r from-brand-blue/10 to-brand-teal/10 rounded opacity-0 counter-pulse"></div>
-                                </div>
-                                <p class="mt-2 text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-300 leading-tight">
-                                    <?php echo htmlspecialchars($stat['stat_label']); ?>
-                                </p>
-                            </div>
 
-                            <!-- Progress bar animation -->
-                            <div class="relative z-10 mt-3">
-                                <div class="h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                                    <div class="h-full bg-gradient-to-r <?php 
-                                        switch($stat['stat_name']) {
-                                            case 'placements': echo 'from-brand-blue to-brand-teal';
-                                                break;
-                                            case 'partners': echo 'from-brand-teal to-brand-green';
-                                                break;
-                                            case 'compliance': echo 'from-brand-green to-brand-blue';
-                                                break;
-                                            default: echo 'from-gray-400 to-gray-600';
-                                        }
-                                    ?> rounded-full transform -translate-x-full progress-bar transition-transform duration-2000 ease-out"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                    
-                    <!-- Live Update Indicator -->
-                    <div class="text-center mt-6">
-                        <div class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium">
-                            <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                            Live Statistics
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Enhanced Scroll Indicator -->
                 <div class="mt-20">
@@ -1467,20 +1368,18 @@ if ($_POST && isset($_POST['contact_form'])) {
                                     <?php endif; ?>
                                     
                                     <!-- Service Duration Display -->
-                                    <?php if ($client['service_duration_type'] === 'ongoing'): ?>
-                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 mt-2">
-                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                            </svg>
-                                            Currently Ongoing
-                                        </span>
-                                    <?php elseif ($client['service_duration_type'] === 'date_range' && $client['service_start_date'] && $client['service_end_date']): ?>
-                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 mt-2">
-                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-                                            </svg>
-                                            <?php echo date('M Y', strtotime($client['service_start_date'])); ?> - <?php echo date('M Y', strtotime($client['service_end_date'])); ?>
-                                        </span>
+                                    <?php if (isset($client['service_duration_type'])): ?>
+                                        <?php if ($client['service_duration_type'] === 'ongoing'): ?>
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 mt-2">
+                                                <i class="fas fa-check-circle w-3 h-3 mr-1"></i>
+                                                Currently Ongoing
+                                            </span>
+                                        <?php elseif ($client['service_duration_type'] === 'date_range' && $client['service_start_date'] && $client['service_end_date']): ?>
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 mt-2">
+                                                <i class="fas fa-calendar-alt w-3 h-3 mr-1"></i>
+                                                <?php echo date('M Y', strtotime($client['service_start_date'])); ?> - <?php echo date('M Y', strtotime($client['service_end_date'])); ?>
+                                            </span>
+                                        <?php endif; ?>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -1915,132 +1814,9 @@ if ($_POST && isset($_POST['contact_form'])) {
                 });
             });
 
-            // Counter Animation Function
-            function animateCounter(element) {
-                const target = parseInt(element.dataset.target);
-                const suffix = element.dataset.suffix || '';
-                const duration = parseInt(element.dataset.duration) || 2000;
-                const startTime = performance.now();
-                const startValue = 0;
-                
-                // Get associated progress bar and pulse effect
-                const card = element.closest('.group');
-                const progressBar = card?.querySelector('.progress-bar');
-                const pulseEffect = card?.querySelector('.counter-pulse');
-                
-                // Start pulse animation
-                if (pulseEffect) {
-                    pulseEffect.style.opacity = '0.3';
-                    pulseEffect.style.animation = 'pulse 0.5s ease-in-out infinite';
-                }
 
-                function updateCounter(currentTime) {
-                    const elapsed = currentTime - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    
-                    // Use easeOutQuart for smooth animation
-                    const easeProgress = 1 - Math.pow(1 - progress, 4);
-                    const currentValue = Math.floor(startValue + (target - startValue) * easeProgress);
-                    
-                    // Update counter display
-                    element.textContent = currentValue.toLocaleString() + suffix;
-                    
-                    // Update progress bar
-                    if (progressBar) {
-                        progressBar.style.transform = `translateX(-${100 - (progress * 100)}%)`;
-                    }
-                    
-                    if (progress < 1) {
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        // Animation complete
-                        element.textContent = target.toLocaleString() + suffix;
-                        if (progressBar) {
-                            progressBar.style.transform = 'translateX(0%)';
-                        }
-                        if (pulseEffect) {
-                            pulseEffect.style.opacity = '0';
-                            pulseEffect.style.animation = 'none';
-                        }
-                        
-                        // Add completion effect
-                        element.style.animation = 'pulse 0.3s ease-in-out';
-                        setTimeout(() => {
-                            element.style.animation = '';
-                        }, 300);
-                    }
-                }
-                
-                requestAnimationFrame(updateCounter);
-            }
 
-            // Enhanced Stats Counter with Real-time Updates
-            function initStatsCounters() {
-                const counters = document.querySelectorAll('.counter-value');
-                const statsObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            const counter = entry.target;
-                            if (!counter.dataset.animated) {
-                                counter.dataset.animated = 'true';
-                                // Add slight delay for staggered effect
-                                const delay = Array.from(counters).indexOf(counter) * 200;
-                                setTimeout(() => {
-                                    animateCounter(counter);
-                                }, delay);
-                            }
-                            statsObserver.unobserve(counter);
-                        }
-                    });
-                }, {
-                    threshold: 0.5,
-                    rootMargin: '0px 0px -100px 0px'
-                });
 
-                counters.forEach(counter => {
-                    statsObserver.observe(counter);
-                });
-            }
-
-            // Simulate real-time updates (optional - for demo purposes)
-            function simulateRealTimeUpdates() {
-                const counters = document.querySelectorAll('.counter-value[data-animated="true"]');
-                
-                counters.forEach(counter => {
-                    const currentTarget = parseInt(counter.dataset.target);
-                    const suffix = counter.dataset.suffix || '';
-                    
-                    // Small random increment every 30-60 seconds
-                    const updateInterval = Math.random() * 30000 + 30000; // 30-60 seconds
-                    
-                    setTimeout(() => {
-                        if (Math.random() > 0.7) { // 30% chance of update
-                            const increment = Math.floor(Math.random() * 3) + 1; // 1-3 increment
-                            const newTarget = currentTarget + increment;
-                            
-                            // Update target and re-animate briefly
-                            counter.dataset.target = newTarget;
-                            counter.style.transition = 'all 0.5s ease';
-                            counter.textContent = newTarget.toLocaleString() + suffix;
-                            
-                            // Pulse effect for real-time update
-                            counter.style.transform = 'scale(1.1)';
-                            setTimeout(() => {
-                                counter.style.transform = 'scale(1)';
-                            }, 200);
-                        }
-                        
-                        // Schedule next potential update
-                        simulateRealTimeUpdates();
-                    }, updateInterval);
-                });
-            }
-
-            // Initialize counters
-            initStatsCounters();
-            
-            // Start real-time simulation after initial load
-            setTimeout(simulateRealTimeUpdates, 5000);
 
             // Scroll animations with fallback
             if ('IntersectionObserver' in window) {

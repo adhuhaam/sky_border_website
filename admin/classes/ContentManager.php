@@ -295,20 +295,17 @@ class ContentManager {
         }
     }
     
-    public function addClient($client_name, $category_id, $logo_url = '', $display_order = 0, $services = '', $service_duration_type = 'ongoing', $service_start_date = null, $service_end_date = null) {
+    public function addClient($client_name, $category_id, $logo_url = '', $display_order = 0, $services = '') {
         try {
-            $query = "INSERT INTO clients (client_name, category_id, logo_url, display_order, services, service_duration_type, service_start_date, service_end_date) 
-                      VALUES (:client_name, :category_id, :logo_url, :display_order, :services, :service_duration_type, :service_start_date, :service_end_date)";
+            $query = "INSERT INTO clients (client_name, category_id, logo_url, display_order, services) 
+                      VALUES (:client_name, :category_id, :logo_url, :display_order, :services)";
             $stmt = $this->conn->prepare($query);
             return $stmt->execute([
                 ':client_name' => $client_name,
                 ':category_id' => $category_id,
                 ':logo_url' => $logo_url,
                 ':display_order' => $display_order,
-                ':services' => $services,
-                ':service_duration_type' => $service_duration_type,
-                ':service_start_date' => $service_start_date,
-                ':service_end_date' => $service_end_date
+                ':services' => $services
             ]);
         } catch (Exception $e) {
             error_log("Add client error: " . $e->getMessage());
@@ -316,17 +313,14 @@ class ContentManager {
         }
     }
     
-    public function updateClient($id, $client_name, $category_id, $logo_url = '', $display_order = 0, $services = '', $service_duration_type = 'ongoing', $service_start_date = null, $service_end_date = null) {
+    public function updateClient($id, $client_name, $category_id, $logo_url = '', $display_order = 0, $services = '') {
         try {
             $query = "UPDATE clients SET 
                       client_name = :client_name,
                       category_id = :category_id,
                       logo_url = :logo_url,
                       display_order = :display_order,
-                      services = :services,
-                      service_duration_type = :service_duration_type,
-                      service_start_date = :service_start_date,
-                      service_end_date = :service_end_date
+                      services = :services
                       WHERE id = :id";
             $stmt = $this->conn->prepare($query);
             return $stmt->execute([
@@ -335,9 +329,6 @@ class ContentManager {
                 ':logo_url' => $logo_url,
                 ':display_order' => $display_order,
                 ':services' => $services,
-                ':service_duration_type' => $service_duration_type,
-                ':service_start_date' => $service_start_date,
-                ':service_end_date' => $service_end_date,
                 ':id' => $id
             ]);
         } catch (Exception $e) {
