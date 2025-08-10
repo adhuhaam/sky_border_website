@@ -8,7 +8,7 @@ class Database {
     private $host = 'localhost';
     private $db_name = 'sky_border';
     private $username = 'root';
-    private $password = ''; // Leave empty for default local MySQL setup
+    private $password = 'Ompl@65482*'; // Leave empty for default local MySQL setup
     public $conn;
 
     public function getConnection() {

@@ -4,8 +4,8 @@ require_once 'classes/ContentManager.php';
 require_once 'config/database.php';
 
 // Initialize authentication
-$auth = new Auth($pdo);
-$contentManager = new ContentManager($pdo);
+$auth = new Auth();
+$contentManager = new ContentManager();
 
 // Check if user is logged in
 if (!$auth->isLoggedIn()) {

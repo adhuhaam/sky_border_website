@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS team_members (
 );
 
 -- Add index for team members
-CREATE INDEX IF NOT EXISTS idx_team_members_order ON team_members(display_order, is_active);
+CREATE INDEX idx_team_members_order ON team_members(display_order, is_active);
 
 -- Insert sample team members if they don't exist
 INSERT IGNORE INTO team_members (name, designation, description, display_order) VALUES

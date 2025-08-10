@@ -1,14 +1,14 @@
 <?php
 /**
- * Local Database Configuration
- * Sky Border Solutions CMS - Development Environment
+ * Database Configuration
+ * Sky Border Solutions CMS
  */
 
 class Database {
     private $host = 'localhost';
-    private $db_name = 'sky_border';
-    private $username = 'root';
-    private $password = ''; // Leave empty for default local MySQL setup
+    private $db_name = 'skydfcaf_sky_border';
+    private $username = 'skydfcaf_sky_border_user';
+    private $password = 'Ompl@65482*';
     public $conn;
 
     public function getConnection() {

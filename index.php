@@ -667,12 +667,22 @@ if ($_POST && isset($_POST['contact_form'])) {
                     <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
                         <?php
                         // Fetch team members from database
-                        $teamQuery = "SELECT * FROM team_members WHERE is_active = 1 ORDER BY display_order ASC";
-                        $teamStmt = $pdo->prepare($teamQuery);
-                        $teamStmt->execute();
-                        $teamMembers = $teamStmt->fetchAll(PDO::FETCH_ASSOC);
+                        if ($databaseAvailable && $contentManager) {
+                            try {
+                                $teamMembers = $contentManager->getAllTeamMembers();
+                                // Filter only active members
+                                $teamMembers = array_filter($teamMembers, function($member) {
+                                    return $member['is_active'] == 1;
+                                });
+                            } catch (Exception $e) {
+                                $teamMembers = [];
+                            }
+                        } else {
+                            $teamMembers = [];
+                        }
                         
-                        foreach ($teamMembers as $index => $member): ?>
+                        if (!empty($teamMembers)):
+                            foreach ($teamMembers as $index => $member): ?>
                         <div class="text-center scroll-reveal group" style="animation-delay: <?php echo 0.6 + ($index * 0.1); ?>s;">
                             <div class="relative mb-6">
                                 <?php if (!empty($member['photo_url'])): ?>
@@ -694,6 +704,11 @@ if ($_POST && isset($_POST['contact_form'])) {
                             <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed"><?php echo htmlspecialchars($member['description']); ?></p>
                         </div>
                         <?php endforeach; ?>
+                        <?php else: ?>
+                        <div class="col-span-full text-center py-8">
+                            <p class="text-gray-500 dark:text-gray-400">Team information will be available soon.</p>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 
