@@ -1465,6 +1465,23 @@ if ($_POST && isset($_POST['contact_form'])) {
                                         <?php echo htmlspecialchars($client['services']); ?>
                                     </p>
                                     <?php endif; ?>
+                                    
+                                    <!-- Service Duration Display -->
+                                    <?php if ($client['service_duration_type'] === 'ongoing'): ?>
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 mt-2">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            Currently Ongoing
+                                        </span>
+                                    <?php elseif ($client['service_duration_type'] === 'date_range' && $client['service_start_date'] && $client['service_end_date']): ?>
+                                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 mt-2">
+                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <?php echo date('M Y', strtotime($client['service_start_date'])); ?> - <?php echo date('M Y', strtotime($client['service_end_date'])); ?>
+                                        </span>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             

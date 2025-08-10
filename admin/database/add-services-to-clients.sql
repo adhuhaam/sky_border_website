@@ -6,8 +6,14 @@ USE skydfcaf_sky_border;
 -- Add services field to clients table if it doesn't exist
 ALTER TABLE clients ADD COLUMN IF NOT EXISTS services TEXT AFTER description;
 
+-- Add duration field to clients table if it doesn't exist
+ALTER TABLE clients ADD COLUMN IF NOT EXISTS service_duration_type ENUM('ongoing', 'date_range') DEFAULT 'ongoing' AFTER services;
+ALTER TABLE clients ADD COLUMN IF NOT EXISTS service_start_date DATE NULL AFTER service_duration_type;
+ALTER TABLE clients ADD COLUMN IF NOT EXISTS service_end_date DATE NULL AFTER service_start_date;
+
 -- Add index for better performance
 CREATE INDEX IF NOT EXISTS idx_clients_services ON clients(services(100));
+CREATE INDEX IF NOT EXISTS idx_clients_duration ON clients(service_duration_type, service_start_date, service_end_date);
 
 -- Update existing clients with sample services data
 UPDATE clients SET services = 'Recruitment, HR Consulting' WHERE id = 1 AND (services IS NULL OR services = '');
@@ -28,4 +34,4 @@ INSERT IGNORE INTO service_categories (category_name, category_description, icon
 DESCRIBE clients;
 
 -- Show sample data
-SELECT id, client_name, services FROM clients LIMIT 5;
+SELECT id, client_name, services, service_duration_type, service_start_date, service_end_date FROM clients LIMIT 5;

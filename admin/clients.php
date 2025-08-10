@@ -33,6 +33,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $services = implode(', ', array_filter($_POST['services']));
         }
         
+        // Handle duration fields
+        $service_duration_type = $_POST['service_duration_type'] ?? 'ongoing';
+        $service_start_date = null;
+        $service_end_date = null;
+        
+        if ($service_duration_type === 'date_range') {
+            $service_start_date = !empty($_POST['service_start_date']) ? $_POST['service_start_date'] : null;
+            $service_end_date = !empty($_POST['service_end_date']) ? $_POST['service_end_date'] : null;
+        }
+        
         $logo_url = '';
         
         if (!empty($client_name)) {
@@ -43,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $logo_url = $uploader->upload('logo_file', 'client_');
                 }
                 
-                if ($contentManager->addClient($client_name, $category_id, $logo_url, $display_order, $services)) {
+                if ($contentManager->addClient($client_name, $category_id, $logo_url, $display_order, $services, $service_duration_type, $service_start_date, $service_end_date)) {
                     $success = 'Client added successfully!';
                     $action = 'list';
                 } else {
@@ -74,6 +84,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $services = implode(', ', array_filter($_POST['services']));
         }
         
+        // Handle duration fields
+        $service_duration_type = $_POST['service_duration_type'] ?? 'ongoing';
+        $service_start_date = null;
+        $service_end_date = null;
+        
+        if ($service_duration_type === 'date_range') {
+            $service_start_date = !empty($_POST['service_start_date']) ? $_POST['service_start_date'] : null;
+            $service_end_date = !empty($_POST['service_end_date']) ? $_POST['service_end_date'] : null;
+        }
+        
         if (!empty($client_name) && $id > 0) {
             try {
                 // Get current client data to preserve existing logo if no new upload
@@ -90,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $logo_url = $new_logo_url;
                 }
                 
-                if ($contentManager->updateClient($id, $client_name, $category_id, $logo_url, $display_order, $services)) {
+                if ($contentManager->updateClient($id, $client_name, $category_id, $logo_url, $display_order, $services, $service_duration_type, $service_start_date, $service_end_date)) {
                     // If update successful and we uploaded a new logo, delete the old one
                     if (isset($new_logo_url) && !empty($old_logo_url) && $old_logo_url !== $logo_url) {
                         $uploader = new FileUploader();

@@ -52,6 +52,26 @@
                         <?php if (!empty($client['services'])): ?>
                         <p class="text-xs text-brand-blue dark:text-brand-blue-light font-medium"><?php echo htmlspecialchars($client['services']); ?></p>
                         <?php endif; ?>
+                        
+                        <!-- Service Duration Display -->
+                        <div class="mt-1">
+                            <?php if ($client['service_duration_type'] === 'ongoing'): ?>
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    Currently Ongoing
+                                </span>
+                            <?php elseif ($client['service_duration_type'] === 'date_range' && $client['service_start_date'] && $client['service_end_date']): ?>
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                                    </svg>
+                                    <?php echo date('M Y', strtotime($client['service_start_date'])); ?> - <?php echo date('M Y', strtotime($client['service_end_date'])); ?>
+                                </span>
+                            <?php endif; ?>
+                        </div>
+                        
                         <p class="text-xs text-gray-400">Order: <?php echo $client['display_order']; ?></p>
                     </div>
                 </div>
@@ -129,6 +149,48 @@
                 </select>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Hold Ctrl/Cmd to select multiple services</p>
             </div>
+
+                <!-- Service Duration -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition mb-2">Service Duration</label>
+                    
+                    <!-- Ongoing Checkbox -->
+                    <div class="flex items-center mb-3">
+                        <input type="radio" name="service_duration_type" id="duration_ongoing" value="ongoing" 
+                               <?php echo (!$editClient || $editClient['service_duration_type'] === 'ongoing') ? 'checked' : ''; ?>
+                               class="h-4 w-4 text-brand-blue focus:ring-brand-blue border-gray-300 dark:border-gray-600">
+                        <label for="duration_ongoing" class="ml-2 text-sm text-gray-700 dark:text-gray-300 theme-transition">
+                            Currently Ongoing
+                        </label>
+                    </div>
+                    
+                    <!-- Date Range Radio -->
+                    <div class="flex items-center mb-3">
+                        <input type="radio" name="service_duration_type" id="duration_date_range" value="date_range"
+                               <?php echo ($editClient && $editClient['service_duration_type'] === 'date_range') ? 'checked' : ''; ?>
+                               class="h-4 w-4 text-brand-blue focus:ring-brand-blue border-gray-300 dark:border-gray-600">
+                        <label for="duration_date_range" class="ml-2 text-sm text-gray-700 dark:text-gray-300 theme-transition">
+                            Specific Date Range
+                        </label>
+                    </div>
+                    
+                    <!-- Date Range Fields -->
+                    <div id="date_range_fields" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3" 
+                         style="display: <?php echo ($editClient && $editClient['service_duration_type'] === 'date_range') ? 'grid' : 'none'; ?>;">
+                        <div>
+                            <label for="service_start_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Start Date</label>
+                            <input type="date" name="service_start_date" id="service_start_date"
+                                   value="<?php echo $editClient && $editClient['service_start_date'] ? $editClient['service_start_date'] : ''; ?>"
+                                   class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
+                        </div>
+                        <div>
+                            <label for="service_end_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">End Date</label>
+                            <input type="date" name="service_end_date" id="service_end_date"
+                                   value="<?php echo $editClient && $editClient['service_end_date'] ? $editClient['service_end_date'] : ''; ?>"
+                                   class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
+                        </div>
+                    </div>
+                </div>
             
             <div>
                 <label for="logo_file" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Logo Upload</label>
@@ -308,4 +370,28 @@ function formatFileSize(bytes) {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle duration type radio button changes
+    const durationOngoing = document.getElementById('duration_ongoing');
+    const durationDateRange = document.getElementById('duration_date_range');
+    const dateRangeFields = document.getElementById('date_range_fields');
+    
+    function toggleDateRangeFields() {
+        if (durationDateRange.checked) {
+            dateRangeFields.style.display = 'grid';
+        } else {
+            dateRangeFields.style.display = 'none';
+        }
+    }
+    
+    // Add event listeners
+    durationOngoing.addEventListener('change', toggleDateRangeFields);
+    durationDateRange.addEventListener('change', toggleDateRangeFields);
+    
+    // Initial state
+    toggleDateRangeFields();
+});
 </script>
