@@ -2,6 +2,7 @@
 require_once 'classes/Auth.php';
 require_once 'classes/ContentManager.php';
 require_once 'config/database.php';
+require_once 'includes/layout-helpers.php';
 
 // Initialize authentication
 $auth = new Auth();
@@ -131,6 +132,44 @@ if ($action === 'edit' && isset($_GET['id'])) {
 // Get all team members for listing
 $teamMembers = $contentManager->getAllTeamMembers();
 
-// Include layout
-include 'layouts/admin.php';
+// Determine page title and actions
+$pageTitle = 'Team Members Management';
+$pageDescription = 'Manage your team members displayed on the website';
+$pageActions = '';
+
+if ($action === 'add') {
+    $pageTitle = 'Add New Team Member';
+    $pageDescription = 'Add a new team member to your team';
+} elseif ($action === 'edit') {
+    $pageTitle = 'Edit Team Member';
+    $pageDescription = 'Update team member information';
+} else {
+    $pageActions = createPageActions([
+        [
+            'url' => '?action=add',
+            'label' => 'Add Team Member',
+            'icon' => 'fas fa-plus',
+            'class' => 'btn-primary'
+        ]
+    ]);
+}
+
+// Prepare data for the layout
+$layoutData = [
+    'pageTitle' => $pageTitle,
+    'pageDescription' => $pageDescription,
+    'pageActions' => $pageActions,
+    'currentUser' => $currentUser,
+    'success' => $success,
+    'error' => $error,
+    'contentFile' => __DIR__ . '/views/team-members-content.php',
+    
+    // Data for the content view
+    'action' => $action,
+    'teamMembers' => $teamMembers,
+    'editTeamMember' => $editTeamMember
+];
+
+// Render the page with layout
+renderAdminPage($layoutData['contentFile'], $layoutData);
 ?>
