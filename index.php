@@ -657,6 +657,46 @@ if ($_POST && isset($_POST['contact_form'])) {
                     </div>
                 </div>
                 
+                <!-- Team Members Section -->
+                <div class="mt-16 scroll-reveal" style="animation-delay: 0.5s;">
+                    <div class="text-center mb-12">
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">Meet Our Team</h3>
+                        <p class="mt-4 text-lg text-gray-600 dark:text-gray-300 theme-transition">The experienced professionals behind our success</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                        <?php
+                        // Fetch team members from database
+                        $teamQuery = "SELECT * FROM team_members WHERE is_active = 1 ORDER BY display_order ASC";
+                        $teamStmt = $pdo->prepare($teamQuery);
+                        $teamStmt->execute();
+                        $teamMembers = $teamStmt->fetchAll(PDO::FETCH_ASSOC);
+                        
+                        foreach ($teamMembers as $index => $member): ?>
+                        <div class="text-center scroll-reveal group" style="animation-delay: <?php echo 0.6 + ($index * 0.1); ?>s;">
+                            <div class="relative mb-6">
+                                <?php if (!empty($member['photo_url'])): ?>
+                                    <img src="<?php echo htmlspecialchars($member['photo_url']); ?>" 
+                                         alt="<?php echo htmlspecialchars($member['name']); ?>" 
+                                         class="mx-auto h-32 w-32 rounded-full object-cover border-4 border-white dark:border-gray-700 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <?php else: ?>
+                                    <div class="mx-auto h-32 w-32 rounded-full bg-gradient-to-r from-brand-blue to-brand-teal flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                        <i class="fas fa-user text-white text-4xl"></i>
+                                    </div>
+                                <?php endif; ?>
+                                
+                                <!-- Hover effect overlay -->
+                                <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-blue/20 to-brand-teal/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            </div>
+                            
+                            <h4 class="text-xl font-bold text-gray-900 dark:text-white theme-transition mb-2"><?php echo htmlspecialchars($member['name']); ?></h4>
+                            <p class="text-brand-blue dark:text-brand-blue-light font-semibold mb-3"><?php echo htmlspecialchars($member['designation']); ?></p>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed"><?php echo htmlspecialchars($member['description']); ?></p>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                
                 <!-- Why Choose Us -->
                 <div class="mt-16 scroll-reveal" style="animation-delay: 0.6s;">
                     <div class="text-center mb-12">

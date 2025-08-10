@@ -713,7 +713,86 @@ class ContentManager {
             return false;
         }
     }
-    
-    
+
+    // Team Member Methods
+    public function addTeamMember($name, $designation, $description = '', $photo_url = '', $display_order = 0, $is_active = 1) {
+        try {
+            $query = "INSERT INTO team_members (name, designation, description, photo_url, display_order, is_active) 
+                      VALUES (:name, :designation, :description, :photo_url, :display_order, :is_active)";
+            $stmt = $this->conn->prepare($query);
+            return $stmt->execute([
+                ':name' => $name,
+                ':designation' => $designation,
+                ':description' => $description,
+                ':photo_url' => $photo_url,
+                ':display_order' => $display_order,
+                ':is_active' => $is_active
+            ]);
+        } catch (Exception $e) {
+            error_log("Add team member error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function updateTeamMember($id, $name, $designation, $description = '', $photo_url = '', $display_order = 0, $is_active = 1) {
+        try {
+            $query = "UPDATE team_members SET 
+                      name = :name,
+                      designation = :designation,
+                      description = :description,
+                      photo_url = :photo_url,
+                      display_order = :display_order,
+                      is_active = :is_active
+                      WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            return $stmt->execute([
+                ':name' => $name,
+                ':designation' => $designation,
+                ':description' => $description,
+                ':photo_url' => $photo_url,
+                ':display_order' => $display_order,
+                ':is_active' => $is_active,
+                ':id' => $id
+            ]);
+        } catch (Exception $e) {
+            error_log("Update team member error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getTeamMember($id) {
+        try {
+            $query = "SELECT * FROM team_members WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([':id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get team member error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getAllTeamMembers() {
+        try {
+            $query = "SELECT * FROM team_members ORDER BY display_order ASC, name ASC";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get all team members error: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function deleteTeamMember($id) {
+        try {
+            $query = "DELETE FROM team_members WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            return $stmt->execute([':id' => $id]);
+        } catch (Exception $e) {
+            error_log("Delete team member error: " . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>
