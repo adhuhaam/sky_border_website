@@ -49,6 +49,9 @@
                     <div class="ml-3">
                         <h3 class="text-lg font-medium text-gray-900 dark:text-white theme-transition"><?php echo htmlspecialchars($client['client_name']); ?></h3>
                         <p class="text-sm text-gray-500 dark:text-gray-400"><?php echo htmlspecialchars($client['category_name'] ?? 'Other'); ?></p>
+                        <?php if (!empty($client['services'])): ?>
+                        <p class="text-xs text-brand-blue dark:text-brand-blue-light font-medium"><?php echo htmlspecialchars($client['services']); ?></p>
+                        <?php endif; ?>
                         <p class="text-xs text-gray-400">Order: <?php echo $client['display_order']; ?></p>
                     </div>
                 </div>
@@ -103,6 +106,28 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
+            </div>
+            
+            <div>
+                <label for="services" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Services Provided</label>
+                <select name="services[]" id="services" multiple
+                        class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
+                    <?php 
+                    // Parse existing services for editing
+                    $existingServices = [];
+                    if ($editClient && !empty($editClient['services'])) {
+                        $existingServices = array_map('trim', explode(',', $editClient['services']));
+                    }
+                    ?>
+                    <option value="Recruitment" <?php echo in_array('Recruitment', $existingServices) ? 'selected' : ''; ?>>Recruitment</option>
+                    <option value="HR Consulting" <?php echo in_array('HR Consulting', $existingServices) ? 'selected' : ''; ?>>HR Consulting</option>
+                    <option value="Staffing" <?php echo in_array('Staffing', $existingServices) ? 'selected' : ''; ?>>Staffing</option>
+                    <option value="Training" <?php echo in_array('Training', $existingServices) ? 'selected' : ''; ?>>Training</option>
+                    <option value="Compliance" <?php echo in_array('Compliance', $existingServices) ? 'selected' : ''; ?>>Compliance</option>
+                    <option value="Visa Processing" <?php echo in_array('Visa Processing', $existingServices) ? 'selected' : ''; ?>>Visa Processing</option>
+                    <option value="Insurance Services" <?php echo in_array('Insurance Services', $existingServices) ? 'selected' : ''; ?>>Insurance Services</option>
+                </select>
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Hold Ctrl/Cmd to select multiple services</p>
             </div>
             
             <div>

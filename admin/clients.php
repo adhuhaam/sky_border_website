@@ -26,6 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $client_name = trim($_POST['client_name'] ?? '');
         $category_id = (int)($_POST['category_id'] ?? 0);
         $display_order = (int)($_POST['display_order'] ?? 0);
+        $services = '';
+        
+        // Handle multiple services selection
+        if (isset($_POST['services']) && is_array($_POST['services'])) {
+            $services = implode(', ', array_filter($_POST['services']));
+        }
+        
         $logo_url = '';
         
         if (!empty($client_name)) {
@@ -36,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $logo_url = $uploader->upload('logo_file', 'client_');
                 }
                 
-                if ($contentManager->addClient($client_name, $category_id, $logo_url, $display_order)) {
+                if ($contentManager->addClient($client_name, $category_id, $logo_url, $display_order, $services)) {
                     $success = 'Client added successfully!';
                     $action = 'list';
                 } else {
@@ -60,6 +67,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $client_name = trim($_POST['client_name'] ?? '');
         $category_id = (int)($_POST['category_id'] ?? 0);
         $display_order = (int)($_POST['display_order'] ?? 0);
+        $services = '';
+        
+        // Handle multiple services selection
+        if (isset($_POST['services']) && is_array($_POST['services'])) {
+            $services = implode(', ', array_filter($_POST['services']));
+        }
         
         if (!empty($client_name) && $id > 0) {
             try {
@@ -77,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $logo_url = $new_logo_url;
                 }
                 
-                if ($contentManager->updateClient($id, $client_name, $category_id, $logo_url, $display_order)) {
+                if ($contentManager->updateClient($id, $client_name, $category_id, $logo_url, $display_order, $services)) {
                     // If update successful and we uploaded a new logo, delete the old one
                     if (isset($new_logo_url) && !empty($old_logo_url) && $old_logo_url !== $logo_url) {
                         $uploader = new FileUploader();

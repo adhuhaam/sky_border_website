@@ -295,16 +295,17 @@ class ContentManager {
         }
     }
     
-    public function addClient($client_name, $category_id, $logo_url = '', $display_order = 0) {
+    public function addClient($client_name, $category_id, $logo_url = '', $display_order = 0, $services = '') {
         try {
-            $query = "INSERT INTO clients (client_name, category_id, logo_url, display_order) 
-                      VALUES (:client_name, :category_id, :logo_url, :display_order)";
+            $query = "INSERT INTO clients (client_name, category_id, logo_url, display_order, services) 
+                      VALUES (:client_name, :category_id, :logo_url, :display_order, :services)";
             $stmt = $this->conn->prepare($query);
             return $stmt->execute([
                 ':client_name' => $client_name,
                 ':category_id' => $category_id,
                 ':logo_url' => $logo_url,
-                ':display_order' => $display_order
+                ':display_order' => $display_order,
+                ':services' => $services
             ]);
         } catch (Exception $e) {
             error_log("Add client error: " . $e->getMessage());
@@ -312,13 +313,14 @@ class ContentManager {
         }
     }
     
-    public function updateClient($id, $client_name, $category_id, $logo_url = '', $display_order = 0) {
+    public function updateClient($id, $client_name, $category_id, $logo_url = '', $display_order = 0, $services = '') {
         try {
             $query = "UPDATE clients SET 
                       client_name = :client_name,
                       category_id = :category_id,
                       logo_url = :logo_url,
-                      display_order = :display_order
+                      display_order = :display_order,
+                      services = :services
                       WHERE id = :id";
             $stmt = $this->conn->prepare($query);
             return $stmt->execute([
@@ -326,6 +328,7 @@ class ContentManager {
                 ':category_id' => $category_id,
                 ':logo_url' => $logo_url,
                 ':display_order' => $display_order,
+                ':services' => $services,
                 ':id' => $id
             ]);
         } catch (Exception $e) {

@@ -1460,6 +1460,11 @@ if ($_POST && isset($_POST['contact_form'])) {
                                     <h4 class="text-sm font-medium text-gray-900 dark:text-white group-hover:text-brand-blue dark:group-hover:text-brand-blue-light transition-colors theme-transition">
                                         <?php echo htmlspecialchars($client['client_name']); ?>
                                     </h4>
+                                    <?php if (!empty($client['services'])): ?>
+                                    <p class="text-xs text-brand-blue dark:text-brand-blue-light font-medium mt-1">
+                                        <?php echo htmlspecialchars($client['services']); ?>
+                                    </p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             
