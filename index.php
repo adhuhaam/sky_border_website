@@ -264,6 +264,21 @@ if ($_POST && isset($_POST['contact_form'])) {
             --bg-white: #ffffff;
         }
         
+        /* Dark Theme Variables */
+        .dark {
+            --navy-blue: #3b82f6;
+            --navy-blue-light: #60a5fa;
+            --navy-blue-dark: #2563eb;
+            --olive-green: #9ca3af;
+            --olive-green-light: #d1d5db;
+            --olive-green-dark: #6b7280;
+            --accent-gold: #fbbf24;
+            --text-primary: #f9fafb;
+            --text-secondary: #d1d5db;
+            --bg-light: #111827;
+            --bg-white: #1f2937;
+        }
+        
         /* Minimalist Theme */
         .minimalist-bg {
             background: var(--bg-light);
@@ -280,6 +295,18 @@ if ($_POST && isset($_POST['contact_form'])) {
         .minimalist-card:hover {
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             transform: translateY(-2px);
+            border-color: var(--navy-blue-light);
+        }
+        
+        .minimalist-card.animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .minimalist-card.animate-on-scroll.animate-in {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .minimalist-button {
@@ -294,8 +321,16 @@ if ($_POST && isset($_POST['contact_form'])) {
         
         .minimalist-button:hover {
             background: var(--navy-blue-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
+        }
+        
+        .minimalist-button:active {
+            transform: translateY(0) scale(0.98);
+        }
+        
+        .minimalist-button.animate-pulse {
+            animation: pulse 2s infinite;
         }
         
         .minimalist-button-secondary {
@@ -398,10 +433,132 @@ if ($_POST && isset($_POST['contact_form'])) {
         .animate-fadeInUp { animation: fadeInUp 0.8s ease-out; }
         .animate-fadeInLeft { animation: fadeInLeft 0.8s ease-out; }
         .animate-fadeInRight { animation: fadeInRight 0.8s ease-out; }
+        
+        /* Enhanced Scroll Animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .scroll-reveal.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .scroll-reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .scroll-reveal-left.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .scroll-reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .scroll-reveal-right.animate-in {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Interactive Hover Effects */
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .hover-scale {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Floating Elements */
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-element-delay-1 {
+            animation-delay: 1s;
+        }
+        
+        .floating-element-delay-2 {
+            animation-delay: 2s;
+        }
+        
+        .floating-element-delay-3 {
+            animation-delay: 3s;
+        }
+        
+        /* Additional Animation Classes */
         .animate-scale { animation: scale 2s ease-in-out infinite; }
         .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
         .animate-countUp { animation: countUp 0.6s ease-out; }
         .animate-progressFill { animation: progressFill 2s ease-out; }
+        
+        /* Smooth Transitions */
+        .theme-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Enhanced Card Interactions */
+        .minimalist-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .minimalist-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Button Hover States */
+        .minimalist-button, .minimalist-button-secondary {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .minimalist-button::before, .minimalist-button-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .minimalist-button:hover::before, .minimalist-button-secondary:hover::before {
+            left: 100%;
+        }
+        
+        /* Text Animation */
+        .text-animate {
+            background: linear-gradient(45deg, var(--navy-blue), var(--olive-green), var(--accent-gold));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: text-shine 3s ease-in-out infinite;
+        }
+        
+        @keyframes text-shine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
 
         
         /* Enhanced Mobile Animations */
@@ -801,10 +958,14 @@ if ($_POST && isset($_POST['contact_form'])) {
         <div class="absolute inset-0 -z-20">
             <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50"></div>
             
-            <!-- Subtle Accent Elements -->
-            <div class="absolute top-20 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-100 to-transparent rounded-full opacity-30 animate-float blur-md"></div>
-            <div class="absolute top-40 right-1/4 w-80 h-80 bg-gradient-to-br from-green-100 to-transparent rounded-full opacity-25 animate-float blur-md" style="animation-delay: 2s;"></div>
-            <div class="absolute -bottom-20 left-1/2 w-72 h-72 bg-gradient-to-br from-blue-50 to-green-50 rounded-full opacity-20 animate-float blur-md" style="animation-delay: 4s;"></div>
+            <!-- Enhanced Floating Elements -->
+            <div class="absolute top-20 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-100 to-transparent rounded-full opacity-30 floating-element blur-md"></div>
+            <div class="absolute top-40 right-1/4 w-80 h-80 bg-gradient-to-br from-green-100 to-transparent rounded-full opacity-25 floating-element blur-md floating-element-delay-1"></div>
+            <div class="absolute -bottom-20 left-1/2 w-72 h-72 bg-gradient-to-br from-blue-50 to-green-50 rounded-full opacity-20 floating-element blur-md floating-element-delay-2"></div>
+            
+            <!-- Additional Floating Elements -->
+            <div class="absolute top-1/3 left-10 w-32 h-32 bg-gradient-to-br from-accent-gold to-transparent rounded-full opacity-20 floating-element blur-md floating-element-delay-3"></div>
+            <div class="absolute bottom-1/3 right-10 w-24 h-24 bg-gradient-to-br from-olive-green to-transparent rounded-full opacity-15 floating-element blur-md"></div>
         </div>
         
         <!-- Main Content -->
@@ -846,29 +1007,29 @@ if ($_POST && isset($_POST['contact_form'])) {
                 </p>
                 </div>
 
-                <!-- Status Badges -->
+                <!-- Enhanced Status Badges -->
                 <div class="mx-auto mt-12 mb-8 flex flex-wrap justify-center gap-4 scroll-reveal" style="animation-delay: 0.7s;">
-                    <div class="group relative inline-flex items-center minimalist-card px-6 py-3 text-sm font-normal text-gray-700 hover:scale-105 transition-all duration-300">
-                        <i class="fas fa-certificate mr-3 text-green-600 text-lg"></i>
+                    <div class="group relative inline-flex items-center minimalist-card px-6 py-3 text-sm font-normal text-gray-700 hover-lift hover-scale transition-all duration-300 animate-pulse-glow">
+                        <i class="fas fa-certificate mr-3 text-green-600 text-lg animate-float"></i>
                         <span class="relative z-10">Government Licensed</span>
                     </div>
-                    <div class="group relative inline-flex items-center minimalist-card px-6 py-3 text-sm font-normal text-gray-700 hover:scale-105 transition-all duration-300" style="animation-delay: 0.1s;">
-                        <i class="fas fa-award mr-3 text-blue-600 text-lg"></i>
+                    <div class="group relative inline-flex items-center minimalist-card px-6 py-3 text-sm font-normal text-gray-700 hover-lift hover-scale transition-all duration-300 animate-pulse-glow" style="animation-delay: 0.1s;">
+                        <i class="fas fa-award mr-3 text-blue-600 text-lg animate-float"></i>
                         <span class="relative z-10">HR Consulting & Recruitment</span>
                     </div>
                 </div>
 
-                <!-- CTA Buttons -->
+                <!-- Enhanced CTA Buttons -->
                 <div class="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6 scroll-reveal" style="animation-delay: 0.8s;">
-                    <a href="#contact" class="group relative inline-flex items-center justify-center px-10 py-5 text-base font-normal text-white minimalist-button rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 w-full sm:w-auto">
-                        <i class="fas fa-comments mr-3 text-lg"></i>
+                    <a href="#contact" class="group relative inline-flex items-center justify-center px-10 py-5 text-base font-normal text-white minimalist-button rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 w-full sm:w-auto animate-pulse-glow">
+                        <i class="fas fa-comments mr-3 text-lg animate-float"></i>
                         <span>Get Started Today</span>
-                        <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-2"></i>
+                        <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-2 animate-float"></i>
                     </a>
-                    <a href="#services" class="group inline-flex items-center justify-center px-10 py-5 text-base font-normal text-white minimalist-button-secondary rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-offset-2 w-full sm:w-auto">
-                        <i class="fas fa-eye mr-3 transition-transform group-hover:scale-110 text-lg"></i>
+                    <a href="#services" class="group inline-flex items-center justify-center px-10 py-5 text-base font-normal text-white minimalist-button-secondary rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-offset-2 w-full sm:w-auto animate-pulse-glow">
+                        <i class="fas fa-eye mr-3 transition-transform group-hover:scale-110 text-lg animate-float"></i>
                         <span>Explore Services</span>
-                        <i class="fas fa-arrow-down ml-3 transition-transform group-hover:translate-y-2"></i>
+                        <i class="fas fa-arrow-down ml-3 transition-transform group-hover:translate-y-2 animate-float"></i>
                     </a>
                 </div>
 
@@ -2174,33 +2335,64 @@ if ($_POST && isset($_POST['contact_form'])) {
 
 
 
-            // Scroll animations with fallback
+            // Enhanced Scroll animations with Intersection Observer
             if ('IntersectionObserver' in window) {
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -100px 0px'
+                };
 
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                            entry.target.classList.add('revealed');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Add animation class based on element type
+                            if (entry.target.classList.contains('scroll-reveal')) {
+                                entry.target.classList.add('animate-in');
+                            } else if (entry.target.classList.contains('scroll-reveal-left')) {
+                                entry.target.classList.add('animate-in');
+                            } else if (entry.target.classList.contains('scroll-reveal-right')) {
+                                entry.target.classList.add('animate-in');
+                            }
+                            
+                            // Add floating animation to cards
+                            if (entry.target.classList.contains('minimalist-card')) {
+                                entry.target.classList.add('animate-on-scroll');
+                                setTimeout(() => {
+                                    entry.target.classList.add('animate-in');
+                                }, 200);
+                            }
+                            
                             // Unobserve once revealed to prevent multiple triggers
                             observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
+                        }
+                    });
+                }, observerOptions);
 
-            // Observe all scroll-reveal elements
-            document.querySelectorAll('.scroll-reveal').forEach(el => {
-                observer.observe(el);
-            });
+                // Observe all scroll-reveal elements
+                document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .minimalist-card').forEach(el => {
+                    observer.observe(el);
+                });
             } else {
                 // Fallback: immediately show all scroll-reveal elements
-                document.querySelectorAll('.scroll-reveal').forEach(el => {
-                    el.classList.add('revealed');
+                document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .minimalist-card').forEach(el => {
+                    el.classList.add('animate-in');
                 });
             }
+            
+            // Add floating animations to elements
+            document.querySelectorAll('.floating-element').forEach((el, index) => {
+                el.classList.add(`floating-element-delay-${(index % 3) + 1}`);
+            });
+            
+            // Add hover effects to interactive elements
+            document.querySelectorAll('.minimalist-card, .minimalist-button, .minimalist-button-secondary').forEach(el => {
+                el.classList.add('hover-lift');
+            });
+            
+            // Add scale effects to buttons
+            document.querySelectorAll('.minimalist-button, .minimalist-button-secondary').forEach(el => {
+                el.classList.add('hover-scale');
+            });
         });
     </script>
 

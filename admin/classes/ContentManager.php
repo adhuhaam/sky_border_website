@@ -775,7 +775,7 @@ class ContentManager {
             return false;
         }
     }
-
+    
     // Team Member Methods
     public function addTeamMember($name, $designation, $description = '', $photo_url = '', $display_order = 0, $is_active = 1) {
         try {
