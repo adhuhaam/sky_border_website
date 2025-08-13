@@ -1197,6 +1197,18 @@ class ContentManager {
         // This is an alias method for getContactMessages to maintain compatibility
         return $this->getContactMessages($status, $limit);
     }
+
+    public function getContact($id) {
+        try {
+            $query = "SELECT * FROM contact_messages WHERE id = :id LIMIT 1";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([':id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get contact error: " . $e->getMessage());
+            return null;
+        }
+    }
     
     public function getTotalContacts($search = '', $status = null) {
         try {

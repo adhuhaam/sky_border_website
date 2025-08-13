@@ -118,11 +118,8 @@ if (!$databaseAvailable) {
         ]
     ];
     
-    $clients = [
-        ['client_name' => 'Leading Construction Company', 'category_name' => 'Construction & Engineering', 'logo_url' => ''],
-        ['client_name' => 'Luxury Resort & Spa', 'category_name' => 'Tourism & Hospitality', 'logo_url' => ''],
-        ['client_name' => 'Investment Holdings Group', 'category_name' => 'Investments, Services & Trading', 'logo_url' => '']
-    ];
+    // Clients will be loaded from database
+    $clients = [];
 }
 
 // Handle contact form submission

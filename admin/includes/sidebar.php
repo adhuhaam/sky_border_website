@@ -77,10 +77,10 @@ $navItems = [
         'active' => $currentPage === 'contacts.php'
     ],
     [
-        'name' => 'Campaigns',
-        'url' => 'campaigns.php',
+        'name' => 'Send Mail',
+        'url' => 'send-mail.php',
         'icon' => 'fas fa-paper-plane',
-        'active' => $currentPage === 'campaigns.php'
+        'active' => $currentPage === 'send-mail.php'
     ],
     [
         'name' => 'SMTP Settings',

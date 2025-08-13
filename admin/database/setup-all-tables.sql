@@ -175,7 +175,47 @@ CREATE TABLE IF NOT EXISTS `bounces` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =====================================================
--- 10. INSERT DEFAULT DATA
+-- 10. CLIENT CATEGORIES TABLE
+-- =====================================================
+CREATE TABLE IF NOT EXISTS `client_categories` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `category_name` varchar(255) NOT NULL,
+    `description` text DEFAULT NULL,
+    `is_active` tinyint(1) DEFAULT 1,
+    `display_order` int(11) DEFAULT 0,
+    `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `idx_category_name` (`category_name`),
+    KEY `idx_is_active` (`is_active`),
+    KEY `idx_display_order` (`display_order`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- =====================================================
+-- 11. CLIENTS TABLE
+-- =====================================================
+CREATE TABLE IF NOT EXISTS `clients` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `client_name` varchar(255) NOT NULL,
+    `category_id` int(11) NOT NULL,
+    `logo_url` varchar(500) DEFAULT NULL,
+    `services` text DEFAULT NULL,
+    `service_duration_type` enum('ongoing', 'date_range', 'completed') DEFAULT 'ongoing',
+    `service_start_date` date DEFAULT NULL,
+    `service_end_date` date DEFAULT NULL,
+    `is_active` tinyint(1) DEFAULT 1,
+    `display_order` int(11) DEFAULT 0,
+    `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `idx_category_id` (`category_id`),
+    KEY `idx_is_active` (`is_active`),
+    KEY `idx_display_order` (`display_order`),
+    FOREIGN KEY (`category_id`) REFERENCES `client_categories`(`id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- =====================================================
+-- 12. INSERT DEFAULT DATA
 -- =====================================================
 
 -- Insert default SMTP configuration
@@ -187,6 +227,18 @@ INSERT IGNORE INTO `contact_lists` (`id`, `name`, `description`) VALUES
 (1, 'All Contacts', 'Default list containing all contacts'),
 (2, 'Newsletter Subscribers', 'Contacts who have subscribed to newsletters'),
 (3, 'Clients', 'Current and potential clients');
+
+-- Insert sample client categories
+INSERT IGNORE INTO `client_categories` (`id`, `category_name`, `description`, `display_order`) VALUES
+(1, 'Construction & Engineering', 'Major construction and infrastructure projects', 1),
+(2, 'Tourism & Hospitality', 'Luxury resorts, hotels, and tourism services', 2),
+(3, 'Investments, Services & Trading', 'Financial services, trading, and investments', 3);
+
+-- Insert sample clients
+INSERT IGNORE INTO `clients` (`client_name`, `category_id`, `services`, `service_duration_type`, `is_active`, `display_order`) VALUES
+('Leading Construction Company', 1, 'Workforce recruitment and HR support', 'ongoing', 1, 1),
+('Luxury Resort & Spa', 2, 'Staffing solutions and compliance', 'ongoing', 1, 2),
+('Investment Holdings Group', 3, 'Professional recruitment services', 'ongoing', 1, 3);
 
 -- Insert sample contacts
 INSERT IGNORE INTO `contacts` (`name`, `email`, `phone`, `company`, `status`) VALUES
@@ -208,6 +260,7 @@ INSERT IGNORE INTO `contact_list_contacts` (`list_id`, `contact_id`) VALUES
 SHOW TABLES LIKE '%campaign%';
 SHOW TABLES LIKE '%smtp%';
 SHOW TABLES LIKE '%contact%';
+SHOW TABLES LIKE '%client%';
 
 -- Show sample data
 SELECT 'SMTP Configs' as table_name, COUNT(*) as count FROM smtp_config
@@ -215,6 +268,10 @@ UNION ALL
 SELECT 'Contacts' as table_name, COUNT(*) as count FROM contacts
 UNION ALL
 SELECT 'Contact Lists' as table_name, COUNT(*) as count FROM contact_lists
+UNION ALL
+SELECT 'Client Categories' as table_name, COUNT(*) as count FROM client_categories
+UNION ALL
+SELECT 'Clients' as table_name, COUNT(*) as count FROM clients
 UNION ALL
 SELECT 'Campaigns' as table_name, COUNT(*) as count FROM campaigns;
 
