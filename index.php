@@ -208,30 +208,30 @@ if ($_POST && isset($_POST['contact_form'])) {
     <!-- Canonical URL -->
     <link rel="canonical" href="<?php echo htmlspecialchars($seoSettings['canonical_url'] ?? 'https://skybordersolutions.com'); ?>">
     
-    <!-- Tailwind CSS with Catalyst -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
-    <script src="https://unpkg.com/@tailwindcss/catalyst@latest/dist/catalyst.min.js"></script>
     
-    <!-- Tailwind Catalyst Configuration -->
+    <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        'catalyst': ['Inter', 'system-ui', 'sans-serif'],
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
                     },
                     colors: {
-                        'transparent': {
-                            50: 'rgba(255, 255, 255, 0.05)',
-                            100: 'rgba(255, 255, 255, 0.1)',
-                            200: 'rgba(255, 255, 255, 0.2)',
-                            300: 'rgba(255, 255, 255, 0.3)',
-                            400: 'rgba(255, 255, 255, 0.4)',
-                            500: 'rgba(255, 255, 255, 0.5)',
-                            600: 'rgba(255, 255, 255, 0.6)',
-                            700: 'rgba(255, 255, 255, 0.7)',
-                            800: 'rgba(255, 255, 255, 0.8)',
-                            900: 'rgba(255, 255, 255, 0.9)',
+                        'primary': {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
                         }
                     }
                 }
@@ -255,172 +255,167 @@ if ($_POST && isset($_POST['contact_form'])) {
         body { 
             font-family: 'Inter', system-ui, sans-serif; 
             scroll-behavior: smooth;
-            background: var(--bg-light);
-            color: var(--text-primary);
-            font-weight: 300;
+            background: #f8fafc;
+            color: #111827;
+            font-weight: 400;
             line-height: 1.6;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         
+        .dark body {
+            background: #0f172a;
+            color: #ffffff;
+        }
+        
         h1, h2, h3, h4, h5, h6 {
-            font-weight: 500;
-            color: var(--navy-blue);
+            font-weight: 600;
+            color: #111827;
             transition: color 0.3s ease;
         }
         
-        /* Dark theme heading adjustments */
         .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-            color: var(--navy-blue-light);
+            color: #ffffff;
         }
         
         .text-bold {
-            font-weight: 500;
+            font-weight: 600;
         }
         
         .text-semibold {
-            font-weight: 400;
+            font-weight: 500;
         }
         
         /* Theme-aware text colors */
         .text-theme-primary {
-            color: var(--text-primary);
+            color: #111827;
+        }
+        
+        .dark .text-theme-primary {
+            color: #ffffff;
         }
         
         .text-theme-secondary {
-            color: var(--text-secondary);
+            color: #374151;
+        }
+        
+        .dark .text-theme-secondary {
+            color: #e5e7eb;
         }
         
         .text-theme-muted {
-            color: var(--text-muted);
+            color: #6b7280;
         }
         
-        /* Navy Blue and Olive Green Theme */
-        :root {
-            --navy-blue: #1e3a8a;
-            --navy-blue-light: #3b82f6;
-            --navy-blue-dark: #1e40af;
-            --olive-green: #6b7280;
-            --olive-green-light: #9ca3af;
-            --olive-green-dark: #4b5563;
-            --accent-gold: #f59e0b;
-            --text-primary: #111827;
-            --text-secondary: #374151;
-            --text-muted: #6b7280;
-            --bg-light: #f8fafc;
-            --bg-white: #ffffff;
-            --bg-card: #ffffff;
-            --border-color: #e5e7eb;
+        .dark .text-theme-muted {
+            color: #9ca3af;
         }
         
-        /* Dark Theme Variables */
-        .dark {
-            --navy-blue: #3b82f6;
-            --navy-blue-light: #60a5fa;
-            --navy-blue-dark: #2563eb;
-            --olive-green: #9ca3af;
-            --olive-green-light: #d1d5db;
-            --olive-green-dark: #6b7280;
-            --accent-gold: #fbbf24;
-            --text-primary: #ffffff;
-            --text-secondary: #e5e7eb;
-            --text-muted: #9ca3af;
-            --bg-light: #0f172a;
-            --bg-white: #1e293b;
-            --bg-card: #334155;
-            --border-color: #475569;
-        }
-        
-        /* Minimalist Theme */
-        .minimalist-bg {
-            background: var(--bg-light);
-        }
-        
-        .minimalist-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        /* Card Styles - Matching Admin Panel */
+        .admin-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
         
-        .dark .minimalist-card {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        .dark .admin-card {
+            background: #1e293b;
+            border-color: #475569;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
         
-        .minimalist-card:hover {
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            transform: translateY(-2px);
-            border-color: var(--navy-blue-light);
+        .admin-card:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(-1px);
         }
         
-        .dark .minimalist-card:hover {
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        .dark .admin-card:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
         }
         
-        .minimalist-card.animate-on-scroll {
+        .admin-card.animate-on-scroll {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(20px);
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .minimalist-card.animate-on-scroll.animate-in {
+        .admin-card.animate-on-scroll.animate-in {
             opacity: 1;
             transform: translateY(0);
         }
         
-        .minimalist-button {
-            background: var(--navy-blue);
+        /* Button Styles - Matching Admin Panel */
+        .admin-button {
+            background: #3b82f6;
             color: white;
             border: none;
-            border-radius: 8px;
-            padding: 12px 24px;
-            font-weight: 400;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-weight: 500;
+            font-size: 14px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         
-        .minimalist-button:hover {
-            background: var(--navy-blue-dark);
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(30, 58, 138, 0.4);
+        .admin-button:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
         }
         
-        .minimalist-button:active {
-            transform: translateY(0) scale(0.98);
+        .admin-button:active {
+            transform: translateY(0);
         }
         
-        .minimalist-button.animate-pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        .minimalist-button-secondary {
-            background: var(--olive-green);
+        .admin-button-secondary {
+            background: #6b7280;
             color: white;
             border: none;
-            border-radius: 8px;
-            padding: 12px 24px;
-            font-weight: 400;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-weight: 500;
+            font-size: 14px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         
-        .minimalist-button-secondary:hover {
-            background: var(--olive-green-dark);
+        .admin-button-secondary:hover {
+            background: #4b5563;
             transform: translateY(-1px);
         }
         
-        /* Navy Blue and Olive Green Gradients */
+        .admin-button-success {
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .admin-button-success:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+        
+        /* Gradients - Matching Admin Panel */
         .gradient-bg { 
-            background: linear-gradient(135deg, var(--navy-blue) 0%, var(--olive-green) 100%); 
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); 
         }
         
         .gradient-text { 
-            background: linear-gradient(135deg, var(--navy-blue) 0%, var(--olive-green) 100%); 
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
             background-clip: text; 
         }
         
         .gradient-text-animated {
-            background: linear-gradient(45deg, var(--navy-blue), var(--olive-green), var(--accent-gold), var(--navy-blue-light), var(--navy-blue));
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8, #10b981, #f59e0b, #3b82f6);
             background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -574,22 +569,22 @@ if ($_POST && isset($_POST['contact_form'])) {
         }
         
         /* Enhanced Card Interactions */
-        .minimalist-card {
+        .admin-card {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .minimalist-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        .admin-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
         
         /* Button Hover States */
-        .minimalist-button, .minimalist-button-secondary {
+        .admin-button, .admin-button-secondary, .admin-button-success {
             position: relative;
             overflow: hidden;
         }
         
-        .minimalist-button::before, .minimalist-button-secondary::before {
+        .admin-button::before, .admin-button-secondary::before, .admin-button-success::before {
             content: '';
             position: absolute;
             top: 0;
@@ -600,7 +595,7 @@ if ($_POST && isset($_POST['contact_form'])) {
             transition: left 0.5s;
         }
         
-        .minimalist-button:hover::before, .minimalist-button-secondary:hover::before {
+        .admin-button:hover::before, .admin-button-secondary:hover::before, .admin-button-success:hover::before {
             left: 100%;
         }
         
@@ -658,21 +653,30 @@ if ($_POST && isset($_POST['contact_form'])) {
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
         
-        /* Catalyst Transparent Button Variants */
-        .catalyst-transparent-btn {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(28px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 1.5rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            color: #ffffff;
+        /* Admin Panel Button Variants */
+        .admin-btn-outline {
+            background: transparent;
+            border: 2px solid #3b82f6;
+            color: #3b82f6;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
         
-        .catalyst-transparent-btn:hover {
-            background: rgba(255, 255, 255, 0.16);
-            border-color: rgba(255, 255, 255, 0.25);
-            transform: translateY(-3px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        .admin-btn-outline:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        .dark .admin-btn-outline {
+            border-color: #60a5fa;
+            color: #60a5fa;
+        }
+        
+        .dark .admin-btn-outline:hover {
+            background: #60a5fa;
+            color: white;
         }
         
         /* Transparent Card Styles */
@@ -692,7 +696,7 @@ if ($_POST && isset($_POST['contact_form'])) {
             background: rgba(255, 255, 255, 0.08);
         }
         
-        /* Catalyst Mobile-specific optimizations */
+        /* Admin Panel Mobile-specific optimizations */
         @media (max-width: 768px) {
             .hover-lift:hover { 
                 transform: translateY(-2px);
@@ -714,19 +718,25 @@ if ($_POST && isset($_POST['contact_form'])) {
             .scroll-reveal {
                 animation-delay: 0s !important;
             }
-            /* Catalyst mobile enhancements */
-            .catalyst-transparent-card {
-                backdrop-filter: blur(24px) !important;
+            /* Admin Panel mobile enhancements */
+            .admin-card {
+                border-radius: 6px !important;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
             }
-            .catalyst-transparent-card-strong {
-                backdrop-filter: blur(28px) !important;
+            .dark .admin-card {
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
             }
-            /* Mobile-optimized transparency */
-            .catalyst-transparent-bg {
-                background: rgba(0, 0, 0, 0.15) !important;
-                backdrop-filter: blur(20px) !important;
-            }
+                    /* Mobile-optimized buttons */
+        .admin-button, .admin-button-secondary, .admin-button-success {
+            padding: 12px 16px !important;
+            font-size: 16px !important;
         }
+        
+        /* Font optimization */
+        body, h1, h2, h3, h4, h5, h6, p, span, div, a, button {
+            font-family: 'Inter', system-ui, sans-serif !important;
+        }
+    }
         
         /* Transparent Button Styles */
         .btn-primary {
@@ -830,26 +840,19 @@ if ($_POST && isset($_POST['contact_form'])) {
             color: rgba(255, 255, 255, 0.7);
         }
         
-        /* Catalyst Transparent Elements */
-        .catalyst-transparent-card {
-            background: rgba(255, 255, 255, 0.08) !important;
-            backdrop-filter: blur(40px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.15) !important;
-        }
-        
-        .catalyst-transparent-card-strong {
-            background: rgba(255, 255, 255, 0.12) !important;
-            backdrop-filter: blur(50px) !important;
+        /* Admin Panel Transparent Elements */
+        .admin-transparent-card {
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(20px) !important;
             border: 1px solid rgba(255, 255, 255, 0.2) !important;
         }
         
-        /* Enhanced visibility for transparent elements */
-        .catalyst-transparent-bg {
+        .dark .admin-transparent-card {
             background: rgba(0, 0, 0, 0.2) !important;
-            backdrop-filter: blur(30px) !important;
+            border-color: rgba(255, 255, 255, 0.1) !important;
         }
         
-        /* Catalyst font optimization */
+        /* Admin Panel font optimization */
         body, h1, h2, h3, h4, h5, h6, p, span, div, a, button {
             font-family: 'Inter', system-ui, sans-serif !important;
         }
@@ -891,45 +894,38 @@ if ($_POST && isset($_POST['contact_form'])) {
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
         
-        /* Catalyst-specific utilities */
-        .catalyst-blur-sm { backdrop-filter: blur(8px); }
-        .catalyst-blur-md { backdrop-filter: blur(16px); }
-        .catalyst-blur-lg { backdrop-filter: blur(24px); }
-        .catalyst-blur-xl { backdrop-filter: blur(32px); }
-        .catalyst-blur-2xl { backdrop-filter: blur(40px); }
+        /* Admin Panel Style Utilities */
+        .admin-blur-sm { backdrop-filter: blur(8px); }
+        .admin-blur-md { backdrop-filter: blur(16px); }
+        .admin-blur-lg { backdrop-filter: blur(24px); }
         
-        /* Catalyst glass morphism */
-        .catalyst-glass {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        /* Admin Panel Glass Effect */
+        .admin-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         
-        .catalyst-glass-strong {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(32px);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        .dark .admin-glass {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.1);
         }
         
-        /* Catalyst hover effects */
-        .catalyst-hover-lift {
+        /* Admin Panel Hover Effects */
+        .admin-hover-lift {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .catalyst-hover-lift:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        .admin-hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
     </style>
     
     <script>
-        // Transparent theme initialization
+        // Admin panel theme initialization
         (function() {
-            // Add transparent theme class
-            document.documentElement.classList.add('transparent-theme');
-            
             // Initialize scroll reveal
             function initScrollReveal() {
                 const elements = document.querySelectorAll('.scroll-reveal');
@@ -1038,7 +1034,7 @@ if ($_POST && isset($_POST['contact_form'])) {
     <?php endif; ?>
 </head>
 
-<body class="h-full bg-transparent theme-transition">
+<body class="h-full bg-gray-50 dark:bg-gray-900 theme-transition">
     <!-- Google Tag Manager (noscript) -->
     <?php if (!empty($seoSettings['google_tag_manager_id'])): ?>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo htmlspecialchars($seoSettings['google_tag_manager_id']); ?>"
@@ -1047,7 +1043,7 @@ if ($_POST && isset($_POST['contact_form'])) {
     
     <!-- Dark Mode Toggle -->
     <div class="fixed top-6 right-6 z-50">
-        <button id="theme-toggle" class="group relative p-4 rounded-2xl catalyst-transparent-card-strong shadow-2xl text-white hover:scale-110 active:scale-95 theme-transition focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+        <button id="theme-toggle" class="group relative p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 shadow-lg text-gray-700 dark:text-gray-300 hover:scale-110 active:scale-95 theme-transition focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2" aria-label="Toggle dark mode" title="Toggle dark/light mode">
             <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-white/10 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
             <i id="theme-icon" class="relative z-10 fas fa-moon text-xl transition-all duration-300" aria-hidden="true"></i>
             <i id="theme-icon-dark" class="relative z-10 fas fa-sun text-xl hidden transition-all duration-300" aria-hidden="true"></i>
@@ -1056,8 +1052,8 @@ if ($_POST && isset($_POST['contact_form'])) {
 
 
 
-    <!-- Minimalist Hero Section -->
-    <section id="home" class="relative overflow-hidden minimalist-bg theme-transition min-h-screen flex items-center">
+    <!-- Hero Section -->
+    <section id="home" class="relative overflow-hidden bg-gray-50 dark:bg-gray-900 theme-transition min-h-screen flex items-center">
         <!-- Subtle Background Pattern -->
         <div class="absolute inset-0 -z-20">
             <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-blue-950 dark:via-slate-900 dark:to-green-950"></div>
@@ -1068,8 +1064,8 @@ if ($_POST && isset($_POST['contact_form'])) {
             <div class="absolute -bottom-20 left-1/2 w-72 h-72 bg-gradient-to-br from-blue-50 to-green-50 rounded-full opacity-20 floating-element blur-md floating-element-delay-2"></div>
             
             <!-- Additional Floating Elements -->
-            <div class="absolute top-1/3 left-10 w-32 h-32 bg-gradient-to-br from-accent-gold to-transparent rounded-full opacity-20 floating-element blur-md floating-element-delay-3"></div>
-            <div class="absolute bottom-1/3 right-10 w-24 h-24 bg-gradient-to-br from-olive-green to-transparent rounded-full opacity-15 floating-element blur-md"></div>
+            <div class="absolute top-1/3 left-10 w-32 h-32 bg-gradient-to-br from-yellow-100 to-transparent rounded-full opacity-20 floating-element blur-md floating-element-delay-3"></div>
+            <div class="absolute bottom-1/3 right-10 w-24 h-24 bg-gradient-to-br from-gray-100 to-transparent rounded-full opacity-15 floating-element blur-md"></div>
         </div>
         
         <!-- Main Content -->
@@ -1092,7 +1088,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <!-- Tagline -->
                 <div class="scroll-reveal" style="animation-delay: 0.4s;">
                     <div class="mx-auto mt-8 sm:mt-10 max-w-3xl px-4">
-                        <div class="catalyst-glass p-6 sm:p-8 catalyst-hover-lift">
+                        <div class="admin-card p-6 sm:p-8 admin-hover-lift">
                             <p class="text-lg sm:text-xl leading-7 sm:leading-8 text-theme-primary font-normal">
                         <span class="relative">
                                     <span class="absolute -left-6 sm:-left-8 top-0 text-theme-muted text-2xl sm:text-3xl">"</span>
@@ -1113,11 +1109,11 @@ if ($_POST && isset($_POST['contact_form'])) {
 
                 <!-- Enhanced Status Badges -->
                 <div class="mx-auto mt-12 mb-8 flex flex-wrap justify-center gap-3 sm:gap-4 px-4 scroll-reveal" style="animation-delay: 0.7s;">
-                    <div class="group relative inline-flex items-center catalyst-glass px-4 sm:px-6 py-3 text-sm font-normal text-theme-primary catalyst-hover-lift transition-all duration-300 animate-pulse-glow">
+                    <div class="group relative inline-flex items-center admin-card px-4 sm:px-6 py-3 text-sm font-normal text-theme-primary admin-hover-lift transition-all duration-300 animate-pulse-glow">
                         <i class="fas fa-certificate mr-3 text-green-600 text-lg animate-float"></i>
                         <span class="relative z-10">Government Licensed</span>
                     </div>
-                    <div class="group relative inline-flex items-center catalyst-glass px-4 sm:px-6 py-3 text-sm font-normal text-theme-primary catalyst-hover-lift transition-all duration-300 animate-pulse-glow" style="animation-delay: 0.1s;">
+                    <div class="group relative inline-flex items-center admin-card px-4 sm:px-6 py-3 text-sm font-normal text-theme-primary admin-hover-lift transition-all duration-300 animate-pulse-glow" style="animation-delay: 0.1s;">
                         <i class="fas fa-award mr-3 text-blue-600 text-lg animate-float"></i>
                         <span class="relative z-10">HR Consulting & Recruitment</span>
                     </div>
@@ -1125,12 +1121,12 @@ if ($_POST && isset($_POST['contact_form'])) {
 
                 <!-- Enhanced CTA Buttons -->
                 <div class="mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-4 scroll-reveal" style="animation-delay: 0.8s;">
-                    <a href="#contact" class="group relative inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 text-base font-normal text-white catalyst-glass-strong rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 w-full sm:w-auto animate-pulse-glow catalyst-hover-lift">
+                    <a href="#contact" class="group relative inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 text-base font-normal text-white admin-button rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 w-full sm:w-auto animate-pulse-glow admin-hover-lift">
                         <i class="fas fa-comments mr-3 text-lg animate-float"></i>
                         <span>Get Started Today</span>
                         <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-2 animate-float"></i>
                     </a>
-                    <a href="#services" class="group inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 text-base font-normal text-white catalyst-glass rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-offset-2 w-full sm:w-auto animate-pulse-glow catalyst-hover-lift">
+                    <a href="#services" class="group inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 text-base font-normal text-white admin-button-secondary rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-offset-2 w-full sm:w-auto animate-pulse-glow admin-hover-lift">
                         <i class="fas fa-eye mr-3 transition-transform group-hover:scale-110 text-lg animate-float"></i>
                         <span>Explore Services</span>
                         <i class="fas fa-arrow-down ml-3 transition-transform group-hover:translate-y-2 animate-float"></i>
@@ -1143,7 +1139,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <div class="mt-24">
                     <div class="flex flex-col items-center">
                         <p class="text-sm text-white/70 mb-4 font-medium">Learn more about us</p>
-                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 catalyst-transparent-card rounded-2xl text-white hover:text-white/80 transition-all duration-400 hover:scale-110">
+                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 bg-white/10 dark:bg-gray-800/50 backdrop-blur-md border border-white/20 dark:border-gray-600/50 rounded-2xl text-white hover:text-white/80 transition-all duration-400 hover:scale-110">
                             <i class="fas fa-chevron-down text-xl animate-bounce group-hover:translate-y-1 transition-transform duration-300"></i>
                         </a>
                     </div>
@@ -2459,7 +2455,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                             }
                             
                             // Add floating animation to cards
-                            if (entry.target.classList.contains('minimalist-card')) {
+                            if (entry.target.classList.contains('admin-card')) {
                                 entry.target.classList.add('animate-on-scroll');
                                 setTimeout(() => {
                                     entry.target.classList.add('animate-in');
@@ -2473,12 +2469,12 @@ if ($_POST && isset($_POST['contact_form'])) {
                 }, observerOptions);
 
                 // Observe all scroll-reveal elements
-                document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .minimalist-card').forEach(el => {
+                document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .admin-card').forEach(el => {
                     observer.observe(el);
                 });
             } else {
                 // Fallback: immediately show all scroll-reveal elements
-                document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .minimalist-card').forEach(el => {
+                document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .admin-card').forEach(el => {
                     el.classList.add('animate-in');
                 });
             }
@@ -2489,12 +2485,12 @@ if ($_POST && isset($_POST['contact_form'])) {
             });
             
             // Add hover effects to interactive elements
-            document.querySelectorAll('.minimalist-card, .minimalist-button, .minimalist-button-secondary').forEach(el => {
+            document.querySelectorAll('.admin-card, .admin-button, .admin-button-secondary, .admin-button-success').forEach(el => {
                 el.classList.add('hover-lift');
             });
             
             // Add scale effects to buttons
-            document.querySelectorAll('.minimalist-button, .minimalist-button-secondary').forEach(el => {
+            document.querySelectorAll('.admin-button, .admin-button-secondary, .admin-button-success').forEach(el => {
                 el.classList.add('hover-scale');
             });
         });

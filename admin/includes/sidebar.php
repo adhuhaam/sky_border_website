@@ -69,6 +69,24 @@ $navItems = [
         'url' => 'messages.php',
         'icon' => 'fas fa-envelope',
         'active' => $currentPage === 'messages.php'
+    ],
+    [
+        'name' => 'Contacts',
+        'url' => 'contacts.php',
+        'icon' => 'fas fa-address-book',
+        'active' => $currentPage === 'contacts.php'
+    ],
+    [
+        'name' => 'Campaigns',
+        'url' => 'campaigns.php',
+        'icon' => 'fas fa-paper-plane',
+        'active' => $currentPage === 'campaigns.php'
+    ],
+    [
+        'name' => 'SMTP Settings',
+        'url' => 'smtp-settings.php',
+        'icon' => 'fas fa-server',
+        'active' => $currentPage === 'smtp-settings.php'
     ]
 ];
 
