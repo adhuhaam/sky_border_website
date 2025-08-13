@@ -183,43 +183,79 @@ if ($_POST && isset($_POST['contact_form'])) {
         body { 
             font-family: 'Inter', sans-serif; 
             scroll-behavior: smooth;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+        }
+        
+        .dark body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
         }
         
         /* Enhanced Transitions */
         .theme-transition { 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
         }
         
-        /* Modern Gradients - Darker Shades */
-        .gradient-bg { 
-            background: linear-gradient(135deg, #1a5a7a 0%, #2a7a6e 50%, #3a6b3a 100%); 
+        /* iOS 26 Inspired Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
+        
+        .glass-card-strong {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(25px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dark .glass-card {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .dark .glass-card-strong {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        /* Modern Gradients - iOS 26 Style */
+        .gradient-bg { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+        }
+        
         .gradient-text { 
-            background: linear-gradient(135deg, #1a5a7a 0%, #2a7a6e 100%); 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
             background-clip: text; 
         }
+        
         .gradient-text-animated {
-            background: linear-gradient(45deg, #1a5a7a, #2a7a6e, #3a6b3a, #5a8a2a, #1a5a7a);
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c, #667eea);
             background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: gradient-flow 3s ease-in-out infinite;
+            animation: gradient-flow 4s ease-in-out infinite;
         }
+        
         .gradient-border {
-            background: linear-gradient(135deg, #1a5a7a, #2a7a6e, #3a6b3a);
-            border-radius: 0.75rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 1rem;
             padding: 2px;
         }
+        
         .gradient-border-inner {
-            background: white;
-            border-radius: 0.625rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 0.875rem;
             height: 100%;
         }
+        
         .dark .gradient-border-inner {
-            background: rgb(17 24 39);
+            background: rgba(15, 23, 42, 0.95);
         }
         
         /* Advanced Animations */
@@ -308,45 +344,80 @@ if ($_POST && isset($_POST['contact_form'])) {
             animation: shimmer 2s infinite;
         }
         
-        /* Enhanced Hover Effects */
+        /* iOS 26 Hover Effects */
         .hover-lift {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
+        
         .hover-lift:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
         }
+        
         .hover-glow:hover {
-            box-shadow: 0 0 30px rgba(46, 134, 171, 0.3);
+            box-shadow: 0 0 40px rgba(102, 126, 234, 0.4);
         }
         
-        /* Glass Morphism Effect */
+        /* Enhanced Glass Morphism */
         .glass {
-            backdrop-filter: blur(16px) saturate(180%);
-            background-color: rgba(255, 255, 255, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.125);
-        }
-        .dark .glass {
-            background-color: rgba(17, 24, 39, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px) saturate(180%);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
         
-        /* Modern Card Styles */
+        .dark .glass {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        /* iOS 26 Button Styles */
+        .ios-button {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .ios-button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .dark .ios-button {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .dark .ios-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+        
+        /* iOS 26 Card Styles */
         .modern-card {
-            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 1.5rem;
         }
+        
         .dark .modern-card {
-            background: linear-gradient(145deg, #1f2937 0%, #111827 100%);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
         }
+        
         .modern-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
         }
+        
         .dark .modern-card:hover {
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
         }
@@ -375,13 +446,16 @@ if ($_POST && isset($_POST['contact_form'])) {
             }
         }
         
-        /* Enhanced Button Styles - Darker Shades */
+        /* iOS 26 Button Styles */
         .btn-primary {
-            background: linear-gradient(135deg, #1a5a7a 0%, #2a7a6e 100%);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
+            border-radius: 1rem;
+            backdrop-filter: blur(20px);
         }
+        
         .btn-primary::before {
             content: '';
             position: absolute;
@@ -389,14 +463,18 @@ if ($_POST && isset($_POST['contact_form'])) {
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
         }
+        
         .btn-primary:hover::before {
             left: 100%;
         }
+        
         .btn-primary:hover {
             transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
             box-shadow: 0 10px 30px rgba(26, 90, 122, 0.4);
         }
         
@@ -424,22 +502,45 @@ if ($_POST && isset($_POST['contact_form'])) {
             background-size: cover;
         }
         
-        /* Custom Scrollbar */
+        /* iOS 26 Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 12px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f5f9;
+            background: rgba(241, 245, 249, 0.5);
+            border-radius: 6px;
         }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #1a5a7a, #2a7a6e);
-            border-radius: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 6px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #0f3a4a, #1a5a7a);
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
         }
         .dark ::-webkit-scrollbar-track {
-            background: #1e293b;
+            background: rgba(30, 41, 59, 0.5);
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            border-color: rgba(15, 23, 42, 0.8);
+        }
+        
+        /* iOS 26 Additional Styles */
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .text-shadow {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .blur-bg {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .dark .blur-bg {
+            background: rgba(0, 0, 0, 0.2);
         }
     </style>
     
@@ -462,18 +563,27 @@ if ($_POST && isset($_POST['contact_form'])) {
             theme: {
                 extend: {
                     colors: {
-                        // Sky Border Solutions Brand Colors - Darker Shades
-                        'brand': {
-                            'green-light': '#5a8a2a',
-                            'green': '#3a6b3a',
-                            'green-dark': '#2a5a2a',
-                            'blue-light': '#2a7a8a',
-                            'blue': '#1a5a7a',
-                            'blue-dark': '#0f3a4a',
-                            'teal': '#2a7a6e',
-                            'gray-light': '#E2E8F0',
-                            'gray': '#475569',
-                            'gray-dark': '#1e293b'
+                        // iOS 26 Color Palette
+                        'ios': {
+                            'blue': '#007AFF',
+                            'purple': '#AF52DE',
+                            'indigo': '#5856D6',
+                            'teal': '#5AC8FA',
+                            'green': '#34C759',
+                            'yellow': '#FF9500',
+                            'red': '#FF3B30',
+                            'gray': {
+                                '50': '#F9F9F9',
+                                '100': '#F2F2F7',
+                                '200': '#E5E5EA',
+                                '300': '#D1D1D6',
+                                '400': '#C7C7CC',
+                                '500': '#AEAEB2',
+                                '600': '#8E8E93',
+                                '700': '#636366',
+                                '800': '#48484A',
+                                '900': '#1C1C1E'
+                            }
                         }
                     }
                 }
@@ -483,41 +593,46 @@ if ($_POST && isset($_POST['contact_form'])) {
 </head>
 
 <body class="h-full bg-gray-50 dark:bg-gray-900 theme-transition">
-    <!-- Enhanced Dark Mode Toggle -->
-    <div class="fixed top-4 right-4 z-50">
-        <button id="theme-toggle" class="group relative p-3 rounded-2xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-lg border border-gray-200/50 dark:border-gray-700/50 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700 hover:scale-105 active:scale-95 theme-transition focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 dark:focus:ring-offset-gray-800 sm:p-4" aria-label="Toggle dark mode" title="Toggle dark/light mode">
-            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-brand-blue/10 to-brand-teal/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <i id="theme-icon" class="relative z-10 fas fa-moon text-lg sm:text-xl transition-all duration-200" aria-hidden="true"></i>
-            <i id="theme-icon-dark" class="relative z-10 fas fa-sun text-lg sm:text-xl hidden transition-all duration-200" aria-hidden="true"></i>
+    <!-- iOS 26 Dark Mode Toggle -->
+    <div class="fixed top-6 right-6 z-50">
+        <button id="theme-toggle" class="group relative p-4 rounded-2xl glass-card-strong shadow-2xl text-gray-700 dark:text-gray-200 hover:scale-110 active:scale-95 theme-transition focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:ring-offset-2 dark:focus:ring-offset-gray-800" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
+            <i id="theme-icon" class="relative z-10 fas fa-moon text-xl transition-all duration-300" aria-hidden="true"></i>
+            <i id="theme-icon-dark" class="relative z-10 fas fa-sun text-xl hidden transition-all duration-300" aria-hidden="true"></i>
         </button>
     </div>
 
 
 
-    <!-- Enhanced Hero Section with Catalyst Design -->
-    <section id="home" class="relative overflow-hidden bg-gradient-to-b from-white via-gray-50/50 to-white dark:from-gray-900 dark:via-gray-800/30 dark:to-gray-900 theme-transition">
-        <!-- Modern Background Pattern -->
+    <!-- iOS 26 Hero Section with Glassmorphism -->
+    <section id="home" class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-900 dark:via-blue-900/20 dark:to-purple-900/20 theme-transition">
+        <!-- iOS 26 Background Pattern -->
         <div class="absolute inset-0 -z-20">
-            <!-- Grid Pattern -->
-            <div class="absolute inset-0 bg-[linear-gradient(to_right,#8882_1px,transparent_1px),linear-gradient(to_bottom,#8882_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
-            <!-- Animated Orbs -->
-            <div class="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-brand-blue/10 to-brand-teal/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float"></div>
-            <div class="absolute top-20 right-1/4 w-96 h-96 bg-gradient-to-l from-brand-teal/10 to-brand-green/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style="animation-delay: 2s;"></div>
-            <div class="absolute -bottom-20 left-1/2 w-96 h-96 bg-gradient-to-t from-brand-green/10 to-brand-blue/10 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-float" style="animation-delay: 4s;"></div>
+            <!-- Subtle Grid Pattern -->
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#8881_1px,transparent_1px),linear-gradient(to_bottom,#8881_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_60%,transparent_120%)]"></div>
+            
+            <!-- Floating Glass Orbs -->
+            <div class="absolute top-10 left-1/4 w-80 h-80 glass-card rounded-full opacity-60 animate-float blur-sm"></div>
+            <div class="absolute top-32 right-1/4 w-72 h-72 glass-card rounded-full opacity-50 animate-float blur-sm" style="animation-delay: 2s;"></div>
+            <div class="absolute -bottom-16 left-1/2 w-96 h-96 glass-card rounded-full opacity-40 animate-float blur-sm" style="animation-delay: 4s;"></div>
+            
+            <!-- Gradient Accent Lines -->
+            <div class="absolute top-1/4 left-0 w-32 h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"></div>
+            <div class="absolute top-3/4 right-0 w-32 h-px bg-gradient-to-l from-transparent via-purple-400/30 to-transparent"></div>
         </div>
         
         <!-- Main Content -->
-        <div class="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8 lg:py-32">
+        <div class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
             <div class="text-center">
                 <!-- Main Heading -->
                 <div class="scroll-reveal" style="animation-delay: 0.2s;">
-                    <h1 class="mx-auto max-w-5xl text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-6xl">
+                    <h1 class="mx-auto max-w-6xl text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-7xl">
                         <span class="block">
-                            <span class="bg-gradient-to-r from-brand-blue via-brand-teal to-brand-green bg-clip-text text-transparent animate-pulse">
+                            <span class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
                         <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
                             </span>
                         </span>
-                        <span class="mt-2 block text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-600 dark:text-gray-300">
+                        <span class="mt-4 block text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-600 dark:text-gray-300">
                             Professional Workforce Solutions
                     </span>
                 </h1>
@@ -525,59 +640,61 @@ if ($_POST && isset($_POST['contact_form'])) {
 
                 <!-- Tagline -->
                 <div class="scroll-reveal" style="animation-delay: 0.4s;">
-                    <p class="mx-auto mt-8 max-w-2xl text-xl leading-8 text-gray-600 dark:text-gray-300">
-                        <span class="relative">
-                            <span class="absolute -left-4 top-0 text-brand-blue/40 text-lg">"</span>
-                    <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
-                            <span class="absolute -right-4 bottom-0 text-brand-blue/40 text-lg">"</span>
-                        </span>
-                </p>
+                    <div class="mx-auto mt-10 max-w-3xl">
+                        <div class="glass-card-strong rounded-2xl p-6 border-0">
+                            <p class="text-xl leading-8 text-gray-700 dark:text-gray-200 font-medium">
+                                <span class="relative">
+                                    <span class="absolute -left-6 top-0 text-blue-500/60 text-2xl">"</span>
+                            <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
+                                    <span class="absolute -right-6 bottom-0 text-blue-500/60 text-2xl">"</span>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Description -->
                 <div class="scroll-reveal" style="animation-delay: 0.6s;">
-                    <p class="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-gray-500 dark:text-gray-400">
+                    <p class="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-gray-600 dark:text-gray-300">
                     <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
                 </p>
                 </div>
 
                 <!-- Status Badges -->
-                <div class="mx-auto mt-10 mb-6 flex flex-wrap justify-center gap-3 scroll-reveal" style="animation-delay: 0.7s;">
-                    <div class="group relative inline-flex items-center rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm px-4 py-2 text-sm font-medium text-brand-green-dark dark:text-brand-green-light border border-brand-green/20 dark:border-brand-green/30 hover:border-brand-green/40 dark:hover:border-brand-green/50 transition-all duration-300 hover:scale-105">
-                        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-green/5 to-brand-green/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <i class="fas fa-certificate mr-2 text-brand-green"></i>
+                <div class="mx-auto mt-12 mb-8 flex flex-wrap justify-center gap-4 scroll-reveal" style="animation-delay: 0.7s;">
+                    <div class="group relative inline-flex items-center glass-card rounded-2xl px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-certificate mr-3 text-green-500 text-lg"></i>
                         <span class="relative z-10">Government Licensed</span>
                     </div>
-                    <div class="group relative inline-flex items-center rounded-full bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm px-4 py-2 text-sm font-medium text-brand-blue-dark dark:text-brand-blue-light border border-brand-blue/20 dark:border-brand-blue/30 hover:border-brand-blue/40 dark:hover:border-brand-blue/50 transition-all duration-300 hover:scale-105" style="animation-delay: 0.1s;">
-                        <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-blue/5 to-brand-blue/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <i class="fas fa-award mr-2 text-brand-blue"></i>
+                    <div class="group relative inline-flex items-center glass-card rounded-2xl px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:scale-105 transition-all duration-300" style="animation-delay: 0.1s;">
+                        <i class="fas fa-award mr-3 text-blue-500 text-lg"></i>
                         <span class="relative z-10">HR Consulting & Recruitment</span>
                     </div>
                 </div>
 
-                <!-- Enhanced CTA Buttons -->
-                <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 scroll-reveal" style="animation-delay: 0.8s;">
-                    <a href="#contact" class="group relative inline-flex items-center justify-center px-8 py-4 text-sm font-semibold text-white bg-gradient-to-r from-brand-blue to-brand-teal rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:ring-offset-2 dark:focus:ring-offset-gray-900 w-full sm:w-auto">
-                        <span class="absolute inset-0 rounded-xl bg-gradient-to-r from-brand-blue-dark to-brand-teal opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                        <i class="fas fa-comments mr-3 relative z-10"></i>
+                <!-- iOS 26 CTA Buttons -->
+                <div class="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6 scroll-reveal" style="animation-delay: 0.8s;">
+                    <a href="#contact" class="group relative inline-flex items-center justify-center px-10 py-5 text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-400 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:ring-offset-2 dark:focus:ring-offset-gray-900 w-full sm:w-auto overflow-hidden">
+                        <span class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></span>
+                        <i class="fas fa-comments mr-3 relative z-10 text-lg"></i>
                         <span class="relative z-10">Get Started Today</span>
-                        <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-1 relative z-10"></i>
+                        <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-2 relative z-10"></i>
                     </a>
-                    <a href="#services" class="group inline-flex items-center justify-center px-8 py-4 text-sm font-semibold text-gray-900 dark:text-white bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 w-full sm:w-auto">
-                        <i class="fas fa-eye mr-3 transition-transform group-hover:scale-110"></i>
+                    <a href="#services" class="group inline-flex items-center justify-center px-10 py-5 text-base font-semibold text-gray-700 dark:text-gray-200 glass-card rounded-2xl shadow-lg hover:shadow-xl transition-all duration-400 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-500/30 focus:ring-offset-2 dark:focus:ring-offset-gray-900 w-full sm:w-auto">
+                        <i class="fas fa-eye mr-3 transition-transform group-hover:scale-110 text-lg"></i>
                         <span>Explore Services</span>
-                        <i class="fas fa-arrow-down ml-3 transition-transform group-hover:translate-y-1"></i>
+                        <i class="fas fa-arrow-down ml-3 transition-transform group-hover:translate-y-2"></i>
                     </a>
                 </div>
 
 
 
-                <!-- Enhanced Scroll Indicator -->
-                <div class="mt-20">
+                <!-- iOS 26 Scroll Indicator -->
+                <div class="mt-24">
                     <div class="flex flex-col items-center">
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Learn more about us</p>
-                        <a href="#about" class="group inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:text-brand-blue dark:hover:text-brand-blue-light hover:border-brand-blue/30 dark:hover:border-brand-blue/30 transition-all duration-300 hover:scale-105">
-                            <i class="fas fa-chevron-down text-lg animate-bounce group-hover:translate-y-1 transition-transform duration-300"></i>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 font-medium">Learn more about us</p>
+                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 glass-card rounded-2xl text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-400 hover:scale-110">
+                            <i class="fas fa-chevron-down text-xl animate-bounce group-hover:translate-y-1 transition-transform duration-300"></i>
                         </a>
                     </div>
                 </div>
@@ -585,20 +702,22 @@ if ($_POST && isset($_POST['contact_form'])) {
         </div>
     </section>
 
-    <!-- Enhanced About Section -->
-    <section id="about" class="relative py-24 sm:py-32 bg-gradient-to-b from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 theme-transition overflow-hidden">
-        <!-- Background Pattern -->
-        <div class="absolute inset-0 bg-grid-gray-100/25 dark:bg-grid-gray-800/25 [mask-image:linear-gradient(0deg,transparent,black,transparent)]"></div>
+    <!-- iOS 26 About Section -->
+    <section id="about" class="relative py-32 sm:py-40 bg-gradient-to-br from-slate-50/50 via-blue-50/20 to-purple-50/20 dark:from-slate-900/50 dark:via-blue-900/10 dark:to-purple-900/10 theme-transition overflow-hidden">
+        <!-- iOS 26 Background Pattern -->
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#8881_1px,transparent_1px),linear-gradient(to_bottom,#8881_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_50%,transparent_100%)]"></div>
+        </div>
         
         <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- Section Header -->
             <div class="mx-auto max-w-4xl text-center scroll-reveal">
-                <div class="inline-flex items-center rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 px-4 py-2 text-sm font-medium text-brand-blue-dark dark:text-brand-blue-light mb-6">
-                    <i class="fas fa-info-circle mr-2"></i>
+                <div class="inline-flex items-center glass-card rounded-2xl px-6 py-3 text-sm font-medium text-blue-600 dark:text-blue-400 mb-8">
+                    <i class="fas fa-info-circle mr-3 text-lg"></i>
                     About Our Company
                 </div>
-                <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl lg:text-5xl">
-                    About <span class="bg-gradient-to-r from-brand-blue to-brand-teal bg-clip-text text-transparent">Sky Border Solutions</span>
+                <h2 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
+                    About <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Sky Border Solutions</span>
                 </h2>
                 <?php if (!empty($companyInfo['about_us'])): ?>
                     <div class="mt-8 text-lg leading-8 text-gray-600 dark:text-gray-300 max-w-6xl mx-auto">
@@ -611,57 +730,51 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <?php endif; ?>
             </div>
             
-            <!-- Mission & Vision Cards -->
-            <div class="mx-auto mt-20 max-w-6xl">
-                <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <!-- iOS 26 Mission & Vision Cards -->
+            <div class="mx-auto mt-24 max-w-6xl">
+                <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
                     <!-- Mission Card -->
-                    <div class="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50 dark:border-gray-700/50 hover:border-gray-300/70 dark:hover:border-gray-600/70 transition-all duration-300 hover:scale-105 scroll-reveal" style="animation-delay: 0.2s;">
-                        <!-- Background Gradient -->
-                        <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-blue/5 to-brand-teal/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        
+                    <div class="group relative glass-card-strong rounded-3xl p-10 hover:scale-105 scroll-reveal transition-all duration-500" style="animation-delay: 0.2s;">
                         <div class="relative z-10">
-                        <div class="flex items-center mb-6">
-                                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-brand-blue to-brand-teal shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                                    <i class="fas fa-bullseye text-white text-xl group-hover:scale-110 transition-transform duration-300"></i>
+                            <div class="flex items-center mb-8">
+                                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 shadow-xl group-hover:shadow-2xl transition-all duration-400 group-hover:scale-110">
+                                    <i class="fas fa-bullseye text-white text-2xl"></i>
+                                </div>
+                                <div class="ml-6">
+                                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Our Mission</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">What drives us forward</p>
+                                </div>
                             </div>
-                                <div class="ml-4">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Our Mission</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">What drives us forward</p>
-                        </div>
-                            </div>
-                            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            <p class="text-gray-700 dark:text-gray-200 leading-relaxed text-lg">
                             <?php echo htmlspecialchars($companyInfo['mission']); ?>
                         </p>
                         </div>
                     </div>
                     
                     <!-- Vision Card -->
-                    <div class="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50 dark:border-gray-700/50 hover:border-gray-300/70 dark:hover:border-gray-600/70 transition-all duration-300 hover:scale-105 scroll-reveal" style="animation-delay: 0.4s;">
-                        <!-- Background Gradient -->
-                        <div class="absolute inset-0 rounded-3xl bg-gradient-to-br from-brand-teal/5 to-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        
+                    <div class="group relative glass-card-strong rounded-3xl p-10 hover:scale-105 scroll-reveal transition-all duration-500" style="animation-delay: 0.4s;">
                         <div class="relative z-10">
-                        <div class="flex items-center mb-6">
-                                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-r from-brand-teal to-brand-green shadow-lg group-hover:shadow-xl transition-shadow duration-300">
-                                    <i class="fas fa-eye text-white text-xl group-hover:scale-110 transition-transform duration-300"></i>
+                            <div class="flex items-center mb-8">
+                                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-500 shadow-xl group-hover:shadow-2xl transition-all duration-400 group-hover:scale-110">
+                                    <i class="fas fa-eye text-white text-2xl"></i>
+                                </div>
+                                <div class="ml-6">
+                                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Our Vision</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Where we're heading</p>
+                                </div>
                             </div>
-                                <div class="ml-4">
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">Our Vision</h3>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">Where we're heading</p>
-                        </div>
-                            </div>
-                            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                            <p class="text-gray-700 dark:text-gray-200 leading-relaxed text-lg">
                             <?php echo htmlspecialchars($companyInfo['vision']); ?>
                         </p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Team Members Section -->
-                <div class="mt-16 scroll-reveal" style="animation-delay: 0.5s;">
-                    <div class="text-center mb-12">
-                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">Meet Our Team</h3>
-                        <p class="mt-4 text-lg text-gray-600 dark:text-gray-300 theme-transition">The experienced professionals behind our success</p>
+                <!-- iOS 26 Team Members Section -->
+                <div class="mt-20 scroll-reveal" style="animation-delay: 0.5s;">
+                    <div class="text-center mb-16">
+                        <h3 class="text-3xl font-bold text-gray-900 dark:text-white theme-transition mb-4">Meet Our Team</h3>
+                        <p class="text-lg text-gray-600 dark:text-gray-300 theme-transition">The experienced professionals behind our success</p>
                     </div>
                     
                     <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -684,24 +797,26 @@ if ($_POST && isset($_POST['contact_form'])) {
                         if (!empty($teamMembers)):
                             foreach ($teamMembers as $index => $member): ?>
                         <div class="text-center scroll-reveal group" style="animation-delay: <?php echo 0.6 + ($index * 0.1); ?>s;">
-                            <div class="relative mb-6">
-                                <?php if (!empty($member['photo_url'])): ?>
-                                    <img src="<?php echo htmlspecialchars($member['photo_url']); ?>" 
-                                         alt="<?php echo htmlspecialchars($member['name']); ?>" 
-                                         class="mx-auto h-32 w-32 rounded-full object-cover border-4 border-white dark:border-gray-700 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                                <?php else: ?>
-                                    <div class="mx-auto h-32 w-32 rounded-full bg-gradient-to-r from-brand-blue to-brand-teal flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                                        <i class="fas fa-user text-white text-4xl"></i>
-                                    </div>
-                                <?php endif; ?>
+                            <div class="glass-card rounded-3xl p-8 hover:scale-105 transition-all duration-400">
+                                <div class="relative mb-8">
+                                    <?php if (!empty($member['photo_url'])): ?>
+                                        <img src="<?php echo htmlspecialchars($member['photo_url']); ?>" 
+                                             alt="<?php echo htmlspecialchars($member['name']); ?>" 
+                                             class="mx-auto h-36 w-36 rounded-full object-cover border-4 border-white/50 dark:border-gray-700/50 shadow-2xl group-hover:shadow-3xl transition-all duration-400 group-hover:scale-110">
+                                    <?php else: ?>
+                                        <div class="mx-auto h-36 w-36 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center shadow-2xl group-hover:shadow-3xl transition-all duration-400 group-hover:scale-110">
+                                            <i class="fas fa-user text-white text-5xl"></i>
+                                        </div>
+                                    <?php endif; ?>
+                                    
+                                    <!-- Hover effect overlay -->
+                                    <div class="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
+                                </div>
                                 
-                                <!-- Hover effect overlay -->
-                                <div class="absolute inset-0 rounded-full bg-gradient-to-r from-brand-blue/20 to-brand-teal/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <h4 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition mb-3"><?php echo htmlspecialchars($member['name']); ?></h4>
+                                <p class="text-blue-600 dark:text-blue-400 font-semibold mb-4 text-lg"><?php echo htmlspecialchars($member['designation']); ?></p>
+                                <p class="text-gray-600 dark:text-gray-300 text-base leading-relaxed"><?php echo htmlspecialchars($member['description']); ?></p>
                             </div>
-                            
-                            <h4 class="text-xl font-bold text-gray-900 dark:text-white theme-transition mb-2"><?php echo htmlspecialchars($member['name']); ?></h4>
-                            <p class="text-brand-blue dark:text-brand-blue-light font-semibold mb-3"><?php echo htmlspecialchars($member['designation']); ?></p>
-                            <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed"><?php echo htmlspecialchars($member['description']); ?></p>
                         </div>
                         <?php endforeach; ?>
                         <?php else: ?>
@@ -713,43 +828,44 @@ if ($_POST && isset($_POST['contact_form'])) {
                 </div>
                 
                 <!-- Why Choose Us -->
-                <div class="mt-16 scroll-reveal" style="animation-delay: 0.6s;">
-                    <div class="text-center mb-12">
-                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">Why Choose Us?</h3>
-                        <p class="mt-4 text-lg text-gray-600 dark:text-gray-300 theme-transition">What sets us apart in the recruitment industry</p>
+                <!-- iOS 26 Why Choose Us -->
+                <div class="mt-20 scroll-reveal" style="animation-delay: 0.6s;">
+                    <div class="text-center mb-16">
+                        <h3 class="text-3xl font-bold text-gray-900 dark:text-white theme-transition mb-4">Why Choose Us?</h3>
+                        <p class="text-lg text-gray-600 dark:text-gray-300 theme-transition">What sets us apart in the recruitment industry</p>
                     </div>
                     
                     <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                        <div class="text-center scroll-reveal" style="animation-delay: 0.8s;">
-                            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-blue/10 dark:bg-brand-blue/20 hover-glow animate-scale">
-                                <i class="fas fa-certificate text-brand-blue dark:text-brand-blue-light text-xl"></i>
+                        <div class="text-center scroll-reveal glass-card rounded-2xl p-6 hover:scale-105 transition-all duration-400" style="animation-delay: 0.8s;">
+                            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 shadow-xl hover:shadow-2xl transition-all duration-400 hover:scale-110">
+                                <i class="fas fa-certificate text-white text-2xl"></i>
                             </div>
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white theme-transition">Licensed & Compliant</h4>
-                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 theme-transition">Government-approved recruitment services</p>
+                            <h4 class="text-xl font-semibold text-gray-900 dark:text-white theme-transition mb-3">Licensed & Compliant</h4>
+                            <p class="text-gray-600 dark:text-gray-300 theme-transition">Government-approved recruitment services</p>
                         </div>
                         
-                        <div class="text-center scroll-reveal" style="animation-delay: 1s;">
-                            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-teal/10 dark:bg-brand-teal/20 hover-glow animate-scale">
-                                <i class="fas fa-users text-brand-teal text-xl"></i>
+                        <div class="text-center scroll-reveal glass-card rounded-2xl p-6 hover:scale-105 transition-all duration-400" style="animation-delay: 1s;">
+                            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-500 shadow-xl hover:shadow-2xl transition-all duration-400 hover:scale-110">
+                                <i class="fas fa-users text-white text-2xl"></i>
                             </div>
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white theme-transition">Expert Team</h4>
-                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 theme-transition">Experienced HR professionals</p>
+                            <h4 class="text-xl font-semibold text-gray-900 dark:text-white theme-transition mb-3">Expert Team</h4>
+                            <p class="text-gray-600 dark:text-gray-300 theme-transition">Experienced HR professionals</p>
                         </div>
                         
-                        <div class="text-center scroll-reveal" style="animation-delay: 1.2s;">
-                            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-green/10 dark:bg-brand-green/20 hover-glow animate-scale">
-                                <i class="fas fa-clock text-brand-green dark:text-brand-green-light text-xl"></i>
+                        <div class="text-center scroll-reveal glass-card rounded-2xl p-6 hover:scale-105 transition-all duration-400" style="animation-delay: 1.2s;">
+                            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-indigo-500 to-blue-500 shadow-xl hover:shadow-2xl transition-all duration-400 hover:scale-110">
+                                <i class="fas fa-clock text-white text-2xl"></i>
                             </div>
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white theme-transition">Fast Processing</h4>
-                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 theme-transition">Quick visa and permit processing</p>
+                            <h4 class="text-xl font-semibold text-gray-900 dark:text-white theme-transition mb-3">Fast Processing</h4>
+                            <p class="text-gray-600 dark:text-gray-300 theme-transition">Quick visa and permit processing</p>
                         </div>
                         
-                        <div class="text-center scroll-reveal" style="animation-delay: 1.4s;">
-                            <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-brand-blue to-brand-teal hover-glow animate-scale">
-                                <i class="fas fa-handshake text-white text-xl"></i>
+                        <div class="text-center scroll-reveal glass-card rounded-2xl p-6 hover:scale-105 transition-all duration-400" style="animation-delay: 1.4s;">
+                            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 shadow-xl hover:shadow-2xl transition-all duration-400 hover:scale-110">
+                                <i class="fas fa-handshake text-white text-2xl"></i>
                             </div>
-                            <h4 class="text-lg font-semibold text-gray-900 dark:text-white theme-transition">Trusted Partners</h4>
-                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 theme-transition">Long-term relationships with clients</p>
+                            <h4 class="text-xl font-semibold text-gray-900 dark:text-white theme-transition mb-3">Trusted Partners</h4>
+                            <p class="text-gray-600 dark:text-gray-300 theme-transition">Long-term relationships with clients</p>
                         </div>
                     </div>
                 </div>
