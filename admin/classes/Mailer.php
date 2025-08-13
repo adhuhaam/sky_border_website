@@ -1,4 +1,7 @@
 <?php
+// Include Composer autoloader for PHPMailer
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 class Mailer {
     private $pdo;
     private $smtpConfig;
