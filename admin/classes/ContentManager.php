@@ -610,6 +610,68 @@ class ContentManager {
         }
     }
     
+    public function getContactMessage($id) {
+        try {
+            $query = "SELECT * FROM contact_messages WHERE id = :id LIMIT 1";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([':id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get contact message error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function deleteContactMessage($id) {
+        try {
+            $query = "DELETE FROM contact_messages WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            return $stmt->execute([':id' => $id]);
+        } catch (Exception $e) {
+            error_log("Delete contact message error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function getContactMessageStats() {
+        try {
+            $query = "SELECT 
+                        status,
+                        COUNT(*) as count
+                      FROM contact_messages 
+                      GROUP BY status";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            $stats = [
+                'total' => 0,
+                'new' => 0,
+                'read' => 0,
+                'replied' => 0,
+                'archived' => 0
+            ];
+            
+            foreach ($results as $row) {
+                $status = $row['status'] ?? 'new';
+                $count = (int)$row['count'];
+                $stats[$status] = $count;
+                $stats['total'] += $count;
+            }
+            
+            return $stats;
+        } catch (Exception $e) {
+            error_log("Get contact message stats error: " . $e->getMessage());
+            return [
+                'total' => 0,
+                'new' => 0,
+                'read' => 0,
+                'replied' => 0,
+                'archived' => 0
+            ];
+        }
+    }
+    
     // Insurance Provider Methods
     public function getInsuranceProviders($type = null, $featured_only = false) {
         try {

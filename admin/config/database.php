@@ -1,46 +1,17 @@
 <?php
 /**
- * Database Configuration
- * Sky Border Solutions CMS - Auto-detects environment
+ * Production Database Configuration
+ * Sky Border Solutions CMS - Production Environment
+ * 
+ * IMPORTANT: Update these credentials with your actual production server details
  */
 
 class Database {
-    private $host;
-    private $db_name;
-    private $username;
-    private $password;
+    private $host = '162.213.255.53'; // Production server IP address
+    private $db_name = 'skydfcaf_sky_border';
+    private $username = 'skydfcaf_sky_border_user';
+    private $password = 'Ompl@65482*';
     public $conn;
-
-    public function __construct() {
-        // Production server configuration
-        $this->host = '162.213.255.53';
-        $this->db_name = 'skydfcaf_sky_border';
-        $this->username = 'skydfcaf_sky_border_user';
-        $this->password = 'Ompl@65482*';
-    }
-
-    private function isLocalEnvironment() {
-        // Check if we're on localhost or development environment
-        $serverName = $_SERVER['SERVER_NAME'] ?? '';
-        $serverAddr = $_SERVER['SERVER_ADDR'] ?? '';
-        $httpHost = $_SERVER['HTTP_HOST'] ?? '';
-        
-        // Check for command line usage
-        if (php_sapi_name() === 'cli') {
-            // If running from command line, check if we're on local machine
-            $hostname = gethostname();
-            return strpos($hostname, 'Adhus-MacBook-Air') !== false || 
-                   strpos($hostname, 'MacBook') !== false ||
-                   strpos($hostname, 'localhost') !== false;
-        }
-        
-        return in_array($serverName, ['localhost', '127.0.0.1', '::1']) || 
-               in_array($serverAddr, ['127.0.0.1', '::1']) ||
-               strpos($serverName, '.local') !== false ||
-               strpos($serverName, '.test') !== false ||
-               strpos($httpHost, 'localhost') !== false ||
-               strpos($httpHost, '127.0.0.1') !== false;
-    }
 
     public function getConnection() {
         $this->conn = null;
@@ -71,17 +42,6 @@ class Database {
         } catch (Exception $e) {
             return false;
         }
-    }
-
-    public function getEnvironmentInfo() {
-        return [
-            'environment' => $this->isLocalEnvironment() ? 'local' : 'production',
-            'host' => $this->host,
-            'database' => $this->db_name,
-            'username' => $this->username,
-            'sapi' => php_sapi_name(),
-            'hostname' => gethostname()
-        ];
     }
 }
 ?>

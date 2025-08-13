@@ -133,6 +133,7 @@ if ($_POST && isset($_POST['contact_form'])) {
     $name = $_POST['name'] ?? '';
     $email = $_POST['email'] ?? '';
     $company = $_POST['company'] ?? '';
+    $subject = $_POST['subject'] ?? '';
     $message = $_POST['message'] ?? '';
     
     if (!empty($name) && !empty($email) && !empty($message)) {
@@ -141,7 +142,7 @@ if ($_POST && isset($_POST['contact_form'])) {
         
         if ($databaseAvailable && $contentManager) {
             try {
-                $messageSaved = $contentManager->addContactMessage($name, $email, $company, '', '', $message);
+                $messageSaved = $contentManager->addContactMessage($name, $email, $company, '', $subject, $message);
             } catch (Exception $e) {
                 $messageSaved = false;
             }
@@ -1863,6 +1864,14 @@ if ($_POST && isset($_POST['contact_form'])) {
                                 <label for="company" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Company</label>
                                 <input type="text" name="company" id="company"
                                        value="<?php echo isset($_POST['company']) ? htmlspecialchars($_POST['company']) : ''; ?>"
+                                       class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition">
+                            </div>
+                            
+                            <!-- Subject -->
+                            <div>
+                                <label for="subject" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Subject</label>
+                                <input type="text" name="subject" id="subject"
+                                       value="<?php echo isset($_POST['subject']) ? htmlspecialchars($_POST['subject']) : ''; ?>"
                                        class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition">
                             </div>
                             

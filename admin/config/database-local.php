@@ -1,15 +1,23 @@
 <?php
 /**
  * Local Database Configuration
- * Sky Border Solutions CMS - Development Environment
+ * Sky Border Solutions CMS - For local development
  */
 
 class Database {
-    private $host = 'localhost';
-    private $db_name = 'sky_border';
-    private $username = 'root';
-    private $password = 'Ompl@65482*'; // Leave empty for default local MySQL setup
+    private $host;
+    private $db_name;
+    private $username;
+    private $password;
     public $conn;
+
+    public function __construct() {
+        // Local development configuration
+        $this->host = 'localhost';
+        $this->db_name = 'sky_border';
+        $this->username = 'root';
+        $this->password = 'Ompl@65482*';
+    }
 
     public function getConnection() {
         $this->conn = null;
