@@ -1,4 +1,7 @@
 <?php
+// Include Composer autoloader for PHPMailer
+require_once __DIR__ . '/../vendor/autoload.php';
+
 require_once 'config/database.php';
 require_once 'classes/Auth.php';
 require_once 'classes/ContentManager.php';
