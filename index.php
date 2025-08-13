@@ -967,7 +967,7 @@ if ($_POST && isset($_POST['contact_form'])) {
             <div class="text-center">
                 <!-- Logo -->
                 <div class="scroll-reveal mb-8" style="animation-delay: 0.1s;">
-                    <img src="/images/logo.svg" alt="Sky Border Solutions Logo" class="w-20 h-20 sm:w-24 sm:h-24 filter drop-shadow-lg mx-auto">
+                    <img src="/images/logo.svg" alt="Sky Border Solutions Logo" class="w-40 h-40 sm:w-24 sm:h-24 filter drop-shadow-lg mx-auto">
                 </div>
 
                 <!-- Main Heading -->
