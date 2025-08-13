@@ -167,13 +167,16 @@ if ($_POST && isset($_POST['contact_form'])) {
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Headless UI for interactive components -->
+    <script src="https://unpkg.com/@headlessui/vue@latest/dist/headlessui.umd.js"></script>
+    
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
     
-    <!-- Google Fonts - Inter (same as Catalyst) -->
+    <!-- Google Fonts - Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Preload critical resources -->
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
@@ -181,46 +184,47 @@ if ($_POST && isset($_POST['contact_form'])) {
     
     <style>
         body { 
-            font-family: 'Inter', sans-serif; 
+            font-family: 'Poppins', sans-serif; 
             scroll-behavior: smooth;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+            background: transparent;
+            color: #ffffff;
         }
         
-        .dark body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        /* Full Transparent Theme */
+        .transparent-bg {
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(30px);
         }
         
-        /* Enhanced Transitions */
-        .theme-transition { 
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
-        }
-        
-        /* iOS 26 Inspired Glassmorphism */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-        
-        .glass-card-strong {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(25px) saturate(200%);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .dark .glass-card {
-            background: rgba(0, 0, 0, 0.2);
+        .transparent-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(40px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
         }
         
-        .dark .glass-card-strong {
-            background: rgba(0, 0, 0, 0.3);
+        .transparent-card-strong {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(50px);
             border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.15);
         }
         
-        /* Modern Gradients - iOS 26 Style */
+        .transparent-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+        
+        .transparent-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* Modern Gradients */
         .gradient-bg { 
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
         }
@@ -239,23 +243,6 @@ if ($_POST && isset($_POST['contact_form'])) {
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: gradient-flow 4s ease-in-out infinite;
-        }
-        
-        .gradient-border {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 1rem;
-            padding: 2px;
-        }
-        
-        .gradient-border-inner {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 0.875rem;
-            height: 100%;
-        }
-        
-        .dark .gradient-border-inner {
-            background: rgba(15, 23, 42, 0.95);
         }
         
         /* Advanced Animations */
@@ -344,82 +331,59 @@ if ($_POST && isset($_POST['contact_form'])) {
             animation: shimmer 2s infinite;
         }
         
-        /* iOS 26 Hover Effects */
+        /* Transparent Hover Effects */
         .hover-lift {
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         .hover-lift:hover {
-            transform: translateY(-12px) scale(1.03);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
         }
         
         .hover-glow:hover {
-            box-shadow: 0 0 40px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.3);
         }
         
-        /* Enhanced Glass Morphism */
+        /* Enhanced Transparent Elements */
         .glass {
-            backdrop-filter: blur(20px) saturate(180%);
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(40px);
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
         
-        .dark .glass {
-            background-color: rgba(0, 0, 0, 0.2);
+        /* Transparent Button Variants */
+        .transparent-btn {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-        
-        /* iOS 26 Button Styles */
-        .ios-button {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 1rem;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        
-        .ios-button:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-        
-        .dark .ios-button {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-        
-        .dark .ios-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.25);
-        }
-        
-        /* iOS 26 Card Styles */
-        .modern-card {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             border-radius: 1.5rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            color: #ffffff;
         }
         
-        .dark .modern-card {
-            background: rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        .transparent-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+        
+        /* Transparent Card Styles */
+        .modern-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: 2rem;
         }
         
         .modern-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-        
-        .dark .modern-card:hover {
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
         }
         
         /* Mobile-specific optimizations */
@@ -446,14 +410,16 @@ if ($_POST && isset($_POST['contact_form'])) {
             }
         }
         
-        /* iOS 26 Button Styles */
+        /* Transparent Button Styles */
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
-            border-radius: 1rem;
-            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
         }
         
         .btn-primary::before {
@@ -463,7 +429,7 @@ if ($_POST && isset($_POST['contact_form'])) {
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
             transition: left 0.6s;
         }
         
@@ -472,10 +438,10 @@ if ($_POST && isset($_POST['contact_form'])) {
         }
         
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
-        }
-            box-shadow: 0 10px 30px rgba(26, 90, 122, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
         }
         
         /* Scroll Reveal */
@@ -502,89 +468,168 @@ if ($_POST && isset($_POST['contact_form'])) {
             background-size: cover;
         }
         
-        /* iOS 26 Custom Scrollbar */
+        /* Transparent Scrollbar */
         ::-webkit-scrollbar {
-            width: 12px;
+            width: 16px;
         }
         ::-webkit-scrollbar-track {
-            background: rgba(241, 245, 249, 0.5);
-            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
         }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 6px;
-            border: 2px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #5a67d8, #6b46c1);
-        }
-        .dark ::-webkit-scrollbar-track {
-            background: rgba(30, 41, 59, 0.5);
-        }
-        .dark ::-webkit-scrollbar-thumb {
-            border-color: rgba(15, 23, 42, 0.8);
+            background: rgba(255, 255, 255, 0.3);
         }
         
-        /* iOS 26 Additional Styles */
+        /* Transparent Additional Styles */
         .text-shadow {
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .dark .text-shadow {
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         
         .blur-bg {
-            backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(50px);
+            background: rgba(255, 255, 255, 0.05);
         }
         
-        .dark .blur-bg {
-            background: rgba(0, 0, 0, 0.2);
+        .transparent-overlay {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+        }
+        
+        .transparent-border {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .transparent-text {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .transparent-text-light {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Ensure transparent elements are visible */
+        .transparent-card {
+            background: rgba(255, 255, 255, 0.08) !important;
+            backdrop-filter: blur(40px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        }
+        
+        .transparent-card-strong {
+            background: rgba(255, 255, 255, 0.12) !important;
+            backdrop-filter: blur(50px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+        
+        /* Enhanced visibility for transparent elements */
+        .transparent-bg {
+            background: rgba(0, 0, 0, 0.2) !important;
+            backdrop-filter: blur(30px) !important;
+        }
+        
+        /* Poppins font optimization */
+        body, h1, h2, h3, h4, h5, h6, p, span, div, a, button {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        
+        /* Enhanced transparent effects */
+        .transparent-theme {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+        }
+        
+        /* Glowing effects for transparent elements */
+        .transparent-card:hover {
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .transparent-card-strong:hover {
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Animated background */
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .transparent-theme {
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+        
+        /* Enhanced text shadows for better readability */
+        h1, h2, h3, h4, h5, h6 {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        p, span {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
     </style>
     
     <script>
-        // Early theme initialization to prevent flash
+        // Transparent theme initialization
         (function() {
-            const savedTheme = localStorage.getItem('darkMode');
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const darkMode = savedTheme === 'true' || (savedTheme === null && prefersDark);
+            // Add transparent theme class
+            document.documentElement.classList.add('transparent-theme');
             
-            if (darkMode) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
+            // Initialize scroll reveal
+            function initScrollReveal() {
+                const elements = document.querySelectorAll('.scroll-reveal');
+                elements.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.classList.add('revealed');
+                    }, index * 100);
+                });
             }
+            
+            // Initialize on load
+            window.addEventListener('load', initScrollReveal);
+            
+            // Initialize on scroll
+            window.addEventListener('scroll', () => {
+                const elements = document.querySelectorAll('.scroll-reveal:not(.revealed)');
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 0.8) {
+                        el.classList.add('revealed');
+                    }
+                });
+            });
         })();
         
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        // iOS 26 Color Palette
-                        'ios': {
-                            'blue': '#007AFF',
-                            'purple': '#AF52DE',
-                            'indigo': '#5856D6',
-                            'teal': '#5AC8FA',
-                            'green': '#34C759',
-                            'yellow': '#FF9500',
-                            'red': '#FF3B30',
-                            'gray': {
-                                '50': '#F9F9F9',
-                                '100': '#F2F2F7',
-                                '200': '#E5E5EA',
-                                '300': '#D1D1D6',
-                                '400': '#C7C7CC',
-                                '500': '#AEAEB2',
-                                '600': '#8E8E93',
-                                '700': '#636366',
-                                '800': '#48484A',
-                                '900': '#1C1C1E'
-                            }
+                        // Transparent Theme Colors
+                        'transparent': {
+                            'white': 'rgba(255, 255, 255, 0.1)',
+                            'white-strong': 'rgba(255, 255, 255, 0.2)',
+                            'black': 'rgba(0, 0, 0, 0.1)',
+                            'black-strong': 'rgba(0, 0, 0, 0.2)'
+                        },
+                        'glass': {
+                            'primary': 'rgba(255, 255, 255, 0.05)',
+                            'secondary': 'rgba(255, 255, 255, 0.08)',
+                            'strong': 'rgba(255, 255, 255, 0.15)'
                         }
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                        'sm': '4px',
+                        'md': '8px',
+                        'lg': '16px',
+                        'xl': '24px',
+                        '2xl': '40px',
+                        '3xl': '64px'
                     }
                 }
             }
@@ -592,11 +637,11 @@ if ($_POST && isset($_POST['contact_form'])) {
     </script>
 </head>
 
-<body class="h-full bg-gray-50 dark:bg-gray-900 theme-transition">
-    <!-- iOS 26 Dark Mode Toggle -->
+<body class="h-full bg-transparent theme-transition">
+    <!-- Transparent Dark Mode Toggle -->
     <div class="fixed top-6 right-6 z-50">
-        <button id="theme-toggle" class="group relative p-4 rounded-2xl glass-card-strong shadow-2xl text-gray-700 dark:text-gray-200 hover:scale-110 active:scale-95 theme-transition focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:ring-offset-2 dark:focus:ring-offset-gray-800" aria-label="Toggle dark mode" title="Toggle dark/light mode">
-            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
+        <button id="theme-toggle" class="group relative p-4 rounded-2xl transparent-card-strong shadow-2xl text-white hover:scale-110 active:scale-95 theme-transition focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-white/10 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
             <i id="theme-icon" class="relative z-10 fas fa-moon text-xl transition-all duration-300" aria-hidden="true"></i>
             <i id="theme-icon-dark" class="relative z-10 fas fa-sun text-xl hidden transition-all duration-300" aria-hidden="true"></i>
         </button>
@@ -604,21 +649,29 @@ if ($_POST && isset($_POST['contact_form'])) {
 
 
 
-    <!-- iOS 26 Hero Section with Glassmorphism -->
-    <section id="home" class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-slate-900 dark:via-blue-900/20 dark:to-purple-900/20 theme-transition">
-        <!-- iOS 26 Background Pattern -->
+    <!-- Transparent Hero Section -->
+    <section id="home" class="relative overflow-hidden bg-transparent theme-transition min-h-screen flex items-center">
+        <!-- Video Background -->
+        <div class="absolute inset-0 -z-30">
+            <video autoplay muted loop class="w-full h-full object-cover opacity-20">
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-particle-flow-32774-large.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-black/40"></div>
+        </div>
+        
+        <!-- Transparent Background Pattern -->
         <div class="absolute inset-0 -z-20">
-            <!-- Subtle Grid Pattern -->
-            <div class="absolute inset-0 bg-[linear-gradient(to_right,#8881_1px,transparent_1px),linear-gradient(to_bottom,#8881_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_60%,transparent_120%)]"></div>
+            <!-- Animated Background -->
+            <div class="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
             
-            <!-- Floating Glass Orbs -->
-            <div class="absolute top-10 left-1/4 w-80 h-80 glass-card rounded-full opacity-60 animate-float blur-sm"></div>
-            <div class="absolute top-32 right-1/4 w-72 h-72 glass-card rounded-full opacity-50 animate-float blur-sm" style="animation-delay: 2s;"></div>
-            <div class="absolute -bottom-16 left-1/2 w-96 h-96 glass-card rounded-full opacity-40 animate-float blur-sm" style="animation-delay: 4s;"></div>
+            <!-- Floating Transparent Elements -->
+            <div class="absolute top-20 left-1/4 w-96 h-96 transparent-card rounded-full opacity-30 animate-float blur-md"></div>
+            <div class="absolute top-40 right-1/4 w-80 h-80 transparent-card rounded-full opacity-25 animate-float blur-md" style="animation-delay: 2s;"></div>
+            <div class="absolute -bottom-20 left-1/2 w-72 h-72 transparent-card rounded-full opacity-20 animate-float blur-md" style="animation-delay: 4s;"></div>
             
-            <!-- Gradient Accent Lines -->
-            <div class="absolute top-1/4 left-0 w-32 h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"></div>
-            <div class="absolute top-3/4 right-0 w-32 h-px bg-gradient-to-l from-transparent via-purple-400/30 to-transparent"></div>
+            <!-- Transparent Accent Lines -->
+            <div class="absolute top-1/3 left-0 w-40 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+            <div class="absolute top-2/3 right-0 w-40 h-px bg-gradient-to-l from-transparent via-white/20 to-transparent"></div>
         </div>
         
         <!-- Main Content -->
@@ -626,13 +679,13 @@ if ($_POST && isset($_POST['contact_form'])) {
             <div class="text-center">
                 <!-- Main Heading -->
                 <div class="scroll-reveal" style="animation-delay: 0.2s;">
-                    <h1 class="mx-auto max-w-6xl text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl lg:text-7xl">
+                    <h1 class="mx-auto max-w-6xl text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
                         <span class="block">
-                            <span class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                            <span class="bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
                         <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
                             </span>
                         </span>
-                        <span class="mt-4 block text-2xl sm:text-3xl lg:text-4xl font-medium text-gray-600 dark:text-gray-300">
+                        <span class="mt-4 block text-2xl sm:text-3xl lg:text-4xl font-medium text-white/80">
                             Professional Workforce Solutions
                     </span>
                 </h1>
@@ -641,12 +694,12 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <!-- Tagline -->
                 <div class="scroll-reveal" style="animation-delay: 0.4s;">
                     <div class="mx-auto mt-10 max-w-3xl">
-                        <div class="glass-card-strong rounded-2xl p-6 border-0">
-                            <p class="text-xl leading-8 text-gray-700 dark:text-gray-200 font-medium">
+                        <div class="transparent-card-strong rounded-2xl p-8 border-0">
+                            <p class="text-xl leading-8 text-white font-medium">
                                 <span class="relative">
-                                    <span class="absolute -left-6 top-0 text-blue-500/60 text-2xl">"</span>
+                                    <span class="absolute -left-8 top-0 text-white/60 text-3xl">"</span>
                             <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
-                                    <span class="absolute -right-6 bottom-0 text-blue-500/60 text-2xl">"</span>
+                                    <span class="absolute -right-8 bottom-0 text-white/60 text-3xl">"</span>
                                 </span>
                             </p>
                         </div>
@@ -655,32 +708,32 @@ if ($_POST && isset($_POST['contact_form'])) {
 
                 <!-- Description -->
                 <div class="scroll-reveal" style="animation-delay: 0.6s;">
-                    <p class="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+                    <p class="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-white/80">
                     <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
                 </p>
                 </div>
 
                 <!-- Status Badges -->
                 <div class="mx-auto mt-12 mb-8 flex flex-wrap justify-center gap-4 scroll-reveal" style="animation-delay: 0.7s;">
-                    <div class="group relative inline-flex items-center glass-card rounded-2xl px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:scale-105 transition-all duration-300">
-                        <i class="fas fa-certificate mr-3 text-green-500 text-lg"></i>
+                    <div class="group relative inline-flex items-center transparent-card rounded-2xl px-6 py-3 text-sm font-medium text-white hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-certificate mr-3 text-green-300 text-lg"></i>
                         <span class="relative z-10">Government Licensed</span>
                     </div>
-                    <div class="group relative inline-flex items-center glass-card rounded-2xl px-6 py-3 text-sm font-medium text-gray-700 dark:text-gray-200 hover:scale-105 transition-all duration-300" style="animation-delay: 0.1s;">
-                        <i class="fas fa-award mr-3 text-blue-500 text-lg"></i>
+                    <div class="group relative inline-flex items-center transparent-card rounded-2xl px-6 py-3 text-sm font-medium text-white hover:scale-105 transition-all duration-300" style="animation-delay: 0.1s;">
+                        <i class="fas fa-award mr-3 text-blue-300 text-lg"></i>
                         <span class="relative z-10">HR Consulting & Recruitment</span>
                     </div>
                 </div>
 
-                <!-- iOS 26 CTA Buttons -->
+                <!-- Transparent CTA Buttons -->
                 <div class="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6 scroll-reveal" style="animation-delay: 0.8s;">
-                    <a href="#contact" class="group relative inline-flex items-center justify-center px-10 py-5 text-base font-semibold text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-400 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:ring-offset-2 dark:focus:ring-offset-gray-900 w-full sm:w-auto overflow-hidden">
-                        <span class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></span>
+                    <a href="#contact" class="group relative inline-flex items-center justify-center px-10 py-5 text-base font-semibold text-white transparent-card-strong rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-400 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2 w-full sm:w-auto overflow-hidden">
+                        <span class="absolute inset-0 rounded-2xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></span>
                         <i class="fas fa-comments mr-3 relative z-10 text-lg"></i>
                         <span class="relative z-10">Get Started Today</span>
                         <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-2 relative z-10"></i>
                     </a>
-                    <a href="#services" class="group inline-flex items-center justify-center px-10 py-5 text-base font-semibold text-gray-700 dark:text-gray-200 glass-card rounded-2xl shadow-lg hover:shadow-xl transition-all duration-400 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-500/30 focus:ring-offset-2 dark:focus:ring-offset-gray-900 w-full sm:w-auto">
+                    <a href="#services" class="group inline-flex items-center justify-center px-10 py-5 text-base font-semibold text-white transparent-card rounded-2xl shadow-lg hover:shadow-xl transition-all duration-400 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2 w-full sm:w-auto">
                         <i class="fas fa-eye mr-3 transition-transform group-hover:scale-110 text-lg"></i>
                         <span>Explore Services</span>
                         <i class="fas fa-arrow-down ml-3 transition-transform group-hover:translate-y-2"></i>
@@ -689,11 +742,11 @@ if ($_POST && isset($_POST['contact_form'])) {
 
 
 
-                <!-- iOS 26 Scroll Indicator -->
+                <!-- Transparent Scroll Indicator -->
                 <div class="mt-24">
                     <div class="flex flex-col items-center">
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 font-medium">Learn more about us</p>
-                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 glass-card rounded-2xl text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-400 hover:scale-110">
+                        <p class="text-sm text-white/70 mb-4 font-medium">Learn more about us</p>
+                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 transparent-card rounded-2xl text-white hover:text-white/80 transition-all duration-400 hover:scale-110">
                             <i class="fas fa-chevron-down text-xl animate-bounce group-hover:translate-y-1 transition-transform duration-300"></i>
                         </a>
                     </div>
