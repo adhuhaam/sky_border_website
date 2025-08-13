@@ -11,9 +11,16 @@ if (!$auth->isLoggedIn()) {
     exit;
 }
 
-// Initialize classes
-$contentManager = new ContentManager();
-$mailer = new Mailer();
+// Initialize database and classes
+try {
+    $database = new Database();
+    $conn = $database->getConnection();
+    $contentManager = new ContentManager();
+    $mailer = new Mailer($conn);
+} catch (Exception $e) {
+    error_log("Failed to initialize classes: " . $e->getMessage());
+    die("Failed to initialize system. Please check error logs.");
+}
 
 // Start session to get preview data
 if (session_status() === PHP_SESSION_NONE) {
