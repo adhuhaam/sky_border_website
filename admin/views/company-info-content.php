@@ -26,10 +26,28 @@
                     </div>
                     
                     <div>
+                        <label for="tagline" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Company Tagline</label>
+                        <input type="text" name="tagline" id="tagline" 
+                               value="<?php echo htmlspecialchars($companyInfo['tagline'] ?? ''); ?>"
+                               placeholder="e.g., Where compliance meets competence"
+                               class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div>
                         <label for="business_type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Business Type</label>
                         <input type="text" name="business_type" id="business_type" 
                                value="<?php echo htmlspecialchars($companyInfo['business_type'] ?? ''); ?>"
                                placeholder="e.g., Human Resources Agency"
+                               class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
+                    </div>
+                    
+                    <div>
+                        <label for="established_year" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Established Year</label>
+                        <input type="number" name="established_year" id="established_year" min="1900" max="<?php echo date('Y'); ?>"
+                               value="<?php echo htmlspecialchars($companyInfo['established_year'] ?? ''); ?>"
+                               placeholder="e.g., 2020"
                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
                     </div>
                 </div>
@@ -88,7 +106,7 @@
                 
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Phone Number</label>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Main Phone Number</label>
                         <input type="tel" name="phone" id="phone" 
                                value="<?php echo htmlspecialchars($companyInfo['phone'] ?? ''); ?>"
                                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
@@ -102,10 +120,36 @@
                     </div>
                 </div>
                 
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                    <div>
+                        <label for="hotline1" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Hotline 1</label>
+                        <input type="tel" name="hotline1" id="hotline1" 
+                               value="<?php echo htmlspecialchars($companyInfo['hotline1'] ?? ''); ?>"
+                               placeholder="e.g., +960 755-9001"
+                               class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
+                    </div>
+                    
+                    <div>
+                        <label for="hotline2" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Hotline 2</label>
+                        <input type="tel" name="hotline2" id="hotline2" 
+                               value="<?php echo htmlspecialchars($companyInfo['hotline2'] ?? ''); ?>"
+                               placeholder="e.g., +960 911-1409"
+                               class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition">
+                    </div>
+                </div>
+                
                 <div>
                     <label for="address" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Address</label>
                     <textarea name="address" id="address" rows="3"
                               class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition"><?php echo htmlspecialchars($companyInfo['address'] ?? ''); ?></textarea>
+                </div>
+                
+                <div>
+                    <label for="business_hours" class="block text-sm font-medium text-gray-700 dark:text-gray-300 theme-transition">Business Hours</label>
+                    <textarea name="business_hours" id="business_hours" rows="4"
+                              placeholder="e.g., Sunday - Thursday: 8:00 AM - 5:00 PM&#10;Saturday: 9:00 AM - 1:00 PM&#10;Friday: Closed"
+                              class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-brand-blue focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white theme-transition"><?php echo htmlspecialchars($companyInfo['business_hours'] ?? ''); ?></textarea>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Use line breaks (Enter key) to separate different days or time periods.</p>
                 </div>
                 
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">

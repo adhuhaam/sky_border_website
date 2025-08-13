@@ -12,20 +12,11 @@ class Database {
     public $conn;
 
     public function __construct() {
-        // Auto-detect environment
-        if ($this->isLocalEnvironment()) {
-            // Local development settings
-            $this->host = 'localhost';
-            $this->db_name = 'sky_border';
-            $this->username = 'root';
-            $this->password = '';
-        } else {
-            // Production settings
-            $this->host = 'localhost'; // Change this to your actual production server hostname/IP
-            $this->db_name = 'skydfcaf_sky_border';
-            $this->username = 'skydfcaf_sky_border_user';
-            $this->password = 'Ompl@65482*';
-        }
+        // Production server configuration
+        $this->host = '162.213.255.53';
+        $this->db_name = 'skydfcaf_sky_border';
+        $this->username = 'skydfcaf_sky_border_user';
+        $this->password = 'Ompl@65482*';
     }
 
     private function isLocalEnvironment() {

@@ -1,11 +1,13 @@
 <?php
 /**
- * Database Configuration
- * Sky Border Solutions CMS
+ * Production Database Configuration
+ * Sky Border Solutions CMS - Production Environment
+ * 
+ * IMPORTANT: Update these credentials with your actual production server details
  */
 
 class Database {
-    private $host = 'localhost';
+    private $host = '162.213.255.53'; // Production server IP address
     private $db_name = 'skydfcaf_sky_border';
     private $username = 'skydfcaf_sky_border_user';
     private $password = 'Ompl@65482*';

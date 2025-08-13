@@ -24,7 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($section === 'basic' && isset($_POST['update_basic'])) {
         $data = [
             'company_name' => trim($_POST['company_name'] ?? ''),
+            'tagline' => trim($_POST['tagline'] ?? ''),
             'business_type' => trim($_POST['business_type'] ?? ''),
+            'established_year' => (int)($_POST['established_year'] ?? 0),
             'registration_number' => trim($_POST['registration_number'] ?? ''),
             'license_number' => trim($_POST['license_number'] ?? ''),
             'description' => trim($_POST['description'] ?? ''),
@@ -45,10 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($section === 'contact' && isset($_POST['update_contact'])) {
         $data = [
             'phone' => trim($_POST['phone'] ?? ''),
+            'hotline1' => trim($_POST['hotline1'] ?? ''),
+            'hotline2' => trim($_POST['hotline2'] ?? ''),
             'email' => trim($_POST['email'] ?? ''),
             'address' => trim($_POST['address'] ?? ''),
-            'website' => trim($_POST['website'] ?? ''),
-            'established_year' => (int)($_POST['established_year'] ?? 0)
+            'business_hours' => trim($_POST['business_hours'] ?? ''),
+            'website' => trim($_POST['website'] ?? '')
         ];
         
         if ($contentManager->updateCompanyInfo($data)) {
