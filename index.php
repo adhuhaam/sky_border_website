@@ -1918,82 +1918,32 @@ if ($_POST && isset($_POST['contact_form'])) {
     <section id="contact" class="py-24 sm:py-32 bg-white dark:bg-gray-900 theme-transition">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- Section Header -->
-            <div class="mx-auto max-w-2xl text-center mb-16 scroll-reveal">
+            <div class="mx-auto max-w-3xl text-center mb-16 scroll-reveal">
                 <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl theme-transition">
                     Get in <span class="gradient-text">Touch</span>
                 </h2>
                 <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300 theme-transition">
-                    Ready to find the perfect talent for your organization? Let's discuss your needs
+                    Ready to find the perfect talent for your organization? Send us a message and we'll get back to you within 24 hours.
                 </p>
-            </div>
-            
-            <div class="grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-2">
-                <!-- Contact Information -->
-                <div class="scroll-reveal" style="animation-delay: 0.2s;">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-8 theme-transition">Contact Information</h3>
-                    
-                    <div class="space-y-6">
-                        <!-- Phone -->
-                        <div class="flex items-center">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-blue to-brand-teal">
-                                <i class="fas fa-phone text-white"></i>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Phone</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-300 theme-transition"><?php echo htmlspecialchars($companyInfo['phone']); ?></p>
-                            </div>
-                        </div>
-                        
-                        <!-- Hotlines -->
-                        <div class="flex items-center">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-teal to-brand-green">
-                                <i class="fas fa-mobile-alt text-white"></i>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Hotlines</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-300 theme-transition">
-                                    <?php echo htmlspecialchars($companyInfo['hotline1']); ?> • <?php echo htmlspecialchars($companyInfo['hotline2']); ?>
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <!-- Email -->
-                        <div class="flex items-center">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-green to-brand-blue">
-                                <i class="fas fa-envelope text-white"></i>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Email</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-300 theme-transition"><?php echo htmlspecialchars($companyInfo['email']); ?></p>
-                            </div>
-                        </div>
-                        
-                        <!-- Address -->
-                        <div class="flex items-start">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-blue to-brand-green">
-                                <i class="fas fa-map-marker-alt text-white"></i>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Address</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-300 theme-transition"><?php echo htmlspecialchars($companyInfo['address']); ?></p>
-                            </div>
-                        </div>
-                        
-                        <!-- Business Hours -->
-                        <div class="flex items-start">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-r from-brand-teal to-brand-blue">
-                                <i class="fas fa-clock text-white"></i>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white theme-transition">Business Hours</p>
-                                <p class="text-sm text-gray-600 dark:text-gray-300 theme-transition whitespace-pre-line"><?php echo htmlspecialchars($companyInfo['business_hours']); ?></p>
-                            </div>
-                        </div>
+                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 text-sm text-gray-600 dark:text-gray-400">
+                    <div class="flex items-center">
+                        <i class="fas fa-clock text-brand-blue mr-2"></i>
+                        <span>Response within 24 hours</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-shield-alt text-brand-green mr-2"></i>
+                        <span>100% Confidential</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-headset text-brand-teal mr-2"></i>
+                        <span>Expert Support</span>
                     </div>
                 </div>
-                
-                <!-- Contact Form -->
-                <div class="scroll-reveal" style="animation-delay: 0.4s;">
+            </div>
+            
+            <!-- Contact Form - Full Width -->
+            <div class="max-w-4xl mx-auto">
+                <div class="scroll-reveal" style="animation-delay: 0.2s;">
                     <div class="modern-card rounded-2xl bg-white dark:bg-gray-800 p-8 shadow-xl">
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6 theme-transition">Send us a Message</h3>
                         
@@ -2027,48 +1977,54 @@ if ($_POST && isset($_POST['contact_form'])) {
                         <form method="POST" class="space-y-6">
                             <input type="hidden" name="contact_form" value="1">
                             
-                            <!-- Name -->
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Name *</label>
-                                <input type="text" name="name" id="name" required 
-                                       value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>"
-                                       class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition">
+                            <!-- Top Row: Name & Email -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Name -->
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Name *</label>
+                                    <input type="text" name="name" id="name" required 
+                                           value="<?php echo isset($_POST['name']) ? htmlspecialchars($_POST['name']) : ''; ?>"
+                                           class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition">
+                                </div>
+                                
+                                <!-- Email -->
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Email *</label>
+                                    <input type="email" name="email" id="email" required
+                                           value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>"
+                                           class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition">
+                                </div>
                             </div>
                             
-                            <!-- Email -->
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Email *</label>
-                                <input type="email" name="email" id="email" required
-                                       value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>"
-                                       class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition">
-                            </div>
-                            
-                            <!-- Company -->
-                            <div>
-                                <label for="company" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Company</label>
-                                <input type="text" name="company" id="company"
-                                       value="<?php echo isset($_POST['company']) ? htmlspecialchars($_POST['company']) : ''; ?>"
-                                       class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition">
-                            </div>
-                            
-                            <!-- Subject -->
-                            <div>
-                                <label for="subject" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Subject</label>
-                                <input type="text" name="subject" id="subject"
-                                       value="<?php echo isset($_POST['subject']) ? htmlspecialchars($_POST['subject']) : ''; ?>"
-                                       class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition">
+                            <!-- Second Row: Company & Subject -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Company -->
+                                <div>
+                                    <label for="company" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Company</label>
+                                    <input type="text" name="company" id="company"
+                                           value="<?php echo isset($_POST['company']) ? htmlspecialchars($_POST['company']) : ''; ?>"
+                                           class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition">
+                                </div>
+                                
+                                <!-- Subject -->
+                                <div>
+                                    <label for="subject" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Subject</label>
+                                    <input type="text" name="subject" id="subject"
+                                           value="<?php echo isset($_POST['subject']) ? htmlspecialchars($_POST['subject']) : ''; ?>"
+                                           class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition">
+                                </div>
                             </div>
                             
                             <!-- Message -->
                             <div>
                                 <label for="message" class="block text-sm font-medium text-gray-900 dark:text-white theme-transition">Message *</label>
-                                <textarea name="message" id="message" rows="4" required
+                                <textarea name="message" id="message" rows="5" required
                                           class="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand-blue sm:text-sm bg-white dark:bg-gray-700 theme-transition"><?php echo isset($_POST['message']) ? htmlspecialchars($_POST['message']) : ''; ?></textarea>
                             </div>
                             
                             <!-- Submit Button -->
-                            <div>
-                                <button type="submit" class="btn-primary w-full rounded-md px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-xl hover-lift focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue">
+                            <div class="pt-4">
+                                <button type="submit" class="btn-primary w-full rounded-md px-3.5 py-3 text-center text-sm font-semibold text-white shadow-xl hover-lift focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue transition-all duration-200">
                                     <i class="fas fa-paper-plane mr-2"></i>
                                     Send Message
                                 </button>
@@ -2185,16 +2141,16 @@ if ($_POST && isset($_POST['contact_form'])) {
                     </div>
                 </div>
 
-                <!-- Contact Quick Info -->
+                <!-- Company Highlights -->
                 <div class="text-center md:text-left">
                     <h4 class="text-sm font-semibold text-white mb-3 flex items-center justify-center md:justify-start">
-                        <i class="fas fa-phone text-brand-teal mr-2"></i>
-                        Get In Touch
+                        <i class="fas fa-star text-brand-blue mr-2"></i>
+                        Why Choose Us
                     </h4>
                     <div class="text-sm text-gray-300 space-y-1">
-                        <p><?php echo htmlspecialchars($companyInfo['phone']); ?></p>
-                        <p><?php echo htmlspecialchars($companyInfo['email']); ?></p>
-                        <p class="text-gray-400">Malé, Maldives</p>
+                        <p>Licensed & Regulated</p>
+                        <p>Local Expertise</p>
+                        <p class="text-brand-green font-medium">Proven Track Record</p>
                     </div>
                 </div>
 
