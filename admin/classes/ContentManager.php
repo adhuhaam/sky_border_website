@@ -1008,7 +1008,7 @@ class ContentManager {
     
     public function getSMTPConfig($id) {
         try {
-            $query = "SELECT * FROM smtp_configs WHERE id = :id";
+            $query = "SELECT * FROM smtp_config WHERE id = :id";
             $stmt = $this->conn->prepare($query);
             $stmt->execute([':id' => $id]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -1020,31 +1020,29 @@ class ContentManager {
     
     public function addSMTPConfig($data) {
         try {
-            $query = "INSERT INTO smtp_configs (
-                config_name, smtp_host, smtp_port, smtp_username, smtp_password, 
-                smtp_encryption, from_email, from_name, is_active, display_order
+            $query = "INSERT INTO smtp_config (
+                name, host, port, username, password, 
+                encryption, from_email, from_name, is_active
             ) VALUES (
-                :config_name, :smtp_host, :smtp_port, :smtp_username, :smtp_password, 
-                :smtp_encryption, :from_email, :from_name, :is_active, :display_order
+                :name, :host, :port, :username, :password, 
+                :encryption, :from_email, :from_name, :is_active
             )";
             
             $stmt = $this->conn->prepare($query);
             
             // Set default values if not provided
-            $data['is_active'] = isset($data['is_active']) ? (bool)$data['is_active'] : true;
-            $data['display_order'] = isset($data['display_order']) ? (int)$data['display_order'] : 0;
+            $data['is_active'] = isset($data['is_active']) ? (int)$data['is_active'] : 1;
             
             return $stmt->execute([
-                ':config_name' => $data['config_name'],
-                ':smtp_host' => $data['smtp_host'],
-                ':smtp_port' => $data['smtp_port'],
-                ':smtp_username' => $data['smtp_username'],
-                ':smtp_password' => $data['smtp_password'],
-                ':smtp_encryption' => $data['smtp_encryption'],
+                ':name' => $data['name'],
+                ':host' => $data['host'],
+                ':port' => $data['port'],
+                ':username' => $data['username'],
+                ':password' => $data['password'],
+                ':encryption' => $data['encryption'],
                 ':from_email' => $data['from_email'],
                 ':from_name' => $data['from_name'],
-                ':is_active' => $data['is_active'],
-                ':display_order' => $data['display_order']
+                ':is_active' => $data['is_active']
             ]);
         } catch (Exception $e) {
             error_log("Add SMTP config error: " . $e->getMessage());
@@ -1054,36 +1052,33 @@ class ContentManager {
     
     public function updateSMTPConfig($id, $data) {
         try {
-            $query = "UPDATE smtp_configs SET 
-                config_name = :config_name,
-                smtp_host = :smtp_host,
-                smtp_port = :smtp_port,
-                smtp_username = :smtp_username,
-                smtp_password = :smtp_password,
-                smtp_encryption = :smtp_encryption,
+            $query = "UPDATE smtp_config SET 
+                name = :name,
+                host = :host,
+                port = :port,
+                username = :username,
+                password = :password,
+                encryption = :encryption,
                 from_email = :from_email,
                 from_name = :from_name,
-                is_active = :is_active,
-                display_order = :display_order
+                is_active = :is_active
                 WHERE id = :id";
             
             $stmt = $this->conn->prepare($query);
             
             // Set default values if not provided
-            $data['is_active'] = isset($data['is_active']) ? (bool)$data['is_active'] : true;
-            $data['display_order'] = isset($data['display_order']) ? (int)$data['display_order'] : 0;
+            $data['is_active'] = isset($data['is_active']) ? (int)$data['is_active'] : 1;
             
             return $stmt->execute([
-                ':config_name' => $data['config_name'],
-                ':smtp_host' => $data['smtp_host'],
-                ':smtp_port' => $data['smtp_port'],
-                ':smtp_username' => $data['smtp_username'],
-                ':smtp_password' => $data['smtp_password'],
-                ':smtp_encryption' => $data['smtp_encryption'],
+                ':name' => $data['name'],
+                ':host' => $data['host'],
+                ':port' => $data['port'],
+                ':username' => $data['username'],
+                ':password' => $data['password'],
+                ':encryption' => $data['encryption'],
                 ':from_email' => $data['from_email'],
                 ':from_name' => $data['from_name'],
                 ':is_active' => $data['is_active'],
-                ':display_order' => $data['display_order'],
                 ':id' => $id
             ]);
         } catch (Exception $e) {
@@ -1152,7 +1147,7 @@ class ContentManager {
     
     public function getContactLists() {
         try {
-            $query = "SELECT * FROM contact_lists ORDER BY list_name";
+            $query = "SELECT * FROM contact_lists ORDER BY name";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
