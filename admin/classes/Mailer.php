@@ -86,9 +86,8 @@ class Mailer {
      * Convert website HTML to email-friendly HTML
      */
     private function convertToEmailHTML($html, $baseUrl) {
-        // Remove scripts and non-email-friendly elements
+        // Remove only JavaScript (keep CSS for styling)
         $html = preg_replace('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/mi', '', $html);
-        $html = preg_replace('/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/mi', '', $html);
         
         // Convert relative URLs to absolute
         $html = preg_replace('/src="\/([^"]*)"/', 'src="' . $baseUrl . '/$1"', $html);
@@ -100,13 +99,29 @@ class Mailer {
         // Add email-specific CSS
         $emailCSS = '
         <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .email-container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .email-header { text-align: center; padding: 20px 0; border-bottom: 2px solid #eee; }
-            .email-content { padding: 20px 0; }
-            .email-footer { text-align: center; padding: 20px 0; border-top: 2px solid #eee; font-size: 12px; color: #666; }
-            .tracking-pixel { width: 1px; height: 1px; opacity: 0; }
-            .unsubscribe-link { color: #666; text-decoration: none; }
+            /* Email-specific overrides for better compatibility */
+            body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+            .email-container { max-width: 100%; margin: 0; padding: 0; }
+            .email-content { width: 100%; max-width: 100%; }
+            /* Ensure images scale properly */
+            img { max-width: 100%; height: auto; }
+            /* Fix button styling for email clients */
+            .btn, button { display: inline-block; text-decoration: none; }
+            /* Ensure proper spacing */
+            * { box-sizing: border-box; }
+            /* Preserve gradients and colors */
+            .bg-gradient-to-r { background: linear-gradient(to right, var(--gradient-colors)) !important; }
+            /* Additional email client compatibility */
+            .floating-element { animation: none !important; }
+            .scroll-reveal { animation: none !important; }
+            .animate-float { animation: none !important; }
+            .animate-pulse { animation: none !important; }
+            /* Ensure proper text rendering */
+            h1, h2, h3, h4, h5, h6 { margin: 0.5em 0; }
+            p { margin: 0.5em 0; }
+            /* Fix for Outlook */
+            table { border-collapse: collapse; }
+            td { vertical-align: top; }
         </style>';
         
         // Extract body content
@@ -128,16 +143,15 @@ class Mailer {
         </head>
         <body>
             <div class="email-container">
-                <div class="email-header">
-                    <img src="' . $baseUrl . '/images/logo.svg" alt="Sky Border Solutions" style="max-width: 200px;">
-                </div>
                 <div class="email-content">
                     ' . $bodyContent . '
                 </div>
-                <div class="email-footer">
-                    <p>This email was sent by Sky Border Solutions</p>
-                    <p><a href="' . $baseUrl . '/unsubscribe?email={EMAIL}&campaign={CAMPAIGN_ID}" class="unsubscribe-link">Unsubscribe</a></p>
-                    <div class="tracking-pixel">
+                <div class="email-footer" style="text-align: center; padding: 20px; background: #f8f9fa; border-top: 1px solid #dee2e6; margin-top: 30px;">
+                    <p style="margin: 0 0 10px 0; color: #6c757d; font-size: 14px;">This email was sent by Sky Border Solutions</p>
+                    <p style="margin: 0 0 10px 0; font-size: 12px;">
+                        <a href="' . $baseUrl . '/unsubscribe?email={EMAIL}&campaign={CAMPAIGN_ID}" style="color: #6c757d; text-decoration: none;">Unsubscribe</a>
+                    </p>
+                    <div style="width: 1px; height: 1px; opacity: 0;">
                         <img src="' . $baseUrl . '/track-email.php?type=open&email={EMAIL}&campaign={CAMPAIGN_ID}" width="1" height="1">
                     </div>
                 </div>
@@ -149,12 +163,164 @@ class Mailer {
     }
     
     /**
+     * Convert Tailwind CSS classes to inline styles for email compatibility
+     */
+    private function convertTailwindToInlineStyles($html) {
+        // Common Tailwind to inline style mappings
+        $tailwindMap = [
+            // Layout
+            'container' => 'max-width: 1200px; margin: 0 auto; padding: 0 1rem;',
+            'mx-auto' => 'margin-left: auto; margin-right: auto;',
+            'px-4' => 'padding-left: 1rem; padding-right: 1rem;',
+            'px-8' => 'padding-left: 2rem; padding-right: 2rem;',
+            'py-8' => 'padding-top: 2rem; padding-bottom: 2rem;',
+            'py-4' => 'padding-top: 1rem; padding-bottom: 1rem;',
+            'mb-8' => 'margin-bottom: 2rem;',
+            'mt-8' => 'margin-top: 2rem;',
+            'mb-4' => 'margin-bottom: 1rem;',
+            'mt-4' => 'margin-top: 1rem;',
+            
+            // Colors
+            'bg-white' => 'background-color: #ffffff;',
+            'bg-slate-900' => 'background-color: #0f172a;',
+            'bg-slate-800' => 'background-color: #1e293b;',
+            'bg-slate-700' => 'background-color: #334155;',
+            'bg-slate-600' => 'background-color: #475569;',
+            'bg-slate-500' => 'background-color: #64748b;',
+            'bg-slate-400' => 'background-color: #94a3b8;',
+            'bg-slate-300' => 'background-color: #cbd5e1;',
+            'bg-slate-200' => 'background-color: #e2e8f0;',
+            'bg-slate-100' => 'background-color: #f1f5f9;',
+            'bg-slate-50' => 'background-color: #f8fafc;',
+            
+            'text-white' => 'color: #ffffff;',
+            'text-slate-900' => 'color: #0f172a;',
+            'text-slate-800' => 'color: #1e293b;',
+            'text-slate-700' => 'color: #334155;',
+            'text-slate-600' => 'color: #475569;',
+            'text-slate-500' => 'color: #64748b;',
+            'text-slate-400' => 'color: #94a3b8;',
+            'text-slate-300' => 'color: #cbd5e1;',
+            'text-slate-200' => 'color: #e2e8f0;',
+            'text-slate-100' => 'color: #f1f5f9;',
+            
+            // Blue colors
+            'bg-blue-800' => 'background-color: #1e40af;',
+            'bg-blue-900' => 'background-color: #1e3a8a;',
+            'text-blue-600' => 'color: #2563eb;',
+            'text-blue-700' => 'color: #1d4ed8;',
+            'text-blue-800' => 'color: #1e40af;',
+            
+            // Green colors
+            'bg-green-700' => 'background-color: #15803d;',
+            'bg-green-800' => 'background-color: #166534;',
+            'text-green-600' => 'color: #16a34a;',
+            'text-green-700' => 'color: #15803d;',
+            
+            // Gradients - convert to solid colors for email compatibility
+            'bg-gradient-to-r' => 'background: linear-gradient(to right, #1e40af, #166534);',
+            'from-blue-800' => 'background-color: #1e40af;',
+            'to-blue-900' => 'background-color: #1e3a8a;',
+            'from-green-700' => 'background-color: #15803d;',
+            'to-green-800' => 'background-color: #166534;',
+            'from-blue-600' => 'background-color: #2563eb;',
+            'to-indigo-600' => 'background-color: #4f46e5;',
+            'via-indigo-600' => 'background-color: #4f46e5;',
+            'to-purple-600' => 'background-color: #9333ea;',
+            
+            // Typography
+            'text-4xl' => 'font-size: 2.25rem; line-height: 2.5rem;',
+            'text-3xl' => 'font-size: 1.875rem; line-height: 2.25rem;',
+            'text-2xl' => 'font-size: 1.5rem; line-height: 2rem;',
+            'text-xl' => 'font-size: 1.25rem; line-height: 1.75rem;',
+            'text-lg' => 'font-size: 1.125rem; line-height: 1.75rem;',
+            'text-base' => 'font-size: 1rem; line-height: 1.5rem;',
+            'text-sm' => 'font-size: 0.875rem; line-height: 1.25rem;',
+            'text-xs' => 'font-size: 0.75rem; line-height: 1rem;',
+            'font-bold' => 'font-weight: 700;',
+            'font-semibold' => 'font-weight: 600;',
+            'font-medium' => 'font-weight: 500;',
+            'text-center' => 'text-align: center;',
+            'text-left' => 'text-align: left;',
+            'text-right' => 'text-align: right;',
+            
+            // Spacing
+            'p-6' => 'padding: 1.5rem;',
+            'p-4' => 'padding: 1rem;',
+            'p-2' => 'padding: 0.5rem;',
+            'm-4' => 'margin: 1rem;',
+            'm-2' => 'margin: 0.5rem;',
+            'rounded-lg' => 'border-radius: 0.5rem;',
+            'rounded-2xl' => 'border-radius: 1rem;',
+            'rounded-xl' => 'border-radius: 0.75rem;',
+            'rounded-md' => 'border-radius: 0.375rem;',
+            'rounded' => 'border-radius: 0.25rem;',
+            
+            // Flexbox
+            'flex' => 'display: flex;',
+            'flex-col' => 'flex-direction: column;',
+            'flex-row' => 'flex-direction: row;',
+            'items-center' => 'align-items: center;',
+            'items-start' => 'align-items: flex-start;',
+            'items-end' => 'align-items: flex-end;',
+            'justify-center' => 'justify-content: center;',
+            'justify-between' => 'justify-content: space-between;',
+            'justify-start' => 'justify-content: flex-start;',
+            'justify-end' => 'justify-content: flex-end;',
+            'justify-around' => 'justify-content: space-around;',
+            'justify-evenly' => 'justify-content: space-evenly;',
+            
+            // Grid
+            'grid' => 'display: grid;',
+            'grid-cols-1' => 'grid-template-columns: repeat(1, minmax(0, 1fr));',
+            'grid-cols-2' => 'grid-template-columns: repeat(2, minmax(0, 1fr));',
+            'grid-cols-3' => 'grid-template-columns: repeat(3, minmax(0, 1fr));',
+            'gap-4' => 'gap: 1rem;',
+            'gap-6' => 'gap: 1.5rem;',
+            'gap-8' => 'gap: 2rem;',
+            
+            // Shadows
+            'shadow-lg' => 'box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);',
+            'shadow-xl' => 'box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);',
+            'shadow-md' => 'box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);',
+            'shadow-sm' => 'box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);',
+            
+            // Responsive
+            'sm:' => '',
+            'md:' => '',
+            'lg:' => '',
+            'xl:' => '',
+            '2xl:' => '',
+            
+            // Hover states (convert to regular styles for email)
+            'hover:' => '',
+            'focus:' => '',
+            'active:' => '',
+            'group-hover:' => '',
+        ];
+        
+        // Apply the mappings
+        foreach ($tailwindMap as $class => $style) {
+            $html = str_replace('class="' . $class . '"', 'style="' . $style . '"', $html);
+            $html = str_replace('class="' . $class . ' ', 'style="' . $style . ' ', $html);
+            $html = str_replace(' ' . $class . '"', ' ' . $style . '"', $html);
+        }
+        
+        // Handle complex gradient combinations
+        $html = preg_replace('/class="([^"]*bg-gradient-to-r[^"]*from-blue-800[^"]*to-green-800[^"]*)"/', 'style="background: linear-gradient(to right, #1e40af, #166534);"', $html);
+        $html = preg_replace('/class="([^"]*bg-gradient-to-r[^"]*from-blue-600[^"]*to-indigo-600[^"]*)"/', 'style="background: linear-gradient(to right, #2563eb, #4f46e5);"', $html);
+        $html = preg_replace('/class="([^"]*bg-gradient-to-r[^"]*from-green-700[^"]*to-green-800[^"]*)"/', 'style="background: linear-gradient(to right, #15803d, #166534);"', $html);
+        
+        return $html;
+    }
+    
+    /**
      * Create a new campaign
      */
     public function createCampaign($data) {
         $stmt = $this->pdo->prepare("
-            INSERT INTO campaigns (name, subject, url_to_render, status, smtp_config_id, scheduled_at)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO campaigns (name, subject, url_to_render, status, smtp_config_id, scheduled_at, rendered_html)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
         
         $stmt->execute([
@@ -163,7 +329,8 @@ class Mailer {
             $data['url_to_render'],
             $data['status'],
             $data['smtp_config_id'],
-            $data['scheduled_at']
+            $data['scheduled_at'],
+            $data['rendered_html'] ?? null
         ]);
         
         return $this->pdo->lastInsertId();
