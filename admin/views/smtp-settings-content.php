@@ -21,32 +21,59 @@
     <!-- Add SMTP Configuration -->
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Add New SMTP Configuration</h3>
+        
+        <!-- Setup Instructions -->
+        <div class="mb-6 p-4 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg">
+            <h4 class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">📋 Setup Instructions for Sky Border Solutions</h4>
+            <div class="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+                <p><strong>Step 1:</strong> Click "Use Sky Border SMTP" button below to auto-fill the form</p>
+                <p><strong>Step 2:</strong> Enter your email password: <code class="bg-gray-200 dark:bg-gray-600 px-1 rounded">Ompl@655482*</code></p>
+                <p><strong>Step 3:</strong> Click "Add SMTP Configuration" to save</p>
+                <p><strong>Step 4:</strong> Test the connection using "Test Connection" button</p>
+                <div class="mt-2 p-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded">
+                    <p class="text-blue-700 dark:text-blue-300"><strong>📧 Email Configuration:</strong></p>
+                    <p class="text-blue-600 dark:text-blue-400">• Host: skybordersolutions.com</p>
+                    <p class="text-blue-600 dark:text-blue-400">• Port: 465 (SSL) or 587 (TLS)</p>
+                    <p class="text-blue-600 dark:text-blue-400">• Username: hello@skybordersolutions.com</p>
+                    <p class="text-blue-600 dark:text-blue-400">• Authentication: Required for all protocols</p>
+                </div>
+            </div>
+        </div>
         <form method="POST" class="space-y-4">
             <input type="hidden" name="action" value="add_smtp">
             
+            <!-- Pre-filled Sky Border Solutions SMTP Configuration -->
+            <div class="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                <h4 class="text-sm font-semibold text-blue-800 dark:text-blue-200 mb-2">💡 Quick Setup: Sky Border Solutions SMTP</h4>
+                <p class="text-xs text-blue-700 dark:text-blue-300 mb-3">Click "Use Sky Border SMTP" to pre-fill the form with your company's email settings</p>
+                <button type="button" onclick="fillSkyBorderSMTP()" class="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 transition-colors">
+                    Use Sky Border SMTP
+                </button>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Configuration Name *</label>
-                    <input type="text" name="name" required placeholder="e.g., Gmail SMTP, Office 365" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <input type="text" name="name" id="smtp_name" required placeholder="e.g., Sky Border SMTP, Gmail SMTP" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                 </div>
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">SMTP Host *</label>
-                    <input type="text" name="host" required placeholder="e.g., smtp.gmail.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <input type="text" name="host" id="smtp_host" required placeholder="e.g., skybordersolutions.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                 </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Port *</label>
-                    <input type="number" name="port" required value="587" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <input type="number" name="port" id="smtp_port" required value="465" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                 </div>
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Encryption</label>
-                    <select name="encryption" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <select name="encryption" id="smtp_encryption" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                        <option value="ssl" selected>SSL</option>
                         <option value="tls">TLS</option>
-                        <option value="ssl">SSL</option>
                         <option value="none">None</option>
                     </select>
                 </div>
@@ -55,7 +82,7 @@
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Active</label>
                     <div class="mt-2">
                         <label class="inline-flex items-center">
-                            <input type="checkbox" name="is_active" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <input type="checkbox" name="is_active" id="smtp_is_active" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500" checked>
                             <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Set as active</span>
                         </label>
                     </div>
@@ -65,24 +92,25 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Username/Email *</label>
-                    <input type="email" name="username" required placeholder="your-email@gmail.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <input type="email" name="username" id="smtp_username" required placeholder="hello@skybordersolutions.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                 </div>
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password/App Password *</label>
-                    <input type="password" name="password" required placeholder="Your password or app password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <input type="password" name="password" id="smtp_password" required placeholder="Your email password" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">For Sky Border Solutions: Use your email account password</p>
                 </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">From Email *</label>
-                    <input type="email" name="from_email" required placeholder="noreply@yourdomain.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <input type="email" name="from_email" id="smtp_from_email" required placeholder="hello@skybordersolutions.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                 </div>
                 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">From Name *</label>
-                    <input type="text" name="from_name" required placeholder="Your Company Name" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <input type="text" name="from_name" id="smtp_from_name" required placeholder="Sky Border Solutions" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                 </div>
             </div>
             
@@ -185,6 +213,17 @@
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mt-8">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Common SMTP Providers</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Sky Border Solutions SMTP -->
+            <div class="border-2 border-blue-300 dark:border-blue-600 rounded-lg p-4 bg-blue-50 dark:bg-blue-900/20">
+                <h4 class="font-semibold text-blue-800 dark:text-blue-200 mb-2">🏢 Sky Border Solutions</h4>
+                <div class="text-sm text-blue-700 dark:text-blue-300 space-y-1">
+                    <div>Host: skybordersolutions.com</div>
+                    <div>Port: 465</div>
+                    <div>Encryption: SSL</div>
+                    <div class="text-xs text-blue-600 dark:text-blue-400 font-medium">✅ Recommended for your company</div>
+                </div>
+            </div>
+            
             <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
                 <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Gmail</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
@@ -468,6 +507,31 @@ function deleteSMTP(configId) {
         document.body.appendChild(form);
         form.submit();
     }
+}
+
+// Pre-fill Sky Border Solutions SMTP configuration
+function fillSkyBorderSMTP() {
+    document.getElementById('smtp_name').value = 'Sky Border Solutions SMTP';
+    document.getElementById('smtp_host').value = 'skybordersolutions.com';
+    document.getElementById('smtp_port').value = '465';
+    document.getElementById('smtp_encryption').value = 'ssl';
+    document.getElementById('smtp_username').value = 'hello@skybordersolutions.com';
+    document.getElementById('smtp_from_email').value = 'hello@skybordersolutions.com';
+    document.getElementById('smtp_from_name').value = 'Sky Border Solutions';
+    document.getElementById('smtp_is_active').checked = true;
+    
+    // Show success message
+    const successDiv = document.createElement('div');
+    successDiv.className = 'mt-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded';
+    successDiv.innerHTML = '✅ Sky Border Solutions SMTP settings pre-filled!<br><strong>Password:</strong> <code>Ompl@655482*</code><br>Enter this password and click "Add SMTP Configuration".';
+    
+    const form = document.querySelector('form');
+    form.insertBefore(successDiv, form.firstChild);
+    
+    // Remove the message after 8 seconds
+    setTimeout(() => {
+        successDiv.remove();
+    }, 8000);
 }
 
 // Close modals when clicking outside
