@@ -1531,5 +1531,53 @@ class ContentManager {
             ];
         }
     }
+    
+    /**
+     * Get contacts by contact list
+     */
+    public function getContactsByList($listId) {
+        try {
+            $query = "SELECT c.* FROM contacts c
+                      JOIN contact_list_contacts clc ON c.id = clc.contact_id
+                      WHERE clc.contact_list_id = :list_id AND c.is_active = 1
+                      ORDER BY c.name";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([':list_id' => $listId]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get contacts by list error: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    /**
+     * Get email templates
+     */
+    public function getEmailTemplates() {
+        try {
+            $query = "SELECT * FROM email_templates WHERE is_active = 1 ORDER BY name";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get email templates error: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    /**
+     * Get email template by ID
+     */
+    public function getEmailTemplate($templateId) {
+        try {
+            $query = "SELECT * FROM email_templates WHERE id = :id AND is_active = 1 LIMIT 1";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([':id' => $templateId]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get email template error: " . $e->getMessage());
+            return null;
+        }
+    }
 }
 ?>

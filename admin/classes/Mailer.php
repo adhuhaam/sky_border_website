@@ -794,5 +794,98 @@ class Mailer {
         
         return $stats;
     }
+    
+    /**
+     * Personalize email content with contact information
+     */
+    public function personalizeEmail($content, $contact) {
+        $personalized = $content;
+        
+        // Replace placeholders with contact information
+        $replacements = [
+            '{{contact_name}}' => $contact['name'] ?? '',
+            '{{contact_email}}' => $contact['email'] ?? '',
+            '{{contact_company}}' => $contact['company'] ?? '',
+            '{{contact_phone}}' => $contact['phone'] ?? '',
+            '{{unsubscribe_link}}' => $this->generateUnsubscribeLink($contact['id']),
+            '{{current_date}}' => date('F j, Y'),
+            '{{current_year}}' => date('Y')
+        ];
+        
+        foreach ($replacements as $placeholder => $value) {
+            $personalized = str_replace($placeholder, $value, $personalized);
+        }
+        
+        return $personalized;
+    }
+    
+    /**
+     * Generate unsubscribe link for a contact
+     */
+    private function generateUnsubscribeLink($contactId) {
+        $token = bin2hex(random_bytes(32));
+        $baseUrl = $_SERVER['HTTP_HOST'] ?? 'localhost';
+        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+        
+        return $protocol . '://' . $baseUrl . '/unsubscribe.php?token=' . $token . '&contact=' . $contactId;
+    }
+    
+    /**
+     * Log email activity
+     */
+    public function logEmailActivity($contactId, $subject, $status, $error = '') {
+        try {
+            $stmt = $this->pdo->prepare("
+                INSERT INTO email_activity (contact_id, subject, status, error_message, created_at)
+                VALUES (?, ?, ?, ?, NOW())
+            ");
+            return $stmt->execute([$contactId, $subject, $status, $error]);
+        } catch (Exception $e) {
+            error_log("Log email activity error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Get recent email activity
+     */
+    public function getRecentEmailActivity($limit = 10) {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT ea.*, c.email as contact_email, c.name as contact_name
+                FROM email_activity ea
+                JOIN contacts c ON ea.contact_id = c.id
+                ORDER BY ea.created_at DESC
+                LIMIT ?
+            ");
+            $stmt->execute([$limit]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get recent email activity error: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    /**
+     * Get email template by ID
+     */
+    public function getEmailTemplate($templateId) {
+        try {
+            $stmt = $this->pdo->prepare("
+                SELECT * FROM email_templates WHERE id = ? AND is_active = 1 LIMIT 1
+            ");
+            $stmt->execute([$templateId]);
+            $template = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($template) {
+                return $template['content'];
+            }
+            
+            return null;
+        } catch (Exception $e) {
+            error_log("Get email template error: " . $e->getMessage());
+            return null;
+        }
+    }
 }
 ?>
