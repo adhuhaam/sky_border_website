@@ -219,20 +219,6 @@ if ($_POST && isset($_POST['contact_form'])) {
                 extend: {
                     fontFamily: {
                         'sans': ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                    colors: {
-                        'primary': {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            200: '#bfdbfe',
-                            300: '#93c5fd',
-                            400: '#60a5fa',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a',
-                        }
                     }
                 }
             }
@@ -255,7 +241,7 @@ if ($_POST && isset($_POST['contact_form'])) {
         body { 
             font-family: 'Inter', system-ui, sans-serif; 
             scroll-behavior: smooth;
-            background: #f8fafc;
+            background: #ffffff;
             color: #111827;
             font-weight: 400;
             line-height: 1.6;
@@ -264,7 +250,7 @@ if ($_POST && isset($_POST['contact_form'])) {
         
         .dark body {
             background: #0f172a;
-            color: #ffffff;
+            color: #f8fafc;
         }
         
         h1, h2, h3, h4, h5, h6 {
@@ -274,7 +260,7 @@ if ($_POST && isset($_POST['contact_form'])) {
         }
         
         .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-            color: #ffffff;
+            color: #f8fafc;
         }
         
         .text-bold {
@@ -291,7 +277,7 @@ if ($_POST && isset($_POST['contact_form'])) {
         }
         
         .dark .text-theme-primary {
-            color: #ffffff;
+            color: #f8fafc;
         }
         
         .text-theme-secondary {
@@ -310,28 +296,13 @@ if ($_POST && isset($_POST['contact_form'])) {
             color: #9ca3af;
         }
         
-        /* Card Styles - Matching Admin Panel */
+        /* Card Styles - Using Tailwind Classes */
         .admin-card {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .dark .admin-card {
-            background: #1e293b;
-            border-color: #475569;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-sm transition-all duration-300;
         }
         
         .admin-card:hover {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transform: translateY(-1px);
-        }
-        
-        .dark .admin-card:hover {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            @apply shadow-md transform -translate-y-1;
         }
         
         .admin-card.animate-on-scroll {
@@ -345,61 +316,17 @@ if ($_POST && isset($_POST['contact_form'])) {
             transform: translateY(0);
         }
         
-        /* Button Styles - Matching Admin Panel */
+        /* Button Styles - Using Tailwind Classes */
         .admin-button {
-            background: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 20px;
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .admin-button:hover {
-            background: #2563eb;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-        }
-        
-        .admin-button:active {
-            transform: translateY(0);
+            @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-5 rounded-md shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0;
         }
         
         .admin-button-secondary {
-            background: #6b7280;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 20px;
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .admin-button-secondary:hover {
-            background: #4b5563;
-            transform: translateY(-1px);
+            @apply bg-gray-600 hover:bg-gray-700 text-white font-medium py-2.5 px-5 rounded-md shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0;
         }
         
         .admin-button-success {
-            background: #10b981;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 20px;
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .admin-button-success:hover {
-            background: #059669;
-            transform: translateY(-1px);
+            @apply bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 px-5 rounded-md shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 active:translate-y-0;
         }
         
         /* Gradients - Matching Admin Panel */
@@ -655,28 +582,19 @@ if ($_POST && isset($_POST['contact_form'])) {
         
         /* Admin Panel Button Variants */
         .admin-btn-outline {
-            background: transparent;
-            border: 2px solid #3b82f6;
-            color: #3b82f6;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            @apply bg-transparent border-2 border-blue-600 text-blue-600 font-medium py-2.5 px-5 rounded-md transition-all duration-300;
         }
         
         .admin-btn-outline:hover {
-            background: #3b82f6;
-            color: white;
-            transform: translateY(-1px);
+            @apply bg-blue-600 text-white transform -translate-y-1;
         }
         
         .dark .admin-btn-outline {
-            border-color: #60a5fa;
-            color: #60a5fa;
+            @apply border-blue-400 text-blue-400;
         }
         
         .dark .admin-btn-outline:hover {
-            background: #60a5fa;
-            color: white;
+            @apply bg-blue-400 text-white;
         }
         
         /* Transparent Card Styles */
@@ -696,7 +614,7 @@ if ($_POST && isset($_POST['contact_form'])) {
             background: rgba(255, 255, 255, 0.08);
         }
         
-        /* Admin Panel Mobile-specific optimizations */
+                /* Admin Panel Mobile-specific optimizations */
         @media (max-width: 768px) {
             .hover-lift:hover { 
                 transform: translateY(-2px);
@@ -718,25 +636,11 @@ if ($_POST && isset($_POST['contact_form'])) {
             .scroll-reveal {
                 animation-delay: 0s !important;
             }
-            /* Admin Panel mobile enhancements */
-            .admin-card {
-                border-radius: 6px !important;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+            /* Mobile-optimized buttons */
+            .admin-button, .admin-button-secondary, .admin-button-success {
+                @apply py-3 px-4 text-base;
             }
-            .dark .admin-card {
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
-            }
-                    /* Mobile-optimized buttons */
-        .admin-button, .admin-button-secondary, .admin-button-success {
-            padding: 12px 16px !important;
-            font-size: 16px !important;
         }
-        
-        /* Font optimization */
-        body, h1, h2, h3, h4, h5, h6, p, span, div, a, button {
-            font-family: 'Inter', system-ui, sans-serif !important;
-        }
-    }
         
         /* Transparent Button Styles */
         .btn-primary {
@@ -842,14 +746,7 @@ if ($_POST && isset($_POST['contact_form'])) {
         
         /* Admin Panel Transparent Elements */
         .admin-transparent-card {
-            background: rgba(255, 255, 255, 0.1) !important;
-            backdrop-filter: blur(20px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        }
-        
-        .dark .admin-transparent-card {
-            background: rgba(0, 0, 0, 0.2) !important;
-            border-color: rgba(255, 255, 255, 0.1) !important;
+            @apply bg-white/10 dark:bg-gray-800/50 backdrop-blur-lg border border-white/20 dark:border-gray-600/50;
         }
         
         /* Admin Panel font optimization */
@@ -857,40 +754,12 @@ if ($_POST && isset($_POST['contact_form'])) {
             font-family: 'Inter', system-ui, sans-serif !important;
         }
         
-        /* Enhanced transparent effects */
-        .transparent-theme {
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-        }
-        
-        /* Glowing effects for transparent elements */
-        .transparent-card:hover {
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-        
-        .transparent-card-strong:hover {
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.4);
-        }
-        
-        /* Animated background */
-        @keyframes gradient-shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        .transparent-theme {
-            background-size: 400% 400%;
-            animation: gradient-shift 15s ease infinite;
-        }
-        
-        /* Catalyst Enhanced text shadows for better readability */
+        /* Enhanced text shadows for better readability */
         h1, h2, h3, h4, h5, h6 {
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
         
-        p, span {
+        .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
         
@@ -901,25 +770,16 @@ if ($_POST && isset($_POST['contact_form'])) {
         
         /* Admin Panel Glass Effect */
         .admin-glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .dark .admin-glass {
-            background: rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.1);
+            @apply bg-white/10 dark:bg-gray-800/50 backdrop-blur-md border border-white/20 dark:border-gray-600/50 shadow-sm;
         }
         
         /* Admin Panel Hover Effects */
         .admin-hover-lift {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            @apply transition-all duration-300 ease-out;
         }
         
         .admin-hover-lift:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            @apply transform -translate-y-2 shadow-lg;
         }
     </style>
     
@@ -951,35 +811,7 @@ if ($_POST && isset($_POST['contact_form'])) {
             });
         })();
         
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        // Transparent Theme Colors
-                        'transparent': {
-                            'white': 'rgba(255, 255, 255, 0.1)',
-                            'white-strong': 'rgba(255, 255, 255, 0.2)',
-                            'black': 'rgba(0, 0, 0, 0.1)',
-                            'black-strong': 'rgba(0, 0, 0, 0.2)'
-                        },
-                        'glass': {
-                            'primary': 'rgba(255, 255, 255, 0.05)',
-                            'secondary': 'rgba(255, 255, 255, 0.08)',
-                            'strong': 'rgba(255, 255, 255, 0.15)'
-                        }
-                    },
-                    backdropBlur: {
-                        'xs': '2px',
-                        'sm': '4px',
-                        'md': '8px',
-                        'lg': '16px',
-                        'xl': '24px',
-                        '2xl': '40px',
-                        '3xl': '64px'
-                    }
-                }
-            }
-        }
+        // Tailwind config is now handled by the CDN
     </script>
     
     <!-- Google Analytics -->
@@ -1034,7 +866,7 @@ if ($_POST && isset($_POST['contact_form'])) {
     <?php endif; ?>
 </head>
 
-<body class="h-full bg-gray-50 dark:bg-gray-900 theme-transition">
+<body class="h-full bg-white dark:bg-gray-900 theme-transition">
     <!-- Google Tag Manager (noscript) -->
     <?php if (!empty($seoSettings['google_tag_manager_id'])): ?>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo htmlspecialchars($seoSettings['google_tag_manager_id']); ?>"
@@ -1043,7 +875,7 @@ if ($_POST && isset($_POST['contact_form'])) {
     
     <!-- Dark Mode Toggle -->
     <div class="fixed top-6 right-6 z-50">
-        <button id="theme-toggle" class="group relative p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 shadow-lg text-gray-700 dark:text-gray-300 hover:scale-110 active:scale-95 theme-transition focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+        <button id="theme-toggle" class="group relative p-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 shadow-lg text-gray-700 dark:text-gray-300 hover:scale-110 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2" aria-label="Toggle dark mode" title="Toggle dark/light mode">
             <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-white/10 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
             <i id="theme-icon" class="relative z-10 fas fa-moon text-xl transition-all duration-300" aria-hidden="true"></i>
             <i id="theme-icon-dark" class="relative z-10 fas fa-sun text-xl hidden transition-all duration-300" aria-hidden="true"></i>
@@ -1053,7 +885,7 @@ if ($_POST && isset($_POST['contact_form'])) {
 
 
     <!-- Hero Section -->
-    <section id="home" class="relative overflow-hidden bg-gray-50 dark:bg-gray-900 theme-transition min-h-screen flex items-center">
+    <section id="home" class="relative overflow-hidden bg-white dark:bg-gray-900 theme-transition min-h-screen flex items-center">
         <!-- Subtle Background Pattern -->
         <div class="absolute inset-0 -z-20">
             <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-blue-950 dark:via-slate-900 dark:to-green-950"></div>
@@ -1139,7 +971,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <div class="mt-24">
                     <div class="flex flex-col items-center">
                         <p class="text-sm text-white/70 mb-4 font-medium">Learn more about us</p>
-                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 bg-white/10 dark:bg-gray-800/50 backdrop-blur-md border border-white/20 dark:border-gray-600/50 rounded-2xl text-white hover:text-white/80 transition-all duration-400 hover:scale-110">
+                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 bg-white/10 dark:bg-gray-800/50 backdrop-blur-md border border-white/20 dark:border-gray-600/50 rounded-2xl text-white hover:text-white/80 transition-all duration-300 hover:scale-110">
                             <i class="fas fa-chevron-down text-xl animate-bounce group-hover:translate-y-1 transition-transform duration-300"></i>
                         </a>
                     </div>
@@ -2291,9 +2123,9 @@ if ($_POST && isset($_POST['contact_form'])) {
     <script>
         // Dark mode functionality
         function initTheme() {
-            const savedTheme = localStorage.getItem('darkMode');
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const darkMode = savedTheme === 'true' || (savedTheme === null && prefersDark);
+            const savedTheme = localStorage.getItem('theme');
+            // Default to light mode, only use dark if explicitly saved
+            const darkMode = savedTheme === 'dark';
             
             if (darkMode) {
                 document.documentElement.classList.add('dark');
@@ -2307,13 +2139,13 @@ if ($_POST && isset($_POST['contact_form'])) {
         
         function toggleTheme() {
             const isDark = document.documentElement.classList.contains('dark');
-            const newDarkMode = !isDark;
+            const newTheme = isDark ? 'light' : 'dark';
             
             // Save preference
-            localStorage.setItem('darkMode', newDarkMode.toString());
+            localStorage.setItem('theme', newTheme);
             
             // Toggle dark class
-            if (newDarkMode) {
+            if (newTheme === 'dark') {
                 document.documentElement.classList.add('dark');
             } else {
                 document.documentElement.classList.remove('dark');
@@ -2350,7 +2182,7 @@ if ($_POST && isset($_POST['contact_form'])) {
         function getThemeDebugInfo() {
             return {
                 isDark: document.documentElement.classList.contains('dark'),
-                localStorage: localStorage.getItem('darkMode'),
+                localStorage: localStorage.getItem('theme'),
                 systemPreference: window.matchMedia('(prefers-color-scheme: dark)').matches,
                 moonIcon: !!document.getElementById('theme-icon'),
                 sunIcon: !!document.getElementById('theme-icon-dark'),
@@ -2376,12 +2208,12 @@ if ($_POST && isset($_POST['contact_form'])) {
                 themeToggle.addEventListener('click', toggleTheme);
             }
             
-            // Listen for system theme changes
+            // Listen for system theme changes (optional - can be removed for simpler behavior)
             if (window.matchMedia) {
                 const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
                 mediaQuery.addListener(function() {
                     // Only update if user hasn't manually set a preference
-                    if (!localStorage.getItem('darkMode')) {
+                    if (!localStorage.getItem('theme')) {
                         initTheme();
                     }
                 });
