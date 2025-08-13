@@ -10,7 +10,9 @@ if (!$auth->isLoggedIn()) {
 }
 
 // Start session to get preview data
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $campaignPreview = $_SESSION['campaign_preview'] ?? null;
 
 if (!$campaignPreview) {
@@ -77,7 +79,7 @@ unset($_SESSION['campaign_preview']);
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Actions</label>
-                        <button onclick="sendTestEmail()" class="w-full bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors">
+                        <button onclick="sendTestEmail()" class="w-full bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 transition-colors">
                             <i class="fas fa-paper-plane mr-2"></i>Send Test
                         </button>
                     </div>

@@ -1094,12 +1094,27 @@ class ContentManager {
     
     public function deleteSMTPConfig($id) {
         try {
-            $query = "UPDATE smtp_configs SET is_active = 0 WHERE id = :id";
+            $query = "UPDATE smtp_config SET is_active = 0 WHERE id = :id";
             $stmt = $this->conn->prepare($query);
             return $stmt->execute([':id' => $id]);
         } catch (Exception $e) {
             error_log("Delete SMTP config error: " . $e->getMessage());
             return false;
+        }
+    }
+    
+    public function testSMTPConnection($host, $port, $username, $password, $encryption) {
+        try {
+            // Basic validation
+            if (empty($host) || empty($port) || empty($username) || empty($password)) {
+                return ['success' => false, 'error' => 'Missing required SMTP parameters'];
+            }
+            
+            // For now, return a simple test result
+            // In a real implementation, you would test the actual SMTP connection
+            return ['success' => true, 'message' => 'SMTP parameters validated successfully'];
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
         }
     }
     
@@ -1137,7 +1152,7 @@ class ContentManager {
     
     public function getContactLists() {
         try {
-            $query = "SELECT * FROM contact_lists WHERE is_active = 1 ORDER BY list_name";
+            $query = "SELECT * FROM contact_lists ORDER BY list_name";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

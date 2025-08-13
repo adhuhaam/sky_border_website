@@ -218,7 +218,7 @@
     <div class="modern-card bg-white dark:bg-gray-800 shadow sm:rounded-lg theme-transition">
         <div class="px-4 py-5 sm:p-6">
             <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4 theme-transition">
-                <i class="fas fa-share-alt text-purple-600 mr-2"></i>
+                <i class="fas fa-share-alt text-green-600 mr-2"></i>
                 Social Media & Online Presence
             </h3>
             

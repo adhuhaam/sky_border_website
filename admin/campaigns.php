@@ -104,7 +104,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 try {
                     $renderedHtml = $mailer->renderWebsiteAsEmail($_POST['url_to_render']);
                     // Store in session for preview
-                    session_start();
+                    if (session_status() === PHP_SESSION_NONE) {
+                        session_start();
+                    }
                     $_SESSION['campaign_preview'] = $renderedHtml;
                     header('Location: campaign-preview.php');
                     exit;

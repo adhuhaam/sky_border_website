@@ -73,7 +73,7 @@
                 <a href="export-contacts.php?format=csv" class="block w-full bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors text-center">
                     Export CSV
                 </a>
-                <a href="export-contacts.php?format=json" class="block w-full bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors text-center">
+                <a href="export-contacts.php?format=json" class="block w-full bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 transition-colors text-center">
                     Export JSON
                 </a>
                 <button onclick="showBulkActions()" class="w-full bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 transition-colors">

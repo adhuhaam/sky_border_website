@@ -215,8 +215,8 @@ try {
                     <p class="text-sm text-gray-600 dark:text-gray-400">Top-rated insurance providers with proven track records</p>
                 </div>
                 <div class="flex flex-col items-center">
-                    <div class="flex h-12 w-12 items-center justify-center rounded-full bg-purple-100 dark:bg-purple-900/30 mb-3">
-                        <i class="fas fa-handshake text-purple-600 dark:text-purple-400 text-xl"></i>
+                    <div class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 mb-3">
+                        <i class="fas fa-handshake text-green-600 dark:text-green-400 text-xl"></i>
                     </div>
                     <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Trusted Partnership</h4>
                     <p class="text-sm text-gray-600 dark:text-gray-400">Long-term partnerships ensuring reliable coverage</p>

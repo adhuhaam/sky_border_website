@@ -92,7 +92,7 @@
 
         <a href="positions.php" class="modern-card group block rounded-lg bg-white dark:bg-gray-800 p-6 hover:shadow-md theme-transition">
             <div class="flex items-center">
-                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500">
+                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-blue-800 to-blue-900">
                     <i class="fas fa-user-tie text-white"></i>
                 </div>
                 <div class="ml-4">

@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'is_active' => isset($_POST['is_active']) ? 1 : 0
                 ];
                 
-                if ($contentManager->updateSMTPConfig($smtpData)) {
+                if ($contentManager->updateSMTPConfig($smtpData['id'], $smtpData)) {
                     $message = 'SMTP configuration updated successfully!';
                 } else {
                     $error = 'Failed to update SMTP configuration.';

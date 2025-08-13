@@ -191,7 +191,7 @@
                                             </button>
                                         <?php endif; ?>
                                         
-                                        <a href="campaign-analytics.php?id=<?php echo $campaign['id']; ?>" class="text-purple-600 hover:text-purple-900 dark:hover:text-purple-400">
+                                        <a href="campaign-analytics.php?id=<?php echo $campaign['id']; ?>" class="text-green-600 hover:text-green-900 dark:hover:text-green-400">
                                             Analytics
                                         </a>
                                         
