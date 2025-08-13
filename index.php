@@ -2080,100 +2080,154 @@ if ($_POST && isset($_POST['contact_form'])) {
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 dark:bg-black theme-transition">
+    <!-- Enhanced Footer -->
+    <footer class="bg-gradient-to-br from-gray-900 via-gray-800 to-black dark:from-black dark:via-gray-900 dark:to-gray-800 theme-transition">
         <div class="mx-auto max-w-7xl px-6 py-20 sm:py-24 lg:px-8 lg:py-32">
-            <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-                <!-- Company Info -->
-                <div class="space-y-8">
-                    <div>
+            <!-- Main Footer Content -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+                <!-- Company Info & Logo -->
+                <div class="lg:col-span-2 space-y-8">
+                    <div class="space-y-6">
                         <div class="flex items-center">
-                            <img src="images/wlogo.png" alt="Sky Border Solutions" class="h-8 w-auto">
+                            <img src="images/wlogo.png" alt="Sky Border Solutions" class="h-10 w-auto">
                         </div>
-                        <p class="mt-4 text-sm leading-6 text-gray-300">
-                            <?php echo htmlspecialchars($companyInfo['tagline']); ?>
-                        </p>
-                        <p class="mt-2 text-sm leading-6 text-gray-400">
-                            
-                        </p>
+                        <div class="space-y-4">
+                            <p class="text-lg font-medium text-white leading-relaxed">
+                                <?php echo htmlspecialchars($companyInfo['tagline']); ?>
+                            </p>
+                            <p class="text-base leading-7 text-gray-300 max-w-md">
+                                <?php echo htmlspecialchars(substr($companyInfo['description'], 0, 150)) . '...'; ?>
+                            </p>
+                        </div>
                     </div>
                     
-                    <!-- Social Links -->
-                    <div class="flex space-x-6">
-                        <a href="#" class="text-gray-400 hover:text-brand-blue transition-colors">
-                            <span class="sr-only">Facebook</span>
-                            <i class="fab fa-facebook-f text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-brand-teal transition-colors">
-                            <span class="sr-only">LinkedIn</span>
-                            <i class="fab fa-linkedin-in text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-brand-green transition-colors">
-                            <span class="sr-only">Instagram</span>
-                            <i class="fab fa-instagram text-xl"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-brand-blue transition-colors">
-                            <span class="sr-only">Twitter</span>
-                            <i class="fab fa-twitter text-xl"></i>
-                        </a>
+                    <!-- Enhanced Social Links -->
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-semibold text-white uppercase tracking-wider">Connect With Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="group p-3 bg-gray-800 hover:bg-brand-blue rounded-lg transition-all duration-300 transform hover:scale-110">
+                                <span class="sr-only">Facebook</span>
+                                <i class="fab fa-facebook-f text-lg text-gray-300 group-hover:text-white"></i>
+                            </a>
+                            <a href="#" class="group p-3 bg-gray-800 hover:bg-brand-teal rounded-lg transition-all duration-300 transform hover:scale-110">
+                                <span class="sr-only">LinkedIn</span>
+                                <i class="fab fa-linkedin-in text-lg text-gray-300 group-hover:text-white"></i>
+                            </a>
+                            <a href="#" class="group p-3 bg-gray-800 hover:bg-brand-green rounded-lg transition-all duration-300 transform hover:scale-110">
+                                <span class="sr-only">Instagram</span>
+                                <i class="fab fa-instagram text-lg text-gray-300 group-hover:text-white"></i>
+                            </a>
+                            <a href="#" class="group p-3 bg-gray-800 hover:bg-brand-blue rounded-lg transition-all duration-300 transform hover:scale-110">
+                                <span class="sr-only">Twitter</span>
+                                <i class="fab fa-twitter text-lg text-gray-300 group-hover:text-white"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                
+
                 <!-- Quick Links -->
-                <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
-                    <div class="md:grid md:grid-cols-2 md:gap-8">
-                        <div>
-                            <h3 class="text-sm font-semibold leading-6 text-white">Navigation</h3>
-                            <ul role="list" class="mt-6 space-y-4">
-                                <li><a href="#home" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Home</a></li>
-                                <li><a href="#about" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">About</a></li>
-                                <li><a href="#services" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Services</a></li>
-                                <li><a href="#portfolio" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Portfolio</a></li>
-                                <li><a href="#clients" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Clients</a></li>
-                                <li><a href="#contact" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Contact</a></li>
-                            </ul>
-                        </div>
-                        <div class="mt-10 md:mt-0">
-                            <h3 class="text-sm font-semibold leading-6 text-white">Services</h3>
-                            <ul role="list" class="mt-6 space-y-4">
-                                <?php foreach (array_slice($services, 0, 4) as $service): ?>
-                                <li><span class="text-sm leading-6 text-gray-300"><?php echo htmlspecialchars($service['category_name']); ?></span></li>
-                                <?php endforeach; ?>
-                            </ul>
-                        </div>
+                <div class="space-y-8">
+                    <h3 class="text-lg font-semibold text-white border-b border-gray-700 pb-2">Quick Links</h3>
+                    <ul class="space-y-4">
+                        <li><a href="#home" class="text-gray-300 hover:text-white transition-colors duration-200 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs text-brand-blue mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            Home
+                        </a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-white transition-colors duration-200 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs text-brand-blue mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            About Us
+                        </a></li>
+                        <li><a href="#services" class="text-gray-300 hover:text-white transition-colors duration-200 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs text-brand-blue mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            Services
+                        </a></li>
+                        <li><a href="#portfolio" class="text-gray-300 hover:text-white transition-colors duration-200 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs text-brand-blue mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            Portfolio
+                        </a></li>
+                        <li><a href="#clients" class="text-gray-300 hover:text-white transition-colors duration-200 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs text-brand-blue mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            Our Clients
+                        </a></li>
+                        <li><a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-200 flex items-center group">
+                            <i class="fas fa-chevron-right text-xs text-brand-blue mr-2 group-hover:translate-x-1 transition-transform"></i>
+                            Contact
+                        </a></li>
+                    </ul>
+                </div>
+
+                <!-- Services Overview -->
+                <div class="space-y-8">
+                    <h3 class="text-lg font-semibold text-white border-b border-gray-700 pb-2">Our Services</h3>
+                    <ul class="space-y-4">
+                        <?php foreach (array_slice($services, 0, 5) as $service): ?>
+                        <li class="text-gray-300 flex items-center group">
+                            <i class="fas fa-check-circle text-brand-green mr-2 text-sm group-hover:scale-110 transition-transform"></i>
+                            <?php echo htmlspecialchars($service['category_name']); ?>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Additional Info Section -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-gray-800">
+                <!-- Business Hours -->
+                <div class="text-center md:text-left">
+                    <h4 class="text-sm font-semibold text-white mb-3 flex items-center justify-center md:justify-start">
+                        <i class="fas fa-clock text-brand-blue mr-2"></i>
+                        Business Hours
+                    </h4>
+                    <div class="text-sm text-gray-300 space-y-1">
+                        <p>Sunday - Thursday: 8:00 AM - 5:00 PM</p>
+                        <p>Saturday: 9:00 AM - 1:00 PM</p>
+                        <p class="text-gray-400">Friday: Closed</p>
                     </div>
-                    <div class="md:grid md:grid-cols-1 md:gap-8">
-                        <div>
-                            <h3 class="text-sm font-semibold leading-6 text-white">Contact Info</h3>
-                            <ul role="list" class="mt-6 space-y-4">
-                                <li class="text-sm leading-6 text-gray-300">
-                                    <i class="fas fa-phone mr-2 text-brand-blue"></i>
-                                    <?php echo htmlspecialchars($companyInfo['phone']); ?>
-                                </li>
-                                <li class="text-sm leading-6 text-gray-300">
-                                    <i class="fas fa-envelope mr-2 text-brand-teal"></i>
-                                    <?php echo htmlspecialchars($companyInfo['email']); ?>
-                                </li>
-                                <li class="text-sm leading-6 text-gray-300">
-                                    <i class="fas fa-map-marker-alt mr-2 text-brand-green"></i>
-                                    Malé, Maldives
-                                </li>
-                            </ul>
-                        </div>
-                      
+                </div>
+
+                <!-- Contact Quick Info -->
+                <div class="text-center md:text-left">
+                    <h4 class="text-sm font-semibold text-white mb-3 flex items-center justify-center md:justify-start">
+                        <i class="fas fa-phone text-brand-teal mr-2"></i>
+                        Get In Touch
+                    </h4>
+                    <div class="text-sm text-gray-300 space-y-1">
+                        <p><?php echo htmlspecialchars($companyInfo['phone']); ?></p>
+                        <p><?php echo htmlspecialchars($companyInfo['email']); ?></p>
+                        <p class="text-gray-400">Malé, Maldives</p>
+                    </div>
+                </div>
+
+                <!-- Company Stats -->
+                <div class="text-center md:text-left">
+                    <h4 class="text-sm font-semibold text-white mb-3 flex items-center justify-center md:justify-start">
+                        <i class="fas fa-chart-line text-brand-green mr-2"></i>
+                        Our Impact
+                    </h4>
+                    <div class="text-sm text-gray-300 space-y-1">
+                        <p>1000+ Successful Placements</p>
+                        <p>50+ Partner Companies</p>
+                        <p class="text-brand-green font-medium">100% Licensed & Compliant</p>
                     </div>
                 </div>
             </div>
             
-            <!-- Bottom Section -->
-            <div class="mt-16 border-t border-gray-800 pt-8 sm:mt-20 lg:mt-24">
-                <div class="flex flex-col items-center justify-between sm:flex-row">
-                    <p class="text-xs leading-5 text-gray-400">
-                        &copy; <span id="year"><?php echo date('Y'); ?></span> <?php echo htmlspecialchars($companyInfo['company_name']); ?>. All rights reserved.
-                    </p>
-                    <p class="mt-4 text-xs leading-5 text-gray-400 sm:mt-0">
-                        Republic of Maldives
-                    </p>
+            <!-- Enhanced Bottom Section -->
+            <div class="mt-16 border-t border-gray-800 pt-8">
+                <div class="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0">
+                    <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6">
+                        <p class="text-sm text-gray-400">
+                            &copy; <span id="year"><?php echo date('Y'); ?></span> <?php echo htmlspecialchars($companyInfo['company_name']); ?>. All rights reserved.
+                        </p>
+                        <p class="text-sm text-gray-400">
+                            Republic of Maldives
+                        </p>
+                    </div>
+                    <div class="flex items-center space-x-6 text-sm text-gray-400">
+                        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                        <a href="#" class="hover:text-white transition-colors">Cookie Policy</a>
+                    </div>
                 </div>
             </div>
         </div>
