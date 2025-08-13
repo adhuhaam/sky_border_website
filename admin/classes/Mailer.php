@@ -99,6 +99,13 @@ class Mailer {
         // Convert CSS background images
         $html = preg_replace('/url\(\/([^)]*)\)/', 'url(' . $baseUrl . '/$1)', $html);
         
+        // Remove external CSS links and style tags (we'll convert Tailwind to inline)
+        $html = preg_replace('/<link[^>]*rel=["\']stylesheet["\'][^>]*>/i', '', $html);
+        $html = preg_replace('/<style[^>]*>.*?<\/style>/si', '', $html);
+        
+        // Convert Tailwind classes to inline styles BEFORE extracting body content
+        $html = $this->convertTailwindToInlineStyles($html);
+        
         // Add email-specific CSS
         $emailCSS = '
         <style>
@@ -134,15 +141,91 @@ class Mailer {
             $bodyContent = $html;
         }
         
-        // Create email template
+        // Clean up any remaining problematic classes or attributes
+        $bodyContent = $this->cleanEmailContent($bodyContent);
+        
+        // Create email template with proper encoding
         $emailHtml = '
         <!DOCTYPE html>
-        <html>
+        <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <title>Sky Border Solutions</title>
-            ' . $emailCSS . '
+            <style>
+                /* Email-specific overrides for better compatibility */
+                body { 
+                    margin: 0; 
+                    padding: 0; 
+                    font-family: Arial, Helvetica, sans-serif; 
+                    font-size: 14px;
+                    line-height: 1.6;
+                    color: #333333;
+                    background-color: #ffffff;
+                }
+                .email-container { 
+                    max-width: 100%; 
+                    margin: 0; 
+                    padding: 0; 
+                }
+                .email-content { 
+                    width: 100%; 
+                    max-width: 100%; 
+                }
+                /* Ensure images scale properly */
+                img { 
+                    max-width: 100%; 
+                    height: auto; 
+                    border: 0;
+                }
+                /* Fix button styling for email clients */
+                .btn, button { 
+                    display: inline-block; 
+                    text-decoration: none; 
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    border: none;
+                    cursor: pointer;
+                }
+                /* Ensure proper spacing */
+                * { 
+                    box-sizing: border-box; 
+                }
+                /* Additional email client compatibility */
+                .floating-element, .scroll-reveal, .animate-float, .animate-pulse { 
+                    animation: none !important; 
+                }
+                /* Ensure proper text rendering */
+                h1, h2, h3, h4, h5, h6 { 
+                    margin: 0.5em 0; 
+                    line-height: 1.2;
+                }
+                p { 
+                    margin: 0.5em 0; 
+                }
+                /* Fix for Outlook */
+                table { 
+                    border-collapse: collapse; 
+                    mso-table-lspace: 0pt;
+                    mso-table-rspace: 0pt;
+                }
+                td { 
+                    vertical-align: top; 
+                }
+                /* Ensure links are visible */
+                a { 
+                    color: #2563eb; 
+                    text-decoration: underline;
+                }
+                /* Fix for dark mode emails */
+                @media (prefers-color-scheme: dark) {
+                    body { 
+                        background-color: #1f2937; 
+                        color: #f9fafb; 
+                    }
+                }
+            </style>
         </head>
         <body>
             <div class="email-container">
@@ -151,7 +234,7 @@ class Mailer {
                 </div>
                 <div class="email-footer" style="text-align: center; padding: 20px; background: #f8f9fa; border-top: 1px solid #dee2e6; margin-top: 30px;">
                     <p style="margin: 0 0 10px 0; color: #6c757d; font-size: 14px;">This email was sent by Sky Border Solutions</p>
-                    <p style="margin: 0 0 10px 0; font-size: 12px;">
+                    <p style="margin: 0 10px 0; font-size: 12px;">
                         <a href="' . $baseUrl . '/unsubscribe?email={EMAIL}&campaign={CAMPAIGN_ID}" style="color: #6c757d; text-decoration: none;">Unsubscribe</a>
                     </p>
                     <div style="width: 1px; height: 1px; opacity: 0;">
@@ -178,10 +261,14 @@ class Mailer {
             'px-8' => 'padding-left: 2rem; padding-right: 2rem;',
             'py-8' => 'padding-top: 2rem; padding-bottom: 2rem;',
             'py-4' => 'padding-top: 1rem; padding-bottom: 1rem;',
+            'py-6' => 'padding-top: 1.5rem; padding-bottom: 1.5rem;',
+            'px-6' => 'padding-left: 1.5rem; padding-right: 1.5rem;',
             'mb-8' => 'margin-bottom: 2rem;',
             'mt-8' => 'margin-top: 2rem;',
             'mb-4' => 'margin-bottom: 1rem;',
             'mt-4' => 'margin-top: 1rem;',
+            'mb-6' => 'margin-bottom: 1.5rem;',
+            'mt-6' => 'margin-top: 1.5rem;',
             
             // Colors
             'bg-white' => 'background-color: #ffffff;',
@@ -886,6 +973,31 @@ class Mailer {
             error_log("Get email template error: " . $e->getMessage());
             return null;
         }
+    }
+    
+    /**
+     * Clean up email content for better compatibility
+     */
+    private function cleanEmailContent($content) {
+        // Remove any remaining problematic attributes
+        $content = preg_replace('/\s+class="[^"]*"/', '', $content);
+        $content = preg_replace('/\s+id="[^"]*"/', '', $content);
+        $content = preg_replace('/\s+data-[^=]*="[^"]*"/', '', $content);
+        
+        // Remove any remaining Tailwind-like classes that might have been missed
+        $content = preg_replace('/\s+[a-z-]+:\s*[a-z-]+/', '', $content);
+        
+        // Clean up empty attributes
+        $content = preg_replace('/\s+[a-z-]+="\s*"/', '', $content);
+        
+        // Ensure proper HTML structure
+        $content = preg_replace('/<div[^>]*>\s*<\/div>/', '', $content);
+        
+        // Fix common email client issues
+        $content = str_replace('&nbsp;', ' ', $content);
+        $content = str_replace('&amp;', '&', $content);
+        
+        return $content;
     }
 }
 ?>
