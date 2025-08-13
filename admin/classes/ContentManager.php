@@ -1113,6 +1113,71 @@ class ContentManager {
         }
     }
     
+    public function testEmailSend($host, $port, $username, $password, $encryption, $fromEmail, $fromName) {
+        try {
+            // Basic validation
+            if (empty($host) || empty($port) || empty($username) || empty($password) || empty($fromEmail) || empty($fromName)) {
+                return ['success' => false, 'error' => 'Missing required SMTP parameters'];
+            }
+            
+            // Create a test email using PHPMailer or similar
+            $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+            
+            try {
+                // Server settings
+                $mail->isSMTP();
+                $mail->Host = $host;
+                $mail->SMTPAuth = true;
+                $mail->Username = $username;
+                $mail->Password = $password;
+                $mail->SMTPSecure = $encryption;
+                $mail->Port = $port;
+                
+                // Recipients
+                $mail->setFrom($fromEmail, $fromName);
+                $mail->addAddress($username); // Send to the SMTP username email
+                
+                // Content
+                $mail->isHTML(true);
+                $mail->Subject = 'SMTP Test Email - Sky Border Solutions';
+                $mail->Body = '
+                <html>
+                <head>
+                    <title>SMTP Test Email</title>
+                </head>
+                <body>
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                        <h2 style="color: #1e40af;">SMTP Configuration Test Successful!</h2>
+                        <p>This is a test email to verify your SMTP configuration is working correctly.</p>
+                        <div style="background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                            <h3 style="margin-top: 0; color: #374151;">Configuration Details:</h3>
+                            <ul style="color: #6b7280;">
+                                <li><strong>Host:</strong> ' . htmlspecialchars($host) . '</li>
+                                <li><strong>Port:</strong> ' . htmlspecialchars($port) . '</li>
+                                <li><strong>Encryption:</strong> ' . htmlspecialchars($encryption) . '</li>
+                                <li><strong>Username:</strong> ' . htmlspecialchars($username) . '</li>
+                                <li><strong>From Email:</strong> ' . htmlspecialchars($fromEmail) . '</li>
+                                <li><strong>From Name:</strong> ' . htmlspecialchars($fromName) . '</li>
+                            </ul>
+                        </div>
+                        <p style="color: #059669; font-weight: bold;">✅ Your SMTP configuration is working correctly!</p>
+                        <p style="color: #6b7280; font-size: 14px;">You can now use this configuration to send email campaigns.</p>
+                    </div>
+                </body>
+                </html>';
+                
+                $mail->send();
+                return ['success' => true, 'message' => 'Test email sent successfully to ' . $username];
+                
+            } catch (Exception $e) {
+                return ['success' => false, 'error' => 'Email could not be sent. Mailer Error: ' . $mail->ErrorInfo];
+            }
+            
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+    
     // Contact Methods (Alias for getContactMessages)
     public function getContacts($search = '', $status = null, $limit = 50, $offset = 0) {
         // This is an alias method for getContactMessages to maintain compatibility

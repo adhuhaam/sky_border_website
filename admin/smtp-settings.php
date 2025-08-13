@@ -83,6 +83,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $error = 'SMTP test error: ' . $e->getMessage();
                 }
                 break;
+                
+            case 'test_email_send':
+                try {
+                    $result = $contentManager->testEmailSend($_POST['host'], $_POST['port'], $_POST['username'], $_POST['password'], $_POST['encryption'], $_POST['from_email'], $_POST['from_name']);
+                    if ($result['success']) {
+                        $message = 'Test email sent successfully! Check your inbox.';
+                    } else {
+                        $error = 'Test email failed: ' . $result['error'];
+                    }
+                } catch (Exception $e) {
+                    $error = 'Test email error: ' . $e->getMessage();
+                }
+                break;
         }
     }
 }

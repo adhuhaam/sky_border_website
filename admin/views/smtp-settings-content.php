@@ -93,6 +93,9 @@
                 <button type="button" onclick="testSMTPConnection()" class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors">
                     Test Connection
                 </button>
+                <button type="button" onclick="testEmailSend()" class="bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700 transition-colors">
+                    Test Email Send
+                </button>
             </div>
         </form>
     </div>
@@ -416,6 +419,38 @@ function testSMTPConnection() {
         <input type="hidden" name="username" value="${username}">
         <input type="hidden" name="password" value="${password}">
         <input type="hidden" name="encryption" value="${encryption}">
+    `;
+    document.body.appendChild(form);
+    form.submit();
+}
+
+// Test email send functionality
+function testEmailSend() {
+    const host = document.querySelector('input[name="host"]').value;
+    const port = document.querySelector('input[name="port"]').value;
+    const username = document.querySelector('input[name="username"]').value;
+    const password = document.querySelector('input[name="password"]').value;
+    const encryption = document.querySelector('select[name="encryption"]').value;
+    const fromEmail = document.querySelector('input[name="from_email"]').value;
+    const fromName = document.querySelector('input[name="from_name"]').value;
+    
+    if (!host || !port || !username || !password || !fromEmail || !fromName) {
+        alert('Please fill in all required fields before testing email send.');
+        return;
+    }
+    
+    // Create a test form
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.innerHTML = `
+        <input type="hidden" name="action" value="test_email_send">
+        <input type="hidden" name="host" value="${host}">
+        <input type="hidden" name="port" value="${port}">
+        <input type="hidden" name="username" value="${username}">
+        <input type="hidden" name="password" value="${password}">
+        <input type="hidden" name="encryption" value="${encryption}">
+        <input type="hidden" name="from_email" value="${fromEmail}">
+        <input type="hidden" name="from_name" value="${fromName}">
     `;
     document.body.appendChild(form);
     form.submit();

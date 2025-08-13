@@ -400,6 +400,55 @@ class Mailer {
     }
     
     /**
+     * Test campaign by sending to admin email
+     */
+    public function testCampaign($campaignId) {
+        try {
+            $campaign = $this->getCampaign($campaignId);
+            if (!$campaign) {
+                return ['success' => false, 'error' => 'Campaign not found'];
+            }
+            
+            // Get SMTP config
+            $smtpConfig = $this->getSMTPConfig();
+            if (!$smtpConfig) {
+                return ['success' => false, 'error' => 'No active SMTP configuration found'];
+            }
+            
+            // Render the website as email
+            $renderedHtml = $this->renderWebsiteAsEmail('/');
+            
+            // Send test email to admin
+            $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+            
+            // Server settings
+            $mail->isSMTP();
+            $mail->Host = $smtpConfig['host'];
+            $mail->SMTPAuth = true;
+            $mail->Username = $smtpConfig['username'];
+            $mail->Password = $smtpConfig['password'];
+            $mail->SMTPSecure = $smtpConfig['encryption'];
+            $mail->Port = $smtpConfig['port'];
+            
+            // Recipients
+            $mail->setFrom($smtpConfig['from_email'], $smtpConfig['from_name']);
+            $mail->addAddress($smtpConfig['username']); // Send to admin email
+            
+            // Content
+            $mail->isHTML(true);
+            $mail->Subject = '[TEST] ' . $campaign['subject'];
+            $mail->Body = $renderedHtml;
+            
+            $mail->send();
+            
+            return ['success' => true, 'message' => 'Test campaign sent successfully'];
+            
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+    
+    /**
      * Send campaign emails
      */
     public function sendCampaign($campaignId, $batchSize = 10) {

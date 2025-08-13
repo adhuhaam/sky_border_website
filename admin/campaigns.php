@@ -26,13 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         switch ($_POST['action']) {
             case 'create_campaign':
                 try {
-                    // Render website as HTML email
-                    $renderedHtml = $mailer->renderWebsiteAsEmail($_POST['url_to_render']);
+                    // Always use the front site as the email template
+                    $renderedHtml = $mailer->renderWebsiteAsEmail('/');
                     
                     $campaignData = [
                         'name' => $_POST['name'],
                         'subject' => $_POST['subject'],
-                        'url_to_render' => $_POST['url_to_render'],
+                        'url_to_render' => '/', // Always use front site
                         'status' => $_POST['status'],
                         'smtp_config_id' => $_POST['smtp_config_id'],
                         'scheduled_at' => $_POST['scheduled_at'] ?: null,
@@ -58,12 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
             case 'update_campaign':
                 try {
-                    $renderedHtml = $mailer->renderWebsiteAsEmail($_POST['url_to_render']);
+                    // Always use the front site as the email template
+                    $renderedHtml = $mailer->renderWebsiteAsEmail('/');
                     
                     $campaignData = [
                         'name' => $_POST['name'],
                         'subject' => $_POST['subject'],
-                        'url_to_render' => $_POST['url_to_render'],
+                        'url_to_render' => '/', // Always use front site
                         'status' => $_POST['status'],
                         'smtp_config_id' => $_POST['smtp_config_id'],
                         'scheduled_at' => $_POST['scheduled_at'] ?: null,
@@ -100,9 +101,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 break;
                 
+            case 'test_campaign':
+                try {
+                    $result = $mailer->testCampaign($_POST['campaign_id']);
+                    if ($result['success']) {
+                        $message = "Test campaign sent successfully! Check your inbox.";
+                    } else {
+                        $error = 'Test campaign failed: ' . $result['error'];
+                    }
+                } catch (Exception $e) {
+                    $error = 'Error testing campaign: ' . $e->getMessage();
+                }
+                break;
+                
             case 'preview_campaign':
                 try {
-                    $renderedHtml = $mailer->renderWebsiteAsEmail($_POST['url_to_render']);
+                    // Always use the front site for preview
+                    $renderedHtml = $mailer->renderWebsiteAsEmail('/');
                     // Store in session for preview
                     if (session_status() === PHP_SESSION_NONE) {
                         session_start();

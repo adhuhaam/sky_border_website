@@ -38,9 +38,17 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Website URL to Render *</label>
-                    <input type="url" name="url_to_render" required placeholder="https://example.com or /page" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Enter the URL of the page you want to send as an email</p>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Template Source</label>
+                    <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-md p-3">
+                        <p class="text-sm text-blue-800 dark:text-blue-200 mb-2">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            <strong>Front Site Template</strong>
+                        </p>
+                        <p class="text-xs text-blue-700 dark:text-blue-300">
+                            This campaign will automatically use your main website (index.php) as the email template with all styling, content, and branding preserved.
+                        </p>
+                    </div>
+                    <input type="hidden" name="url_to_render" value="/" />
                 </div>
                 
                 <div>
@@ -191,6 +199,10 @@
                                             </button>
                                         <?php endif; ?>
                                         
+                                        <button onclick="testCampaign(<?php echo $campaign['id']; ?>)" class="text-purple-600 hover:text-purple-900 dark:hover:text-purple-400">
+                                            Test
+                                        </button>
+                                        
                                         <a href="campaign-analytics.php?id=<?php echo $campaign['id']; ?>" class="text-green-600 hover:text-green-900 dark:hover:text-green-400">
                                             Analytics
                                         </a>
@@ -232,13 +244,22 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Website URL to Render *</label>
-                        <input type="url" name="url_to_render" id="edit_url_to_render" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email Template Source</label>
+                        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-md p-3">
+                            <p class="text-sm text-blue-800 dark:text-blue-200">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                <strong>Front Site Template</strong>
+                            </p>
+                            <p class="text-xs text-blue-700 dark:text-blue-300 mt-1">
+                                Uses your main website as the email template
+                            </p>
+                        </div>
+                        <input type="hidden" name="url_to_render" id="edit_url_to_render" value="/" />
                     </div>
                     
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">SMTP Configuration</label>
-                        <select name="smtp_config_id" id="edit_smtp_config_id" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                        <select name="smtp_config_id" id="edit_smtp_config_id" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-600">
                             <?php foreach ($smtpConfigs as $config): ?>
                                 <option value="<?php echo $config['id']; ?>"><?php echo htmlspecialchars($config['name']); ?></option>
                             <?php endforeach; ?>
@@ -297,7 +318,7 @@ function editCampaign(campaign) {
     document.getElementById('edit_campaign_id').value = campaign.id;
     document.getElementById('edit_name').value = campaign.name;
     document.getElementById('edit_subject').value = campaign.subject;
-    document.getElementById('edit_url_to_render').value = campaign.url_to_render;
+    document.getElementById('edit_url_to_render').value = '/'; // Always use front site
     document.getElementById('edit_smtp_config_id').value = campaign.smtp_config_id;
     document.getElementById('edit_status').value = campaign.status;
     
@@ -308,6 +329,20 @@ function editCampaign(campaign) {
     }
     
     document.getElementById('editModal').classList.remove('hidden');
+}
+
+// Test campaign functionality
+function testCampaign(campaignId) {
+    if (confirm('Send a test email of this campaign to verify it looks correct?')) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.innerHTML = `
+            <input type="hidden" name="action" value="test_campaign">
+            <input type="hidden" name="campaign_id" value="${campaignId}">
+        `;
+        document.body.appendChild(form);
+        form.submit();
+    }
 }
 
 function closeEditModal() {
