@@ -1009,11 +1009,11 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <!-- Enhanced Status Badges -->
                 <div class="mx-auto mt-12 mb-8 flex flex-wrap justify-center gap-3 sm:gap-4 px-4 scroll-reveal" style="animation-delay: 0.7s;">
                     <div class="group relative inline-flex items-center bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 sm:px-6 py-3 text-sm font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 animate-pulse-glow rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105">
-                        <i class="fas fa-certificate mr-3 text-white text-lg animate-float"></i>
+                        <i class="fas fa-certificate mr-3 text-white text-lg"></i>
                         <span class="relative z-10">Government Licensed</span>
                     </div>
-                    <div class="group relative inline-flex items-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 sm:px-6 py-3 text-sm font-semibold hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 animate-pulse-glow rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105" style="animation-delay: 0.1s;">
-                        <i class="fas fa-award mr-3 text-white text-lg animate-float"></i>
+                    <div class="group relative inline-flex items-center bg-gradient-to-br from-blue-500 to-indigo-500 text-white px-4 sm:px-6 py-3 text-sm font-semibold hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 animate-pulse-glow rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105" style="animation-delay: 0.1s;">
+                        <i class="fas fa-award mr-3 text-white text-lg"></i>
                         <span class="relative z-10">HR Consulting & Recruitment</span>
                     </div>
                 </div>
@@ -1021,14 +1021,14 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <!-- Enhanced CTA Buttons with Tailwind Catalyst Style -->
                 <div class="mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-4 scroll-reveal" style="animation-delay: 0.8s;">
                     <a href="#contact" class="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-300/50 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900">
-                        <i class="fas fa-comments mr-3 text-lg animate-float"></i>
+                        <i class="fas fa-comments mr-3 text-lg"></i>
                         <span>Get Started Today</span>
-                        <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-2 animate-float"></i>
+                        <i class="fas fa-arrow-right ml-3"></i>
                     </a>
                     <a href="#services" class="group inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-white/90 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 text-slate-800 dark:text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900 backdrop-blur-md border border-white/30 dark:border-white/20">
-                        <i class="fas fa-eye mr-3 transition-transform group-hover:scale-110 text-lg animate-float"></i>
+                        <i class="fas fa-eye mr-3 text-lg"></i>
                         <span>Explore Services</span>
-                        <i class="fas fa-arrow-down ml-3 transition-transform group-hover:translate-y-2 animate-float"></i>
+                        <i class="fas fa-arrow-down ml-3"></i>
                     </a>
                 </div>
 
