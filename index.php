@@ -967,16 +967,16 @@ if ($_POST && isset($_POST['contact_form'])) {
             <div class="text-center">
                 <!-- Logo -->
                 <div class="scroll-reveal mb-8" style="animation-delay: 0.1s;">
-                    <img src="/images/logo.svg" alt="Sky Border Solutions Logo" class="w-40 h-40 sm:w-24 sm:h-24 filter drop-shadow-lg mx-auto">
+                    <img src="/images/logo.svg" alt="Sky Border Solutions Logo" class="w-32 h-32 sm:w-40 sm:h-40 filter drop-shadow-lg mx-auto">
                 </div>
 
                 <!-- Main Heading -->
                 <div class="scroll-reveal" style="animation-delay: 0.2s;">
                     <h1 class="mx-auto max-w-6xl text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
                         <span class="block">
-                            <span class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent text-shadow-lg">
-                                <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
-                            </span>
+                                                    <span class="bg-gradient-to-r from-blue-800 via-green-700 to-green-800 dark:from-blue-400 dark:via-green-600 dark:to-green-700 bg-clip-text text-transparent text-shadow-lg">
+                            <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
+                        </span>
                         </span>
                         <span class="mt-4 block text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-medium text-slate-700 dark:text-slate-200 text-shadow-sm">
                             Professional Workforce Solutions
@@ -987,15 +987,13 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <!-- Tagline -->
                 <div class="scroll-reveal" style="animation-delay: 0.4s;">
                     <div class="mx-auto mt-8 sm:mt-10 max-w-3xl px-4">
-                        <div class="bg-white/70 dark:bg-white/10 backdrop-blur-xl border border-white/30 dark:border-white/20 p-6 sm:p-8 rounded-2xl hover:bg-white/80 dark:hover:bg-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl">
-                            <p class="text-lg sm:text-xl leading-7 sm:leading-8 text-slate-800 dark:text-white font-medium text-shadow-sm">
-                                <span class="relative">
-                                    <span class="absolute -left-6 sm:-left-8 top-0 text-blue-500/60 dark:text-blue-400/60 text-2xl sm:text-3xl">"</span>
-                                    <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
-                                    <span class="absolute -right-6 sm:-right-8 bottom-0 text-blue-500/60 dark:text-blue-400/60 text-2xl sm:text-3xl">"</span>
-                                </span>
-                            </p>
-                        </div>
+                        <p class="text-lg sm:text-xl leading-7 sm:leading-8 text-slate-800 dark:text-white font-medium text-shadow-sm text-center">
+                            <span class="relative">
+                                <span class="absolute -left-6 sm:-left-8 top-0 text-green-700/60 dark:text-green-600/60 text-2xl sm:text-3xl">"</span>
+                                <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
+                                <span class="absolute -right-6 sm:-right-8 bottom-0 text-green-700/60 dark:text-green-600/60 text-2xl sm:text-3xl">"</span>
+                            </span>
+                        </p>
                     </div>
                 </div>
 
@@ -1008,11 +1006,11 @@ if ($_POST && isset($_POST['contact_form'])) {
 
                 <!-- Enhanced Status Badges -->
                 <div class="mx-auto mt-12 mb-8 flex flex-wrap justify-center gap-3 sm:gap-4 px-4 scroll-reveal" style="animation-delay: 0.7s;">
-                    <div class="group relative inline-flex items-center bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 sm:px-6 py-3 text-sm font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 animate-pulse-glow rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <div class="group relative inline-flex items-center bg-gradient-to-r from-green-700 to-green-800 text-white px-4 sm:px-6 py-3 text-sm font-semibold hover:from-green-800 hover:to-green-900 transition-all duration-300 animate-pulse-glow rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105">
                         <i class="fas fa-certificate mr-3 text-white text-lg"></i>
                         <span class="relative z-10">Government Licensed</span>
                     </div>
-                    <div class="group relative inline-flex items-center bg-gradient-to-br from-blue-500 to-indigo-500 text-white px-4 sm:px-6 py-3 text-sm font-semibold hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 animate-pulse-glow rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105" style="animation-delay: 0.1s;">
+                    <div class="group relative inline-flex items-center bg-gradient-to-br from-blue-800 to-blue-900 text-white px-4 sm:px-6 py-3 text-sm font-semibold hover:from-blue-900 hover:to-blue-950 transition-all duration-300 animate-pulse-glow rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105" style="animation-delay: 0.1s;">
                         <i class="fas fa-award mr-3 text-white text-lg"></i>
                         <span class="relative z-10">HR Consulting & Recruitment</span>
                     </div>
@@ -1020,15 +1018,15 @@ if ($_POST && isset($_POST['contact_form'])) {
 
                 <!-- Enhanced CTA Buttons with Tailwind Catalyst Style -->
                 <div class="mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-4 scroll-reveal" style="animation-delay: 0.8s;">
-                    <a href="#contact" class="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-300/50 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900">
-                        <i class="fas fa-comments mr-3 text-lg"></i>
+                    <a href="#contact" class="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-800 to-blue-900 hover:from-blue-900 hover:to-blue-950 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-300/50 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900">
+                        <i class="fas fa-comments mr-3 text-lg text-white"></i>
                         <span>Get Started Today</span>
-                        <i class="fas fa-arrow-right ml-3"></i>
+                        <i class="fas fa-arrow-right ml-3 text-white"></i>
                     </a>
-                    <a href="#services" class="group inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-white/90 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 text-slate-800 dark:text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900 backdrop-blur-md border border-white/30 dark:border-white/20">
-                        <i class="fas fa-eye mr-3 text-lg"></i>
+                    <a href="#services" class="group inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-green-700 to-green-800 hover:from-green-800 hover:to-green-900 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-green-300/50 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900">
+                        <i class="fas fa-eye mr-3 text-lg text-white"></i>
                         <span>Explore Services</span>
-                        <i class="fas fa-arrow-down ml-3"></i>
+                        <i class="fas fa-arrow-down ml-3 text-white"></i>
                     </a>
                 </div>
 
@@ -1036,7 +1034,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <div class="mt-24">
                     <div class="flex flex-col items-center">
                         <p class="text-sm text-slate-600 dark:text-slate-300 mb-4 font-medium text-shadow-sm">Learn more about us</p>
-                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 bg-white/80 dark:bg-white/10 backdrop-blur-lg border border-white/30 dark:border-white/20 rounded-2xl text-slate-700 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl">
+                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 bg-white/80 dark:bg-white/10 backdrop-blur-lg border border-white/30 dark:border-white/20 rounded-2xl text-slate-700 dark:text-white hover:text-green-700 dark:hover:text-green-600 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl">
                             <i class="fas fa-chevron-down text-xl animate-bounce group-hover:translate-y-1 transition-transform duration-300"></i>
                         </a>
                     </div>
