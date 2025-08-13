@@ -25,11 +25,14 @@ $statusColors = [
 <!-- Status Filter -->
 <div class="mb-6">
     <div class="flex flex-wrap gap-2">
-        <a href="messages.php" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium <?php echo !isset($_GET['filter']) || $_GET['filter'] === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'; ?> theme-transition">
+        <?php 
+        $currentFilter = $_GET['filter'] ?? 'all';
+        ?>
+        <a href="messages.php" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium <?php echo $currentFilter === 'all' ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'; ?> theme-transition">
             All Messages (<?php echo $messageStats['total'] ?? 0; ?>)
         </a>
         <?php foreach ($statusOptions as $status => $label): ?>
-        <a href="?filter=<?php echo $status; ?>" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium <?php echo (isset($_GET['filter']) && $_GET['filter'] === $status) ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'; ?> theme-transition">
+        <a href="?filter=<?php echo $status; ?>" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium <?php echo $currentFilter === $status ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'; ?> theme-transition">
             <?php echo $label; ?>
             <span class="ml-1">(<?php echo $messageStats[$status] ?? 0; ?>)</span>
         </a>

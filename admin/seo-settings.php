@@ -5,7 +5,7 @@ require_once 'includes/layout-helpers.php';
 
 // Initialize authentication
 $auth = new Auth();
-if (!$auth->isAuthenticated()) {
+if (!$auth->isLoggedIn()) {
     header('Location: index.php');
     exit;
 }

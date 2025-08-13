@@ -7,7 +7,7 @@
  */
 
 class Database {
-    private $host = '162.213.255.53'; // Production server IP address
+    private $host = 'localhost'; // Use localhost for shared hosting
     private $db_name = 'skydfcaf_sky_border';
     private $username = 'skydfcaf_sky_border_user';
     private $password = 'Ompl@65482*';

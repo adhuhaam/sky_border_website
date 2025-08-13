@@ -230,58 +230,103 @@ if ($_POST && isset($_POST['contact_form'])) {
         body { 
             font-family: 'Poppins', sans-serif; 
             scroll-behavior: smooth;
-            background: transparent;
-            color: #ffffff;
+            background: var(--bg-light);
+            color: var(--text-primary);
+            font-weight: 300;
+            line-height: 1.6;
         }
         
-        /* Full Transparent Theme */
-        .transparent-bg {
-            background: rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(30px);
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 400;
+            color: var(--navy-blue);
         }
         
-        .transparent-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+        .text-bold {
+            font-weight: 500;
         }
         
-        .transparent-card-strong {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(50px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.15);
+        .text-semibold {
+            font-weight: 400;
         }
         
-        .transparent-button {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #ffffff;
+        /* Navy Blue and Olive Green Theme */
+        :root {
+            --navy-blue: #1e3a8a;
+            --navy-blue-light: #3b82f6;
+            --navy-blue-dark: #1e40af;
+            --olive-green: #6b7280;
+            --olive-green-light: #9ca3af;
+            --olive-green-dark: #4b5563;
+            --accent-gold: #f59e0b;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+        }
+        
+        /* Minimalist Theme */
+        .minimalist-bg {
+            background: var(--bg-light);
+        }
+        
+        .minimalist-card {
+            background: var(--bg-white);
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
         
-        .transparent-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.3);
+        .minimalist-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             transform: translateY(-2px);
         }
         
-        /* Modern Gradients */
+        .minimalist-button {
+            background: var(--navy-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+        }
+        
+        .minimalist-button:hover {
+            background: var(--navy-blue-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+        }
+        
+        .minimalist-button-secondary {
+            background: var(--olive-green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+        }
+        
+        .minimalist-button-secondary:hover {
+            background: var(--olive-green-dark);
+            transform: translateY(-1px);
+        }
+        
+        /* Navy Blue and Olive Green Gradients */
         .gradient-bg { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            background: linear-gradient(135deg, var(--navy-blue) 0%, var(--olive-green) 100%); 
         }
         
         .gradient-text { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            background: linear-gradient(135deg, var(--navy-blue) 0%, var(--olive-green) 100%); 
             -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent; 
             background-clip: text; 
         }
         
         .gradient-text-animated {
-            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c, #667eea);
+            background: linear-gradient(45deg, var(--navy-blue), var(--olive-green), var(--accent-gold), var(--navy-blue-light), var(--navy-blue));
             background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -750,29 +795,16 @@ if ($_POST && isset($_POST['contact_form'])) {
 
 
 
-    <!-- Transparent Hero Section -->
-    <section id="home" class="relative overflow-hidden bg-transparent theme-transition min-h-screen flex items-center">
-        <!-- Video Background -->
-        <div class="absolute inset-0 -z-30">
-            <video autoplay muted loop class="w-full h-full object-cover opacity-20">
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-particle-flow-32774-large.mp4" type="video/mp4">
-            </video>
-            <div class="absolute inset-0 bg-black/40"></div>
-        </div>
-        
-        <!-- Transparent Background Pattern -->
+    <!-- Minimalist Hero Section -->
+    <section id="home" class="relative overflow-hidden minimalist-bg theme-transition min-h-screen flex items-center">
+        <!-- Subtle Background Pattern -->
         <div class="absolute inset-0 -z-20">
-            <!-- Animated Background -->
-            <div class="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50"></div>
             
-            <!-- Floating Transparent Elements -->
-            <div class="absolute top-20 left-1/4 w-96 h-96 transparent-card rounded-full opacity-30 animate-float blur-md"></div>
-            <div class="absolute top-40 right-1/4 w-80 h-80 transparent-card rounded-full opacity-25 animate-float blur-md" style="animation-delay: 2s;"></div>
-            <div class="absolute -bottom-20 left-1/2 w-72 h-72 transparent-card rounded-full opacity-20 animate-float blur-md" style="animation-delay: 4s;"></div>
-            
-            <!-- Transparent Accent Lines -->
-            <div class="absolute top-1/3 left-0 w-40 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-            <div class="absolute top-2/3 right-0 w-40 h-px bg-gradient-to-l from-transparent via-white/20 to-transparent"></div>
+            <!-- Subtle Accent Elements -->
+            <div class="absolute top-20 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-100 to-transparent rounded-full opacity-30 animate-float blur-md"></div>
+            <div class="absolute top-40 right-1/4 w-80 h-80 bg-gradient-to-br from-green-100 to-transparent rounded-full opacity-25 animate-float blur-md" style="animation-delay: 2s;"></div>
+            <div class="absolute -bottom-20 left-1/2 w-72 h-72 bg-gradient-to-br from-blue-50 to-green-50 rounded-full opacity-20 animate-float blur-md" style="animation-delay: 4s;"></div>
         </div>
         
         <!-- Main Content -->
@@ -780,13 +812,13 @@ if ($_POST && isset($_POST['contact_form'])) {
             <div class="text-center">
                 <!-- Main Heading -->
                 <div class="scroll-reveal" style="animation-delay: 0.2s;">
-                    <h1 class="mx-auto max-w-6xl text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl">
+                    <h1 class="mx-auto max-w-6xl text-5xl font-semibold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
                         <span class="block">
-                            <span class="bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent">
+                            <span class="gradient-text">
                         <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
                             </span>
                         </span>
-                        <span class="mt-4 block text-2xl sm:text-3xl lg:text-4xl font-medium text-white/80">
+                        <span class="mt-4 block text-2xl sm:text-3xl lg:text-4xl font-normal text-gray-600">
                             Professional Workforce Solutions
                     </span>
                 </h1>
@@ -795,12 +827,12 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <!-- Tagline -->
                 <div class="scroll-reveal" style="animation-delay: 0.4s;">
                     <div class="mx-auto mt-10 max-w-3xl">
-                        <div class="transparent-card-strong rounded-2xl p-8 border-0">
-                            <p class="text-xl leading-8 text-white font-medium">
+                        <div class="minimalist-card p-8">
+                            <p class="text-xl leading-8 text-gray-700 font-normal">
                         <span class="relative">
-                                    <span class="absolute -left-8 top-0 text-white/60 text-3xl">"</span>
+                                    <span class="absolute -left-8 top-0 text-gray-400 text-3xl">"</span>
                     <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
-                                    <span class="absolute -right-8 bottom-0 text-white/60 text-3xl">"</span>
+                                    <span class="absolute -right-8 bottom-0 text-gray-400 text-3xl">"</span>
                         </span>
                 </p>
                         </div>
@@ -809,32 +841,31 @@ if ($_POST && isset($_POST['contact_form'])) {
 
                 <!-- Description -->
                 <div class="scroll-reveal" style="animation-delay: 0.6s;">
-                    <p class="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-white/80">
+                    <p class="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-gray-600">
                     <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
                 </p>
                 </div>
 
                 <!-- Status Badges -->
                 <div class="mx-auto mt-12 mb-8 flex flex-wrap justify-center gap-4 scroll-reveal" style="animation-delay: 0.7s;">
-                    <div class="group relative inline-flex items-center transparent-card rounded-2xl px-6 py-3 text-sm font-medium text-white hover:scale-105 transition-all duration-300">
-                        <i class="fas fa-certificate mr-3 text-green-300 text-lg"></i>
+                    <div class="group relative inline-flex items-center minimalist-card px-6 py-3 text-sm font-normal text-gray-700 hover:scale-105 transition-all duration-300">
+                        <i class="fas fa-certificate mr-3 text-green-600 text-lg"></i>
                         <span class="relative z-10">Government Licensed</span>
                     </div>
-                    <div class="group relative inline-flex items-center transparent-card rounded-2xl px-6 py-3 text-sm font-medium text-white hover:scale-105 transition-all duration-300" style="animation-delay: 0.1s;">
-                        <i class="fas fa-award mr-3 text-blue-300 text-lg"></i>
+                    <div class="group relative inline-flex items-center minimalist-card px-6 py-3 text-sm font-normal text-gray-700 hover:scale-105 transition-all duration-300" style="animation-delay: 0.1s;">
+                        <i class="fas fa-award mr-3 text-blue-600 text-lg"></i>
                         <span class="relative z-10">HR Consulting & Recruitment</span>
                     </div>
                 </div>
 
-                <!-- Transparent CTA Buttons -->
+                <!-- CTA Buttons -->
                 <div class="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6 scroll-reveal" style="animation-delay: 0.8s;">
-                    <a href="#contact" class="group relative inline-flex items-center justify-center px-10 py-5 text-base font-semibold text-white transparent-card-strong rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-400 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2 w-full sm:w-auto overflow-hidden">
-                        <span class="absolute inset-0 rounded-2xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></span>
-                        <i class="fas fa-comments mr-3 relative z-10 text-lg"></i>
-                        <span class="relative z-10">Get Started Today</span>
-                        <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-2 relative z-10"></i>
+                    <a href="#contact" class="group relative inline-flex items-center justify-center px-10 py-5 text-base font-normal text-white minimalist-button rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 w-full sm:w-auto">
+                        <i class="fas fa-comments mr-3 text-lg"></i>
+                        <span>Get Started Today</span>
+                        <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-2"></i>
                     </a>
-                    <a href="#services" class="group inline-flex items-center justify-center px-10 py-5 text-base font-semibold text-white transparent-card rounded-2xl shadow-lg hover:shadow-xl transition-all duration-400 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2 w-full sm:w-auto">
+                    <a href="#services" class="group inline-flex items-center justify-center px-10 py-5 text-base font-normal text-white minimalist-button-secondary rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-offset-2 w-full sm:w-auto">
                         <i class="fas fa-eye mr-3 transition-transform group-hover:scale-110 text-lg"></i>
                         <span>Explore Services</span>
                         <i class="fas fa-arrow-down ml-3 transition-transform group-hover:translate-y-2"></i>

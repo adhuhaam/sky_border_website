@@ -61,7 +61,11 @@ if ($action === 'view' && $messageId) {
 
 if ($action === 'list' || $action === 'filter') {
     $filter = $_GET['filter'] ?? 'all';
-    $messages = $contentManager->getContactMessages($filter);
+    if ($filter === 'all') {
+        $messages = $contentManager->getContactMessages();
+    } else {
+        $messages = $contentManager->getContactMessages($filter);
+    }
     $messageStats = $contentManager->getContactMessageStats();
 }
 
