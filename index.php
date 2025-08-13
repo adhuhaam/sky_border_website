@@ -208,19 +208,44 @@ if ($_POST && isset($_POST['contact_form'])) {
     <!-- Canonical URL -->
     <link rel="canonical" href="<?php echo htmlspecialchars($seoSettings['canonical_url'] ?? 'https://skybordersolutions.com'); ?>">
     
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS with Catalyst -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <script src="https://unpkg.com/@tailwindcss/catalyst@latest/dist/catalyst.min.js"></script>
     
-    <!-- Headless UI for interactive components -->
-    <script src="https://unpkg.com/@headlessui/vue@latest/dist/headlessui.umd.js"></script>
+    <!-- Tailwind Catalyst Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'catalyst': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        'transparent': {
+                            50: 'rgba(255, 255, 255, 0.05)',
+                            100: 'rgba(255, 255, 255, 0.1)',
+                            200: 'rgba(255, 255, 255, 0.2)',
+                            300: 'rgba(255, 255, 255, 0.3)',
+                            400: 'rgba(255, 255, 255, 0.4)',
+                            500: 'rgba(255, 255, 255, 0.5)',
+                            600: 'rgba(255, 255, 255, 0.6)',
+                            700: 'rgba(255, 255, 255, 0.7)',
+                            800: 'rgba(255, 255, 255, 0.8)',
+                            900: 'rgba(255, 255, 255, 0.9)',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
     
-    <!-- Google Fonts - Poppins -->
+    <!-- Google Fonts - Inter (Catalyst Default) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Preload critical resources -->
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
@@ -228,17 +253,24 @@ if ($_POST && isset($_POST['contact_form'])) {
     
     <style>
         body { 
-            font-family: 'Poppins', sans-serif; 
+            font-family: 'Inter', system-ui, sans-serif; 
             scroll-behavior: smooth;
             background: var(--bg-light);
             color: var(--text-primary);
             font-weight: 300;
             line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         h1, h2, h3, h4, h5, h6 {
-            font-weight: 400;
+            font-weight: 500;
             color: var(--navy-blue);
+            transition: color 0.3s ease;
+        }
+        
+        /* Dark theme heading adjustments */
+        .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+            color: var(--navy-blue-light);
         }
         
         .text-bold {
@@ -247,6 +279,19 @@ if ($_POST && isset($_POST['contact_form'])) {
         
         .text-semibold {
             font-weight: 400;
+        }
+        
+        /* Theme-aware text colors */
+        .text-theme-primary {
+            color: var(--text-primary);
+        }
+        
+        .text-theme-secondary {
+            color: var(--text-secondary);
+        }
+        
+        .text-theme-muted {
+            color: var(--text-muted);
         }
         
         /* Navy Blue and Olive Green Theme */
@@ -258,10 +303,13 @@ if ($_POST && isset($_POST['contact_form'])) {
             --olive-green-light: #9ca3af;
             --olive-green-dark: #4b5563;
             --accent-gold: #f59e0b;
-            --text-primary: #1f2937;
-            --text-secondary: #6b7280;
+            --text-primary: #111827;
+            --text-secondary: #374151;
+            --text-muted: #6b7280;
             --bg-light: #f8fafc;
             --bg-white: #ffffff;
+            --bg-card: #ffffff;
+            --border-color: #e5e7eb;
         }
         
         /* Dark Theme Variables */
@@ -273,10 +321,13 @@ if ($_POST && isset($_POST['contact_form'])) {
             --olive-green-light: #d1d5db;
             --olive-green-dark: #6b7280;
             --accent-gold: #fbbf24;
-            --text-primary: #f9fafb;
-            --text-secondary: #d1d5db;
-            --bg-light: #111827;
-            --bg-white: #1f2937;
+            --text-primary: #ffffff;
+            --text-secondary: #e5e7eb;
+            --text-muted: #9ca3af;
+            --bg-light: #0f172a;
+            --bg-white: #1e293b;
+            --bg-card: #334155;
+            --border-color: #475569;
         }
         
         /* Minimalist Theme */
@@ -285,17 +336,25 @@ if ($_POST && isset($_POST['contact_form'])) {
         }
         
         .minimalist-card {
-            background: var(--bg-white);
-            border: 1px solid #e5e7eb;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
+        }
+        
+        .dark .minimalist-card {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
         
         .minimalist-card:hover {
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             transform: translateY(-2px);
             border-color: var(--navy-blue-light);
+        }
+        
+        .dark .minimalist-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
         
         .minimalist-card.animate-on-scroll {
@@ -599,20 +658,21 @@ if ($_POST && isset($_POST['contact_form'])) {
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
         
-        /* Transparent Button Variants */
-        .transparent-btn {
+        /* Catalyst Transparent Button Variants */
+        .catalyst-transparent-btn {
             background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(25px);
+            backdrop-filter: blur(28px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 1.5rem;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             color: #ffffff;
         }
         
-        .transparent-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
+        .catalyst-transparent-btn:hover {
+            background: rgba(255, 255, 255, 0.16);
             border-color: rgba(255, 255, 255, 0.25);
             transform: translateY(-3px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
         
         /* Transparent Card Styles */
@@ -632,7 +692,7 @@ if ($_POST && isset($_POST['contact_form'])) {
             background: rgba(255, 255, 255, 0.08);
         }
         
-        /* Mobile-specific optimizations */
+        /* Catalyst Mobile-specific optimizations */
         @media (max-width: 768px) {
             .hover-lift:hover { 
                 transform: translateY(-2px);
@@ -653,6 +713,18 @@ if ($_POST && isset($_POST['contact_form'])) {
             /* Improved mobile spacing */
             .scroll-reveal {
                 animation-delay: 0s !important;
+            }
+            /* Catalyst mobile enhancements */
+            .catalyst-transparent-card {
+                backdrop-filter: blur(24px) !important;
+            }
+            .catalyst-transparent-card-strong {
+                backdrop-filter: blur(28px) !important;
+            }
+            /* Mobile-optimized transparency */
+            .catalyst-transparent-bg {
+                background: rgba(0, 0, 0, 0.15) !important;
+                backdrop-filter: blur(20px) !important;
             }
         }
         
@@ -758,28 +830,28 @@ if ($_POST && isset($_POST['contact_form'])) {
             color: rgba(255, 255, 255, 0.7);
         }
         
-        /* Ensure transparent elements are visible */
-        .transparent-card {
+        /* Catalyst Transparent Elements */
+        .catalyst-transparent-card {
             background: rgba(255, 255, 255, 0.08) !important;
             backdrop-filter: blur(40px) !important;
             border: 1px solid rgba(255, 255, 255, 0.15) !important;
         }
         
-        .transparent-card-strong {
+        .catalyst-transparent-card-strong {
             background: rgba(255, 255, 255, 0.12) !important;
             backdrop-filter: blur(50px) !important;
             border: 1px solid rgba(255, 255, 255, 0.2) !important;
         }
         
         /* Enhanced visibility for transparent elements */
-        .transparent-bg {
+        .catalyst-transparent-bg {
             background: rgba(0, 0, 0, 0.2) !important;
             backdrop-filter: blur(30px) !important;
         }
         
-        /* Poppins font optimization */
+        /* Catalyst font optimization */
         body, h1, h2, h3, h4, h5, h6, p, span, div, a, button {
-            font-family: 'Poppins', sans-serif !important;
+            font-family: 'Inter', system-ui, sans-serif !important;
         }
         
         /* Enhanced transparent effects */
@@ -810,13 +882,45 @@ if ($_POST && isset($_POST['contact_form'])) {
             animation: gradient-shift 15s ease infinite;
         }
         
-        /* Enhanced text shadows for better readability */
+        /* Catalyst Enhanced text shadows for better readability */
         h1, h2, h3, h4, h5, h6 {
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
         
         p, span {
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Catalyst-specific utilities */
+        .catalyst-blur-sm { backdrop-filter: blur(8px); }
+        .catalyst-blur-md { backdrop-filter: blur(16px); }
+        .catalyst-blur-lg { backdrop-filter: blur(24px); }
+        .catalyst-blur-xl { backdrop-filter: blur(32px); }
+        .catalyst-blur-2xl { backdrop-filter: blur(40px); }
+        
+        /* Catalyst glass morphism */
+        .catalyst-glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        
+        .catalyst-glass-strong {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        /* Catalyst hover effects */
+        .catalyst-hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .catalyst-hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
     </style>
     
@@ -941,9 +1045,9 @@ if ($_POST && isset($_POST['contact_form'])) {
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <?php endif; ?>
     
-    <!-- Transparent Dark Mode Toggle -->
+    <!-- Dark Mode Toggle -->
     <div class="fixed top-6 right-6 z-50">
-        <button id="theme-toggle" class="group relative p-4 rounded-2xl transparent-card-strong shadow-2xl text-white hover:scale-110 active:scale-95 theme-transition focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+        <button id="theme-toggle" class="group relative p-4 rounded-2xl catalyst-transparent-card-strong shadow-2xl text-white hover:scale-110 active:scale-95 theme-transition focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2" aria-label="Toggle dark mode" title="Toggle dark/light mode">
             <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-white/10 to-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
             <i id="theme-icon" class="relative z-10 fas fa-moon text-xl transition-all duration-300" aria-hidden="true"></i>
             <i id="theme-icon-dark" class="relative z-10 fas fa-sun text-xl hidden transition-all duration-300" aria-hidden="true"></i>
@@ -956,7 +1060,7 @@ if ($_POST && isset($_POST['contact_form'])) {
     <section id="home" class="relative overflow-hidden minimalist-bg theme-transition min-h-screen flex items-center">
         <!-- Subtle Background Pattern -->
         <div class="absolute inset-0 -z-20">
-            <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-blue-950 dark:via-slate-900 dark:to-green-950"></div>
             
             <!-- Enhanced Floating Elements -->
             <div class="absolute top-20 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-100 to-transparent rounded-full opacity-30 floating-element blur-md"></div>
@@ -969,17 +1073,17 @@ if ($_POST && isset($_POST['contact_form'])) {
         </div>
         
         <!-- Main Content -->
-        <div class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
+        <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32 xl:py-40">
             <div class="text-center">
                 <!-- Main Heading -->
                 <div class="scroll-reveal" style="animation-delay: 0.2s;">
-                    <h1 class="mx-auto max-w-6xl text-5xl font-semibold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
+                    <h1 class="mx-auto max-w-6xl text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
                         <span class="block">
                             <span class="gradient-text">
                         <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
                             </span>
                         </span>
-                        <span class="mt-4 block text-2xl sm:text-3xl lg:text-4xl font-normal text-gray-600">
+                        <span class="mt-4 block text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-theme-secondary">
                             Professional Workforce Solutions
                     </span>
                 </h1>
@@ -987,13 +1091,13 @@ if ($_POST && isset($_POST['contact_form'])) {
 
                 <!-- Tagline -->
                 <div class="scroll-reveal" style="animation-delay: 0.4s;">
-                    <div class="mx-auto mt-10 max-w-3xl">
-                        <div class="minimalist-card p-8">
-                            <p class="text-xl leading-8 text-gray-700 font-normal">
+                    <div class="mx-auto mt-8 sm:mt-10 max-w-3xl px-4">
+                        <div class="catalyst-glass p-6 sm:p-8 catalyst-hover-lift">
+                            <p class="text-lg sm:text-xl leading-7 sm:leading-8 text-theme-primary font-normal">
                         <span class="relative">
-                                    <span class="absolute -left-8 top-0 text-gray-400 text-3xl">"</span>
+                                    <span class="absolute -left-6 sm:-left-8 top-0 text-theme-muted text-2xl sm:text-3xl">"</span>
                     <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
-                                    <span class="absolute -right-8 bottom-0 text-gray-400 text-3xl">"</span>
+                                    <span class="absolute -right-6 sm:-right-8 bottom-0 text-theme-muted text-2xl sm:text-3xl">"</span>
                         </span>
                 </p>
                         </div>
@@ -1002,31 +1106,31 @@ if ($_POST && isset($_POST['contact_form'])) {
 
                 <!-- Description -->
                 <div class="scroll-reveal" style="animation-delay: 0.6s;">
-                    <p class="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-gray-600">
+                    <p class="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-theme-secondary">
                     <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
                 </p>
                 </div>
 
                 <!-- Enhanced Status Badges -->
-                <div class="mx-auto mt-12 mb-8 flex flex-wrap justify-center gap-4 scroll-reveal" style="animation-delay: 0.7s;">
-                    <div class="group relative inline-flex items-center minimalist-card px-6 py-3 text-sm font-normal text-gray-700 hover-lift hover-scale transition-all duration-300 animate-pulse-glow">
+                <div class="mx-auto mt-12 mb-8 flex flex-wrap justify-center gap-3 sm:gap-4 px-4 scroll-reveal" style="animation-delay: 0.7s;">
+                    <div class="group relative inline-flex items-center catalyst-glass px-4 sm:px-6 py-3 text-sm font-normal text-theme-primary catalyst-hover-lift transition-all duration-300 animate-pulse-glow">
                         <i class="fas fa-certificate mr-3 text-green-600 text-lg animate-float"></i>
                         <span class="relative z-10">Government Licensed</span>
                     </div>
-                    <div class="group relative inline-flex items-center minimalist-card px-6 py-3 text-sm font-normal text-gray-700 hover-lift hover-scale transition-all duration-300 animate-pulse-glow" style="animation-delay: 0.1s;">
+                    <div class="group relative inline-flex items-center catalyst-glass px-4 sm:px-6 py-3 text-sm font-normal text-theme-primary catalyst-hover-lift transition-all duration-300 animate-pulse-glow" style="animation-delay: 0.1s;">
                         <i class="fas fa-award mr-3 text-blue-600 text-lg animate-float"></i>
                         <span class="relative z-10">HR Consulting & Recruitment</span>
                     </div>
                 </div>
 
                 <!-- Enhanced CTA Buttons -->
-                <div class="mt-16 flex flex-col sm:flex-row items-center justify-center gap-6 scroll-reveal" style="animation-delay: 0.8s;">
-                    <a href="#contact" class="group relative inline-flex items-center justify-center px-10 py-5 text-base font-normal text-white minimalist-button rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 w-full sm:w-auto animate-pulse-glow">
+                <div class="mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-4 scroll-reveal" style="animation-delay: 0.8s;">
+                    <a href="#contact" class="group relative inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 text-base font-normal text-white catalyst-glass-strong rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 w-full sm:w-auto animate-pulse-glow catalyst-hover-lift">
                         <i class="fas fa-comments mr-3 text-lg animate-float"></i>
                         <span>Get Started Today</span>
                         <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-2 animate-float"></i>
                     </a>
-                    <a href="#services" class="group inline-flex items-center justify-center px-10 py-5 text-base font-normal text-white minimalist-button-secondary rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-offset-2 w-full sm:w-auto animate-pulse-glow">
+                    <a href="#services" class="group inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 text-base font-normal text-white catalyst-glass rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-offset-2 w-full sm:w-auto animate-pulse-glow catalyst-hover-lift">
                         <i class="fas fa-eye mr-3 transition-transform group-hover:scale-110 text-lg animate-float"></i>
                         <span>Explore Services</span>
                         <i class="fas fa-arrow-down ml-3 transition-transform group-hover:translate-y-2 animate-float"></i>
@@ -1039,7 +1143,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <div class="mt-24">
                     <div class="flex flex-col items-center">
                         <p class="text-sm text-white/70 mb-4 font-medium">Learn more about us</p>
-                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 transparent-card rounded-2xl text-white hover:text-white/80 transition-all duration-400 hover:scale-110">
+                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 catalyst-transparent-card rounded-2xl text-white hover:text-white/80 transition-all duration-400 hover:scale-110">
                             <i class="fas fa-chevron-down text-xl animate-bounce group-hover:translate-y-1 transition-transform duration-300"></i>
                         </a>
                     </div>

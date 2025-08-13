@@ -86,23 +86,9 @@ try {
 <div class="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
     <div class="flex flex-col flex-grow pt-5 bg-white dark:bg-gray-800 overflow-y-auto border-r border-gray-200 dark:border-gray-700 theme-transition">
         <!-- Logo and Brand -->
-        <div class="flex items-center flex-shrink-0 px-4 pb-4 border-b border-gray-200 dark:border-gray-700">
-            <div class="flex items-center w-full sidebar-logo-container">
-                <div class="flex-shrink-0">
-                    <img class="h-12 w-auto drop-shadow-sm" src="../images/logo.svg" alt="Sky Border Solutions" 
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <!-- Fallback logo if image fails to load -->
-                    <div class="h-12 w-12 bg-gradient-to-r from-brand-blue to-brand-teal rounded-xl flex items-center justify-center shadow-lg" style="display: none;">
-                        <span class="text-white font-bold text-lg">SBS</span>
-                    </div>
-                </div>
-                <div class="ml-4 flex-1 min-w-0">
-                    <h1 class="text-xl font-bold text-gray-900 dark:text-white theme-transition truncate">
-                        Sky Border
-                    </h1>
-                    <p class="text-sm font-semibold gradient-text">Admin Panel</p>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Content Management System</p>
-                </div>
+        <div class="flex items-center justify-center flex-shrink-0 px-4 pb-6 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-center w-full">
+                <img class="h-16 w-auto drop-shadow-sm" src="../images/logo.svg" alt="Sky Border Solutions">
             </div>
         </div>
         
@@ -110,7 +96,7 @@ try {
         <nav class="mt-8 flex-1 px-2 space-y-1">
             <?php foreach ($navItems as $item): ?>
             <a href="<?php echo $item['url']; ?>" 
-               class="<?php echo $item['active'] ? 'bg-gradient-to-r from-brand-blue to-brand-teal text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'; ?> group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200">
+               class="<?php echo $item['active'] ? 'bg-gradient-to-r from-blue-600 to-gray-600 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white'; ?> group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200">
                 <i class="<?php echo $item['icon']; ?> <?php echo $item['active'] ? 'text-white' : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300'; ?> flex-shrink-0 mr-3 text-base"></i>
                 <?php echo $item['name']; ?>
                 
@@ -127,7 +113,7 @@ try {
         <div class="flex-shrink-0 flex border-t border-gray-200 dark:border-gray-700 p-4">
             <div class="flex items-center w-full">
                 <div class="flex-shrink-0">
-                    <div class="h-8 w-8 rounded-full bg-gradient-to-r from-brand-blue to-brand-teal flex items-center justify-center">
+                    <div class="h-8 w-8 rounded-full bg-gradient-to-r from-blue-600 to-gray-600 flex items-center justify-center">
                         <i class="fas fa-user text-white text-sm"></i>
                     </div>
                 </div>
@@ -160,16 +146,13 @@ try {
             </div>
             
             <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-                <div class="flex-shrink-0 flex items-center px-4">
-                    <img class="h-8 w-auto" src="../images/logo.svg" alt="Sky Border Solutions">
-                    <div class="ml-3">
-                        <h1 class="text-lg font-bold text-gray-900 dark:text-white theme-transition">CMS Admin</h1>
-                    </div>
+                <div class="flex-shrink-0 flex items-center justify-center px-4">
+                    <img class="h-12 w-auto" src="../images/logo.svg" alt="Sky Border Solutions">
                 </div>
                 <nav class="mt-5 px-2 space-y-1">
                     <?php foreach ($navItems as $item): ?>
                     <a href="<?php echo $item['url']; ?>" 
-                       class="<?php echo $item['active'] ? 'bg-gradient-to-r from-brand-blue to-brand-teal text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'; ?> group flex items-center px-2 py-2 text-base font-medium rounded-md">
+                                               class="<?php echo $item['active'] ? 'bg-gradient-to-r from-blue-600 to-gray-600 text-white' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'; ?> group flex items-center px-2 py-2 text-base font-medium rounded-md">
                         <i class="<?php echo $item['icon']; ?> <?php echo $item['active'] ? 'text-white' : 'text-gray-400'; ?> mr-4 flex-shrink-0 text-lg"></i>
                         <?php echo $item['name']; ?>
                         <?php if ($item['name'] === 'Messages' && $unreadCount > 0): ?>
@@ -184,11 +167,11 @@ try {
             
             <div class="flex-shrink-0 flex border-t border-gray-200 dark:border-gray-700 p-4">
                 <div class="flex items-center w-full">
-                    <div class="flex-shrink-0">
-                        <div class="h-8 w-8 rounded-full bg-gradient-to-r from-brand-blue to-brand-teal flex items-center justify-center">
-                            <i class="fas fa-user text-white text-sm"></i>
-                        </div>
+                                    <div class="flex-shrink-0">
+                    <div class="h-8 w-8 rounded-full bg-gradient-to-r from-blue-600 to-gray-600 flex items-center justify-center">
+                        <i class="fas fa-user text-white text-sm"></i>
                     </div>
+                </div>
                     <div class="ml-3 flex-1">
                         <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
                             <?php echo htmlspecialchars($currentUser['full_name'] ?? 'Admin User'); ?>
@@ -207,7 +190,7 @@ try {
         <div class="px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <button type="button" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-blue" id="open-mobile-menu">
+                    <button type="button" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" id="open-mobile-menu">
                         <span class="sr-only">Open sidebar</span>
                         <i class="fas fa-bars text-lg"></i>
                     </button>
