@@ -461,6 +461,61 @@ class Mailer {
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
+
+    /**
+     * Send test email to any email address
+     */
+    public function sendTestEmail($email, $htmlContent, $subject = 'Test Email') {
+        try {
+            // Get SMTP config
+            $smtpConfig = $this->getSMTPConfig();
+            if (!$smtpConfig) {
+                return ['success' => false, 'error' => 'No active SMTP configuration found'];
+            }
+            
+            // Send test email using PHPMailer
+            try {
+                // Check if PHPMailer is available via Composer
+                if (class_exists('PHPMailer\PHPMailer\PHPMailer')) {
+                    $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+                } 
+                // Check if PHPMailer is available in local classes directory
+                elseif (class_exists('PHPMailer')) {
+                    $mail = new PHPMailer(true);
+                } else {
+                    return ['success' => false, 'error' => 'PHPMailer not found. Please install it first.'];
+                }
+                
+                // Server settings
+                $mail->isSMTP();
+                $mail->Host = $smtpConfig['host'];
+                $mail->SMTPAuth = true;
+                $mail->Username = $smtpConfig['username'];
+                $mail->Password = $smtpConfig['password'];
+                $mail->SMTPSecure = $smtpConfig['encryption'];
+                $mail->Port = $smtpConfig['port'];
+                
+                // Recipients
+                $mail->setFrom($smtpConfig['from_email'], $smtpConfig['from_name']);
+                $mail->addAddress($email);
+                
+                // Content
+                $mail->isHTML(true);
+                $mail->Subject = $subject;
+                $mail->Body = $htmlContent;
+                
+                $mail->send();
+                
+                return ['success' => true, 'message' => 'Test email sent successfully to ' . $email];
+                
+            } catch (Exception $e) {
+                return ['success' => false, 'error' => 'Email could not be sent. Mailer Error: ' . $e->getMessage()];
+            }
+            
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
     
     /**
      * Send campaign emails

@@ -1,6 +1,8 @@
 <?php
 require_once 'config/database.php';
 require_once 'classes/Auth.php';
+require_once 'classes/ContentManager.php';
+require_once 'classes/Mailer.php';
 
 // Initialize authentication
 $auth = new Auth();
@@ -9,19 +11,55 @@ if (!$auth->isLoggedIn()) {
     exit;
 }
 
+// Initialize classes
+$contentManager = new ContentManager();
+$mailer = new Mailer();
+
 // Start session to get preview data
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
 $campaignPreview = $_SESSION['campaign_preview'] ?? null;
+$campaignId = $_SESSION['campaign_id'] ?? null;
 
 if (!$campaignPreview) {
     header('Location: campaigns.php?error=No preview data available');
     exit;
 }
 
-// Clear the preview data from session
-unset($_SESSION['campaign_preview']);
+// Handle test email sending
+$message = '';
+$error = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_test'])) {
+    $testEmail = $_POST['test_email'] ?? '';
+    
+    if (empty($testEmail)) {
+        $error = 'Please enter a test email address';
+    } elseif (!filter_var($testEmail, FILTER_VALIDATE_EMAIL)) {
+        $error = 'Please enter a valid email address';
+    } else {
+        try {
+            // Send test email using the campaign preview content
+            $result = $mailer->sendTestEmail($testEmail, $campaignPreview, 'Test Campaign - Sky Border Solutions');
+            
+            if ($result['success']) {
+                $message = 'Test email sent successfully to ' . $testEmail;
+            } else {
+                $error = 'Failed to send test email: ' . $result['error'];
+            }
+        } catch (Exception $e) {
+            $error = 'Error sending test email: ' . $e->getMessage();
+        }
+    }
+}
+
+// Clear the preview data from session after processing
+if (!isset($_POST['send_test'])) {
+    unset($_SESSION['campaign_preview']);
+    unset($_SESSION['campaign_id']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,6 +97,23 @@ unset($_SESSION['campaign_preview']);
             </div>
         </div>
 
+        <!-- Messages -->
+        <?php if ($message): ?>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
+                <span class="block sm:inline"><?php echo htmlspecialchars($message); ?></span>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($error): ?>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+                <span class="block sm:inline"><?php echo htmlspecialchars($error); ?></span>
+            </div>
+        </div>
+        <?php endif; ?>
+
         <!-- Preview Content -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <!-- Preview Controls -->
@@ -75,13 +130,16 @@ unset($_SESSION['campaign_preview']);
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Test Recipient</label>
-                        <input type="email" id="test-email" placeholder="test@example.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                        <input type="email" name="test_email" id="test-email" placeholder="test@example.com" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Actions</label>
-                        <button onclick="sendTestEmail()" class="w-full bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 transition-colors">
-                            <i class="fas fa-paper-plane mr-2"></i>Send Test
-                        </button>
+                        <form method="POST" class="inline">
+                            <input type="hidden" name="send_test" value="1">
+                            <button type="submit" class="w-full bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-800 transition-colors">
+                                <i class="fas fa-paper-plane mr-2"></i>Send Test
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -162,43 +220,12 @@ unset($_SESSION['campaign_preview']);
             }, 2000);
         }
 
-        // Send test email
-        function sendTestEmail() {
-            const email = document.getElementById('test-email').value;
-            if (!email) {
-                alert('Please enter a test email address');
-                return;
-            }
-            
-            if (confirm(`Send test email to ${email}?`)) {
-                // Here you would implement the test email sending
-                // For now, just show a success message
-                alert('Test email sent successfully! (This is a demo - no actual email was sent)');
-            }
-        }
-
-        // Print functionality
-        function printPreview() {
-            const printContent = document.getElementById('email-preview').innerHTML;
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>Campaign Preview</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; margin: 20px; }
-                        .email-preview { max-width: 600px; margin: 0 auto; }
-                    </style>
-                </head>
-                <body>
-                    <div class="email-preview">${printContent}</div>
-                </body>
-                </html>
-            `);
-            printWindow.document.close();
-            printWindow.print();
-        }
+        // Auto-resize preview based on mode
+        document.addEventListener('DOMContentLoaded', function() {
+            const preview = document.getElementById('email-preview');
+            preview.style.maxWidth = '600px';
+            preview.style.margin = '0 auto';
+        });
     </script>
 </body>
 </html>

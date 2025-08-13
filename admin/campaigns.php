@@ -123,6 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         session_start();
                     }
                     $_SESSION['campaign_preview'] = $renderedHtml;
+                    $_SESSION['campaign_id'] = $_POST['campaign_id'] ?? null;
                     header('Location: campaign-preview.php');
                     exit;
                 } catch (Exception $e) {

@@ -116,7 +116,7 @@
                 <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors">
                     Create Campaign
                 </button>
-                <button type="button" onclick="previewCampaign()" class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors">
+                <button type="button" onclick="previewNewCampaign()" class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transition-colors">
                     Preview
                 </button>
             </div>
@@ -198,6 +198,10 @@
                                                 Send
                                             </button>
                                         <?php endif; ?>
+                                        
+                                        <button onclick="previewCampaign(<?php echo $campaign['id']; ?>)" class="text-blue-600 hover:text-blue-900 dark:hover:text-blue-400">
+                                            Preview
+                                        </button>
                                         
                                         <button onclick="testCampaign(<?php echo $campaign['id']; ?>)" class="text-purple-600 hover:text-purple-900 dark:hover:text-purple-400">
                                             Test
@@ -377,19 +381,24 @@ function deleteCampaign(campaignId) {
     }
 }
 
-// Preview campaign
-function previewCampaign() {
-    const url = document.querySelector('input[name="url_to_render"]').value;
-    if (!url) {
-        alert('Please enter a URL to preview.');
-        return;
-    }
-    
+// Preview new campaign (before creation)
+function previewNewCampaign() {
     const form = document.createElement('form');
     form.method = 'POST';
     form.innerHTML = `
         <input type="hidden" name="action" value="preview_campaign">
-        <input type="hidden" name="url_to_render" value="${url}">
+    `;
+    document.body.appendChild(form);
+    form.submit();
+}
+
+// Preview existing campaign
+function previewCampaign(campaignId) {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.innerHTML = `
+        <input type="hidden" name="action" value="preview_campaign">
+        <input type="hidden" name="campaign_id" value="${campaignId}">
     `;
     document.body.appendChild(form);
     form.submit();
