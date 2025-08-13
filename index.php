@@ -967,9 +967,7 @@ if ($_POST && isset($_POST['contact_form'])) {
             <div class="text-center">
                 <!-- Logo -->
                 <div class="scroll-reveal mb-8" style="animation-delay: 0.1s;">
-                    <div class="inline-flex items-center justify-center w-24 h-24 sm:w-32 sm:h-32 bg-white/80 dark:bg-white/10 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-110">
-                        <img src="/images/logo.svg" alt="Sky Border Solutions Logo" class="w-16 h-16 sm:w-20 sm:h-20 filter drop-shadow-lg">
-                    </div>
+                    <img src="/images/logo.svg" alt="Sky Border Solutions Logo" class="w-20 h-20 sm:w-24 sm:h-24 filter drop-shadow-lg mx-auto">
                 </div>
 
                 <!-- Main Heading -->

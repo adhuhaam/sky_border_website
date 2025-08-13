@@ -973,5 +973,288 @@ class ContentManager {
             return false;
         }
     }
+    
+    // SMTP Configuration Methods
+    public function getSMTPConfigs() {
+        try {
+            $query = "SELECT * FROM smtp_configs WHERE is_active = 1 ORDER BY display_order, config_name";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            if (!empty($result)) {
+                return $result;
+            }
+        } catch (Exception $e) {
+            error_log("Get SMTP configs error: " . $e->getMessage());
+        }
+        
+        // Fallback data
+        return [
+            [
+                'id' => 1,
+                'config_name' => 'Primary SMTP',
+                'smtp_host' => 'smtp.gmail.com',
+                'smtp_port' => 587,
+                'smtp_username' => 'noreply@skybordersolutions.com',
+                'smtp_password' => '',
+                'smtp_encryption' => 'tls',
+                'from_email' => 'noreply@skybordersolutions.com',
+                'from_name' => 'Sky Border Solutions',
+                'is_active' => 1,
+                'display_order' => 1
+            ]
+        ];
+    }
+    
+    public function getSMTPConfig($id) {
+        try {
+            $query = "SELECT * FROM smtp_configs WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([':id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get SMTP config error: " . $e->getMessage());
+            return null;
+        }
+    }
+    
+    public function addSMTPConfig($data) {
+        try {
+            $query = "INSERT INTO smtp_configs (
+                config_name, smtp_host, smtp_port, smtp_username, smtp_password, 
+                smtp_encryption, from_email, from_name, is_active, display_order
+            ) VALUES (
+                :config_name, :smtp_host, :smtp_port, :smtp_username, :smtp_password, 
+                :smtp_encryption, :from_email, :from_name, :is_active, :display_order
+            )";
+            
+            $stmt = $this->conn->prepare($query);
+            
+            // Set default values if not provided
+            $data['is_active'] = isset($data['is_active']) ? (bool)$data['is_active'] : true;
+            $data['display_order'] = isset($data['display_order']) ? (int)$data['display_order'] : 0;
+            
+            return $stmt->execute([
+                ':config_name' => $data['config_name'],
+                ':smtp_host' => $data['smtp_host'],
+                ':smtp_port' => $data['smtp_port'],
+                ':smtp_username' => $data['smtp_username'],
+                ':smtp_password' => $data['smtp_password'],
+                ':smtp_encryption' => $data['smtp_encryption'],
+                ':from_email' => $data['from_email'],
+                ':from_name' => $data['from_name'],
+                ':is_active' => $data['is_active'],
+                ':display_order' => $data['display_order']
+            ]);
+        } catch (Exception $e) {
+            error_log("Add SMTP config error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function updateSMTPConfig($id, $data) {
+        try {
+            $query = "UPDATE smtp_configs SET 
+                config_name = :config_name,
+                smtp_host = :smtp_host,
+                smtp_port = :smtp_port,
+                smtp_username = :smtp_username,
+                smtp_password = :smtp_password,
+                smtp_encryption = :smtp_encryption,
+                from_email = :from_email,
+                from_name = :from_name,
+                is_active = :is_active,
+                display_order = :display_order
+                WHERE id = :id";
+            
+            $stmt = $this->conn->prepare($query);
+            
+            // Set default values if not provided
+            $data['is_active'] = isset($data['is_active']) ? (bool)$data['is_active'] : true;
+            $data['display_order'] = isset($data['display_order']) ? (int)$data['display_order'] : 0;
+            
+            return $stmt->execute([
+                ':config_name' => $data['config_name'],
+                ':smtp_host' => $data['smtp_host'],
+                ':smtp_port' => $data['smtp_port'],
+                ':smtp_username' => $data['smtp_username'],
+                ':smtp_password' => $data['smtp_password'],
+                ':smtp_encryption' => $data['smtp_encryption'],
+                ':from_email' => $data['from_email'],
+                ':from_name' => $data['from_name'],
+                ':is_active' => $data['is_active'],
+                ':display_order' => $data['display_order'],
+                ':id' => $id
+            ]);
+        } catch (Exception $e) {
+            error_log("Update SMTP config error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function deleteSMTPConfig($id) {
+        try {
+            $query = "UPDATE smtp_configs SET is_active = 0 WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            return $stmt->execute([':id' => $id]);
+        } catch (Exception $e) {
+            error_log("Delete SMTP config error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    // Contact Methods (Alias for getContactMessages)
+    public function getContacts($status = null, $limit = 50) {
+        // This is an alias method for getContactMessages to maintain compatibility
+        return $this->getContactMessages($status, $limit);
+    }
+    
+    // Campaign Methods
+    public function getCampaigns($status = null, $limit = 50) {
+        try {
+            $query = "SELECT * FROM email_campaigns";
+            
+            if ($status) {
+                $query .= " WHERE status = :status";
+            }
+            
+            $query .= " ORDER BY created_at DESC LIMIT :limit";
+            
+            $stmt = $this->conn->prepare($query);
+            if ($status) {
+                $stmt->bindParam(':status', $status);
+            }
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get campaigns error: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    public function getCampaign($id) {
+        try {
+            $query = "SELECT * FROM email_campaigns WHERE id = :id LIMIT 1";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([':id' => $id]);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get campaign error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function addCampaign($data) {
+        try {
+            $query = "INSERT INTO email_campaigns (
+                campaign_name, subject, content, recipient_list, status, scheduled_at, created_at
+            ) VALUES (
+                :campaign_name, :subject, :content, :recipient_list, :status, :scheduled_at, NOW()
+            )";
+            
+            $stmt = $this->conn->prepare($query);
+            
+            // Set default values if not provided
+            $data['status'] = $data['status'] ?? 'draft';
+            $data['scheduled_at'] = $data['scheduled_at'] ?? null;
+            
+            return $stmt->execute([
+                ':campaign_name' => $data['campaign_name'],
+                ':subject' => $data['subject'],
+                ':content' => $data['content'],
+                ':recipient_list' => $data['recipient_list'],
+                ':status' => $data['status'],
+                ':scheduled_at' => $data['scheduled_at']
+            ]);
+        } catch (Exception $e) {
+            error_log("Add campaign error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function updateCampaign($id, $data) {
+        try {
+            $query = "UPDATE email_campaigns SET 
+                campaign_name = :campaign_name,
+                subject = :subject,
+                content = :content,
+                recipient_list = :recipient_list,
+                status = :status,
+                scheduled_at = :scheduled_at,
+                updated_at = NOW()
+                WHERE id = :id";
+            
+            $stmt = $this->conn->prepare($query);
+            
+            // Set default values if not provided
+            $data['status'] = $data['status'] ?? 'draft';
+            $data['scheduled_at'] = $data['scheduled_at'] ?? null;
+            
+            return $stmt->execute([
+                ':campaign_name' => $data['campaign_name'],
+                ':subject' => $data['subject'],
+                ':content' => $data['content'],
+                ':recipient_list' => $data['recipient_list'],
+                ':status' => $data['status'],
+                ':scheduled_at' => $data['scheduled_at'],
+                ':id' => $id
+            ]);
+        } catch (Exception $e) {
+            error_log("Update campaign error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function deleteCampaign($id) {
+        try {
+            $query = "DELETE FROM email_campaigns WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            return $stmt->execute([':id' => $id]);
+        } catch (Exception $e) {
+            error_log("Delete campaign error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function getCampaignStats() {
+        try {
+            $query = "SELECT 
+                        status,
+                        COUNT(*) as count
+                      FROM email_campaigns 
+                      GROUP BY status";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            $stats = [
+                'total' => 0,
+                'draft' => 0,
+                'scheduled' => 0,
+                'sent' => 0,
+                'failed' => 0
+            ];
+            
+            foreach ($results as $row) {
+                $status = $row['status'] ?? 'draft';
+                $count = (int)$row['count'];
+                $stats[$status] = $count;
+                $stats['total'] += $count;
+            }
+            
+            return $stats;
+        } catch (Exception $e) {
+            error_log("Get campaign stats error: " . $e->getMessage());
+            return [
+                'total' => 0,
+                'draft' => 0,
+                'scheduled' => 0,
+                'sent' => 0,
+                'failed' => 0
+            ];
+        }
+    }
 }
 ?>
