@@ -77,7 +77,7 @@ if (!$databaseAvailable) {
             'category_name' => 'Permits & Visa Processing',
             'category_description' => 'Government approvals for legal expatriate employment',
             'icon_class' => 'fas fa-passport',
-            'color_theme' => 'purple'
+            'color_theme' => 'green'
         ],
         [
             'category_name' => 'Insurance Services',
@@ -953,9 +953,9 @@ if ($_POST && isset($_POST['contact_form'])) {
             <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100/40 via-transparent to-transparent dark:from-blue-900/20"></div>
             
             <!-- Enhanced Floating Elements -->
-            <div class="absolute top-20 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-200/30 to-purple-200/20 rounded-full opacity-40 floating-element blur-xl"></div>
-            <div class="absolute top-40 right-1/4 w-80 h-80 bg-gradient-to-br from-indigo-200/30 to-blue-200/20 rounded-full opacity-35 floating-element blur-xl floating-element-delay-1"></div>
-            <div class="absolute -bottom-20 left-1/2 w-72 h-72 bg-gradient-to-br from-purple-200/20 to-blue-200/20 rounded-full opacity-30 floating-element blur-xl floating-element-delay-2"></div>
+            <div class="absolute top-20 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-200/30 to-green-200/20 rounded-full opacity-40 floating-element blur-xl"></div>
+            <div class="absolute top-40 right-1/4 w-80 h-80 bg-gradient-to-br from-blue-200/30 to-green-200/20 rounded-full opacity-35 floating-element blur-xl floating-element-delay-1"></div>
+            <div class="absolute -bottom-20 left-1/2 w-72 h-72 bg-gradient-to-br from-green-200/20 to-blue-200/20 rounded-full opacity-30 floating-element blur-xl floating-element-delay-2"></div>
             
             <!-- Additional Floating Elements -->
             <div class="absolute top-1/3 left-10 w-32 h-32 bg-gradient-to-br from-cyan-200/25 to-transparent rounded-full opacity-25 floating-element blur-lg floating-element-delay-3"></div>
@@ -1044,7 +1044,7 @@ if ($_POST && isset($_POST['contact_form'])) {
     </section>
 
     <!-- iOS 26 About Section -->
-    <section id="about" class="relative py-32 sm:py-40 bg-gradient-to-br from-slate-50/50 via-blue-50/20 to-purple-50/20 dark:from-slate-900/50 dark:via-blue-900/10 dark:to-purple-900/10 theme-transition overflow-hidden">
+    <section id="about" class="relative py-32 sm:py-40 bg-gradient-to-br from-slate-50/50 via-blue-50/20 to-green-50/20 dark:from-slate-900/50 dark:via-blue-900/10 dark:to-green-900/10 theme-transition overflow-hidden">
         <!-- iOS 26 Background Pattern -->
         <div class="absolute inset-0">
             <div class="absolute inset-0 bg-[linear-gradient(to_right,#8881_1px,transparent_1px),linear-gradient(to_bottom,#8881_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_50%,transparent_100%)]"></div>
@@ -1058,7 +1058,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                     About Our Company
                 </div>
                 <h2 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
-                    About <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Sky Border Solutions</span>
+                    About <span class="bg-gradient-to-r from-blue-800 to-green-700 bg-clip-text text-transparent">Sky Border Solutions</span>
                 </h2>
                 <?php if (!empty($companyInfo['about_us'])): ?>
                     <div class="mt-8 text-lg leading-8 text-gray-600 dark:text-gray-300 max-w-6xl mx-auto">
@@ -1078,7 +1078,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                     <div class="group relative glass-card-strong rounded-3xl p-10 hover:scale-105 scroll-reveal transition-all duration-500" style="animation-delay: 0.2s;">
                         <div class="relative z-10">
                             <div class="flex items-center mb-8">
-                                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 shadow-xl group-hover:shadow-2xl transition-all duration-400 group-hover:scale-110">
+                                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-800 to-blue-900 shadow-xl group-hover:shadow-2xl transition-all duration-400 group-hover:scale-110">
                                     <i class="fas fa-bullseye text-white text-2xl"></i>
                             </div>
                                 <div class="ml-6">
@@ -1096,7 +1096,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                     <div class="group relative glass-card-strong rounded-3xl p-10 hover:scale-105 scroll-reveal transition-all duration-500" style="animation-delay: 0.4s;">
                         <div class="relative z-10">
                             <div class="flex items-center mb-8">
-                                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-500 shadow-xl group-hover:shadow-2xl transition-all duration-400 group-hover:scale-110">
+                                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-green-700 to-green-800 shadow-xl group-hover:shadow-2xl transition-all duration-400 group-hover:scale-110">
                                     <i class="fas fa-eye text-white text-2xl"></i>
                             </div>
                                 <div class="ml-6">
@@ -1145,13 +1145,13 @@ if ($_POST && isset($_POST['contact_form'])) {
                                              alt="<?php echo htmlspecialchars($member['name']); ?>" 
                                              class="mx-auto h-36 w-36 rounded-full object-cover border-4 border-white/50 dark:border-gray-700/50 shadow-2xl group-hover:shadow-3xl transition-all duration-400 group-hover:scale-110">
                                     <?php else: ?>
-                                        <div class="mx-auto h-36 w-36 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center shadow-2xl group-hover:shadow-3xl transition-all duration-400 group-hover:scale-110">
+                                        <div class="mx-auto h-36 w-36 rounded-full bg-gradient-to-r from-blue-800 to-blue-900 flex items-center justify-center shadow-2xl group-hover:shadow-3xl transition-all duration-400 group-hover:scale-110">
                                             <i class="fas fa-user text-white text-5xl"></i>
                                         </div>
                                     <?php endif; ?>
                                     
                                     <!-- Hover effect overlay -->
-                                    <div class="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
+                                    <div class="absolute inset-0 rounded-full bg-gradient-to-r from-blue-800/20 to-green-700/20 opacity-0 group-hover:opacity-100 transition-opacity duration-400"></div>
                                 </div>
                                 
                                 <h4 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition mb-3"><?php echo htmlspecialchars($member['name']); ?></h4>
@@ -1178,7 +1178,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                     
                     <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
                         <div class="text-center scroll-reveal glass-card rounded-2xl p-6 hover:scale-105 transition-all duration-400" style="animation-delay: 0.8s;">
-                            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 shadow-xl hover:shadow-2xl transition-all duration-400 hover:scale-110">
+                            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-800 to-blue-900 shadow-xl hover:shadow-2xl transition-all duration-400 hover:scale-110">
                                 <i class="fas fa-certificate text-white text-2xl"></i>
                             </div>
                             <h4 class="text-xl font-semibold text-gray-900 dark:text-white theme-transition mb-3">Licensed & Compliant</h4>
@@ -1186,7 +1186,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                         </div>
                         
                         <div class="text-center scroll-reveal glass-card rounded-2xl p-6 hover:scale-105 transition-all duration-400" style="animation-delay: 1s;">
-                            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-500 shadow-xl hover:shadow-2xl transition-all duration-400 hover:scale-110">
+                            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-green-700 to-green-800 shadow-xl hover:shadow-2xl transition-all duration-400 hover:scale-110">
                                 <i class="fas fa-users text-white text-2xl"></i>
                             </div>
                             <h4 class="text-xl font-semibold text-gray-900 dark:text-white theme-transition mb-3">Expert Team</h4>
@@ -1202,7 +1202,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                         </div>
                         
                         <div class="text-center scroll-reveal glass-card rounded-2xl p-6 hover:scale-105 transition-all duration-400" style="animation-delay: 1.4s;">
-                            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 shadow-xl hover:shadow-2xl transition-all duration-400 hover:scale-110">
+                            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-800 to-blue-900 shadow-xl hover:shadow-2xl transition-all duration-400 hover:scale-110">
                                 <i class="fas fa-handshake text-white text-2xl"></i>
                             </div>
                             <h4 class="text-xl font-semibold text-gray-900 dark:text-white theme-transition mb-3">Trusted Partners</h4>
@@ -1339,12 +1339,12 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <!-- Insurance Services -->
                 <div class="modern-card group relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 p-8 hover-lift scroll-reveal theme-transition" style="animation-delay: 0.4s;">
                     <div class="flex items-center mb-6">
-                        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-purple-500 to-brand-blue group-hover:scale-110 transition-transform duration-300">
+                        <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-green-700 to-blue-800 group-hover:scale-110 transition-transform duration-300">
                             <i class="fas fa-shield-alt text-white text-2xl"></i>
                         </div>
                         <div class="ml-4">
                             <h3 class="text-2xl font-bold text-gray-900 dark:text-white theme-transition">Insurance Services</h3>
-                            <p class="text-purple-600 dark:text-purple-400 font-medium">Comprehensive coverage solutions</p>
+                            <p class="text-green-700 dark:text-green-600 font-medium">Comprehensive coverage solutions</p>
                         </div>
                     </div>
                     
@@ -1354,29 +1354,29 @@ if ($_POST && isset($_POST['contact_form'])) {
                     
                     <div class="space-y-4">
                         <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-check-circle text-purple-500 mr-3"></i>
+                            <i class="fas fa-check-circle text-green-600 mr-3"></i>
                             Work Visa Medical Insurance (Mandatory)
                         </div>
                         <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-check-circle text-purple-500 mr-3"></i>
+                            <i class="fas fa-check-circle text-green-600 mr-3"></i>
                             Emergency care and hospitalization
                         </div>
                         <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-check-circle text-purple-500 mr-3"></i>
+                            <i class="fas fa-check-circle text-green-600 mr-3"></i>
                             Work-related injury and accident protection
                         </div>
                         <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-check-circle text-purple-500 mr-3"></i>
+                            <i class="fas fa-check-circle text-green-600 mr-3"></i>
                             Disability and death benefits
                         </div>
                         <div class="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fas fa-check-circle text-purple-500 mr-3"></i>
+                            <i class="fas fa-check-circle text-green-600 mr-3"></i>
                             Repatriation support in medical emergencies
                         </div>
                     </div>
 
                     <!-- Insurance Providers within Insurance Services -->
-                    <div class="mt-8 pt-8 border-t border-purple-200 dark:border-purple-700">
+                    <div class="mt-8 pt-8 border-t border-green-200 dark:border-green-700">
                         <h4 class="text-lg font-semibold text-gray-900 dark:text-white mb-6 theme-transition">
                             Our Insurance Partners
                         </h4>
@@ -1491,7 +1491,7 @@ if ($_POST && isset($_POST['contact_form'])) {
 
                             <!-- Emergency Care -->
                             <div class="flex items-start space-x-3">
-                                <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-red-500 to-pink-500 flex-shrink-0">
+                                <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-green-600 to-green-700 flex-shrink-0">
                                     <i class="fas fa-ambulance text-white text-xs"></i>
                                 </div>
                                 <div>
@@ -1513,7 +1513,7 @@ if ($_POST && isset($_POST['contact_form'])) {
 
                             <!-- Disability Benefits -->
                             <div class="flex items-start space-x-3">
-                                <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-purple-500 to-indigo-500 flex-shrink-0">
+                                <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-blue-700 to-blue-800 flex-shrink-0">
                                     <i class="fas fa-wheelchair text-white text-xs"></i>
                                 </div>
                                 <div>
@@ -1546,12 +1546,12 @@ if ($_POST && isset($_POST['contact_form'])) {
                         </div>
 
                         <!-- Insurance Support Note -->
-                        <div class="mt-6 p-4 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-xl border border-purple-200 dark:border-purple-700">
+                        <div class="mt-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-xl border border-green-200 dark:border-green-700">
                             <div class="flex items-start space-x-3">
-                                <i class="fas fa-info-circle text-purple-600 dark:text-purple-400 mt-0.5 text-sm"></i>
+                                <i class="fas fa-info-circle text-green-600 dark:text-green-400 mt-0.5 text-sm"></i>
                                 <div>
-                                    <h5 class="text-sm font-medium text-purple-900 dark:text-purple-300 mb-1">Full Insurance Lifecycle Management</h5>
-                                    <p class="text-xs text-purple-800 dark:text-purple-400">
+                                    <h5 class="text-sm font-medium text-green-900 dark:text-green-300 mb-1">Full Insurance Lifecycle Management</h5>
+                                    <p class="text-xs text-green-800 dark:text-green-400">
                                         Our team handles the full insurance lifecycle - from policy selection and documentation to renewals and claims coordination - ensuring uninterrupted coverage and full compliance.
                                     </p>
                                 </div>
@@ -1560,7 +1560,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                     </div>
                     
                     <!-- Hover Effect -->
-                    <div class="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-brand-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-green-500/5 to-blue-800/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
                 </div>
             </div>
 
@@ -1645,16 +1645,16 @@ if ($_POST && isset($_POST['contact_form'])) {
                     <!-- Additional Industries -->
                     <div class="modern-card bg-white dark:bg-gray-900 rounded-2xl p-6 hover-lift scroll-reveal theme-transition" style="animation-delay: 1.0s;">
                         <div class="flex items-center mb-4">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-violet-500 to-purple-500">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-blue-800 to-blue-900">
                                 <i class="fas fa-briefcase text-white"></i>
                             </div>
                             <h4 class="ml-3 text-lg font-semibold text-gray-900 dark:text-white theme-transition">Administration & Office</h4>
                         </div>
                         <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                             <div class="flex flex-wrap gap-2">
-                                <span class="inline-flex items-center rounded-full bg-violet-100 dark:bg-violet-900/20 px-2.5 py-0.5 text-xs font-medium text-violet-800 dark:text-violet-400">HR Assistants</span>
-                                <span class="inline-flex items-center rounded-full bg-violet-100 dark:bg-violet-900/20 px-2.5 py-0.5 text-xs font-medium text-violet-800 dark:text-violet-400">Secretaries</span>
-                                <span class="inline-flex items-center rounded-full bg-violet-100 dark:bg-violet-900/20 px-2.5 py-0.5 text-xs font-medium text-violet-800 dark:text-violet-400">Admin Officers</span>
+                                <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/20 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-400">HR Assistants</span>
+                                <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/20 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-400">Secretaries</span>
+                                <span class="inline-flex items-center rounded-full bg-blue-100 dark:bg-blue-900/20 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:text-blue-400">Admin Officers</span>
                                 <span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-400">+6 more</span>
                             </div>
                         </div>
@@ -1662,15 +1662,15 @@ if ($_POST && isset($_POST['contact_form'])) {
 
                     <div class="modern-card bg-white dark:bg-gray-900 rounded-2xl p-6 hover-lift scroll-reveal theme-transition" style="animation-delay: 1.1s;">
                         <div class="flex items-center mb-4">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-rose-500 to-pink-500">
+                            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-green-700 to-green-800">
                                 <i class="fas fa-truck text-white"></i>
                             </div>
                             <h4 class="ml-3 text-lg font-semibold text-gray-900 dark:text-white theme-transition">Transport & Logistics</h4>
                         </div>
                         <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                             <div class="flex flex-wrap gap-2">
-                                <span class="inline-flex items-center rounded-full bg-rose-100 dark:bg-rose-900/20 px-2.5 py-0.5 text-xs font-medium text-rose-800 dark:text-rose-400">Heavy Vehicle Drivers</span>
-                                <span class="inline-flex items-center rounded-full bg-rose-100 dark:bg-rose-900/20 px-2.5 py-0.5 text-xs font-medium text-rose-800 dark:text-rose-400">Warehouse Assistants</span>
+                                <span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/20 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-400">Heavy Vehicle Drivers</span>
+                                <span class="inline-flex items-center rounded-full bg-green-100 dark:bg-green-900/20 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-400">Warehouse Assistants</span>
                                 <span class="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-2.5 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-400">+6 more</span>
                             </div>
                         </div>

@@ -977,7 +977,7 @@ class ContentManager {
     // SMTP Configuration Methods
     public function getSMTPConfigs() {
         try {
-            $query = "SELECT * FROM smtp_configs WHERE is_active = 1 ORDER BY display_order, config_name";
+            $query = "SELECT * FROM smtp_config WHERE is_active = 1 ORDER BY name";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -993,16 +993,15 @@ class ContentManager {
         return [
             [
                 'id' => 1,
-                'config_name' => 'Primary SMTP',
-                'smtp_host' => 'smtp.gmail.com',
-                'smtp_port' => 587,
-                'smtp_username' => 'noreply@skybordersolutions.com',
-                'smtp_password' => '',
-                'smtp_encryption' => 'tls',
+                'name' => 'Primary SMTP',
+                'host' => 'smtp.gmail.com',
+                'port' => 587,
+                'username' => 'noreply@skybordersolutions.com',
+                'password' => '',
+                'encryption' => 'tls',
                 'from_email' => 'noreply@skybordersolutions.com',
                 'from_name' => 'Sky Border Solutions',
-                'is_active' => 1,
-                'display_order' => 1
+                'is_active' => 1
             ]
         ];
     }
@@ -1105,9 +1104,174 @@ class ContentManager {
     }
     
     // Contact Methods (Alias for getContactMessages)
-    public function getContacts($status = null, $limit = 50) {
+    public function getContacts($search = '', $status = null, $limit = 50, $offset = 0) {
         // This is an alias method for getContactMessages to maintain compatibility
         return $this->getContactMessages($status, $limit);
+    }
+    
+    public function getAllContacts($status = null, $limit = 1000) {
+        // This is an alias method for getContactMessages to maintain compatibility
+        return $this->getContactMessages($status, $limit);
+    }
+    
+    public function getTotalContacts($search = '', $status = null) {
+        try {
+            $query = "SELECT COUNT(*) as total FROM contact_messages";
+            $params = [];
+            
+            if ($status) {
+                $query .= " WHERE status = :status";
+                $params[':status'] = $status;
+            }
+            
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute($params);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            return (int)($result['total'] ?? 0);
+        } catch (Exception $e) {
+            error_log("Get total contacts error: " . $e->getMessage());
+            return 0;
+        }
+    }
+    
+    public function getContactLists() {
+        try {
+            $query = "SELECT * FROM contact_lists WHERE is_active = 1 ORDER BY list_name";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get contact lists error: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    public function addContact($data) {
+        try {
+            $query = "INSERT INTO contact_messages (name, email, company, phone, subject, message, status) 
+                      VALUES (:name, :email, :company, :phone, '', '', :status)";
+            $stmt = $this->conn->prepare($query);
+            return $stmt->execute([
+                ':name' => $data['name'],
+                ':email' => $data['email'],
+                ':company' => $data['company'] ?? '',
+                ':phone' => $data['phone'] ?? '',
+                ':status' => $data['status'] ?? 'new'
+            ]);
+        } catch (Exception $e) {
+            error_log("Add contact error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function updateContact($data) {
+        try {
+            $query = "UPDATE contact_messages SET 
+                      name = :name,
+                      email = :email,
+                      company = :company,
+                      phone = :phone,
+                      status = :status
+                      WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            return $stmt->execute([
+                ':name' => $data['name'],
+                ':email' => $data['email'],
+                ':company' => $data['company'] ?? '',
+                ':phone' => $data['phone'] ?? '',
+                ':status' => $data['status'],
+                ':id' => $data['id']
+            ]);
+        } catch (Exception $e) {
+            error_log("Update contact error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function deleteContact($id) {
+        try {
+            $query = "DELETE FROM contact_messages WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            return $stmt->execute([':id' => $id]);
+        } catch (Exception $e) {
+            error_log("Delete contact error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function importContactsFromCSV($filePath) {
+        try {
+            $imported = 0;
+            $errors = [];
+            
+            if (($handle = fopen($filePath, "r")) !== FALSE) {
+                $row = 1;
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    if ($row == 1) {
+                        $row++;
+                        continue; // Skip header row
+                    }
+                    
+                    if (count($data) >= 2) {
+                        $contactData = [
+                            'name' => $data[0] ?? '',
+                            'email' => $data[1] ?? '',
+                            'company' => $data[2] ?? '',
+                            'phone' => $data[3] ?? '',
+                            'status' => 'new'
+                        ];
+                        
+                        if ($this->addContact($contactData)) {
+                            $imported++;
+                        } else {
+                            $errors[] = "Row $row: Failed to import";
+                        }
+                    }
+                    $row++;
+                }
+                fclose($handle);
+            }
+            
+            return [
+                'success' => true,
+                'imported' => $imported,
+                'errors' => $errors
+            ];
+        } catch (Exception $e) {
+            error_log("Import contacts from CSV error: " . $e->getMessage());
+            return [
+                'success' => false,
+                'error' => $e->getMessage()
+            ];
+        }
+    }
+    
+    public function bulkActionContacts($contactIds, $action) {
+        try {
+            switch ($action) {
+                case 'delete':
+                    $query = "DELETE FROM contact_messages WHERE id IN (" . str_repeat('?,', count($contactIds) - 1) . "?)";
+                    $stmt = $this->conn->prepare($query);
+                    return $stmt->execute($contactIds);
+                    
+                case 'activate':
+                    $query = "UPDATE contact_messages SET status = 'active' WHERE id IN (" . str_repeat('?,', count($contactIds) - 1) . "?)";
+                    $stmt = $this->conn->prepare($query);
+                    return $stmt->execute($contactIds);
+                    
+                case 'deactivate':
+                    $query = "UPDATE contact_messages SET status = 'inactive' WHERE id IN (" . str_repeat('?,', count($contactIds) - 1) . "?)";
+                    $stmt = $this->conn->prepare($query);
+                    return $stmt->execute($contactIds);
+                    
+                default:
+                    return false;
+            }
+        } catch (Exception $e) {
+            error_log("Bulk action contacts error: " . $e->getMessage());
+            return false;
+        }
     }
     
     // Campaign Methods
@@ -1215,6 +1379,18 @@ class ContentManager {
         } catch (Exception $e) {
             error_log("Delete campaign error: " . $e->getMessage());
             return false;
+        }
+    }
+    
+    public function getAllCampaigns() {
+        try {
+            $query = "SELECT * FROM email_campaigns ORDER BY created_at DESC";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            error_log("Get all campaigns error: " . $e->getMessage());
+            return [];
         }
     }
     
