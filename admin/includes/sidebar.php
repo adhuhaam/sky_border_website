@@ -59,6 +59,12 @@ $navItems = [
         'active' => $currentPage === 'insurance.php'
     ],
     [
+        'name' => 'SEO Settings',
+        'url' => 'seo-settings.php',
+        'icon' => 'fas fa-search',
+        'active' => $currentPage === 'seo-settings.php'
+    ],
+    [
         'name' => 'Messages',
         'url' => 'messages.php',
         'icon' => 'fas fa-envelope',

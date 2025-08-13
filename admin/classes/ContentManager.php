@@ -794,5 +794,122 @@ class ContentManager {
             return false;
         }
     }
+    
+    // SEO Methods
+    public function getSEOSettings($pageName = 'global') {
+        try {
+            $query = "SELECT * FROM seo_settings WHERE page_name = :page_name LIMIT 1";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([':page_name' => $pageName]);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($result) {
+                return $result;
+            }
+        } catch (Exception $e) {
+            error_log("Get SEO settings error: " . $e->getMessage());
+        }
+        
+        // Fallback data
+        return [
+            'meta_title' => 'Sky Border Solutions | Professional HR Consulting & Recruitment Agency',
+            'meta_description' => 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.',
+            'meta_keywords' => 'HR consulting, recruitment agency, Maldives, workforce solutions, HR services, professional recruitment, talent acquisition, HR consultancy',
+            'og_title' => 'Sky Border Solutions | Professional HR Consulting & Recruitment Agency',
+            'og_description' => 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.',
+            'og_image' => '/images/logo.svg',
+            'twitter_title' => 'Sky Border Solutions | Professional HR Consulting & Recruitment Agency',
+            'twitter_description' => 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.',
+            'twitter_image' => '/images/logo.svg',
+            'canonical_url' => 'https://skybordersolutions.com',
+            'robots_txt' => 'User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /uploads/\nSitemap: https://skybordersolutions.com/sitemap.xml',
+            'google_analytics_id' => 'G-XXXXXXXXXX',
+            'google_tag_manager_id' => 'GTM-XXXXXXX',
+            'facebook_pixel_id' => 'XXXXXXXXXX',
+            'schema_markup' => '{"@context":"https://schema.org","@type":"Organization","name":"Sky Border Solutions","url":"https://skybordersolutions.com","logo":"https://skybordersolutions.com/images/logo.svg","description":"Leading HR consultancy and recruitment firm in the Republic of Maldives","address":{"@type":"PostalAddress","addressCountry":"MV"},"contactPoint":{"@type":"ContactPoint","telephone":"+960-XXX-XXXX","contactType":"customer service"}}',
+            'custom_meta_tags' => '<meta name="author" content="Sky Border Solutions">\n<meta name="theme-color" content="#667eea">\n<meta name="msapplication-TileColor" content="#667eea">'
+        ];
+    }
+    
+    public function getAllSEOSettings() {
+        try {
+            $query = "SELECT * FROM seo_settings ORDER BY page_name";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            if (!empty($result)) {
+                return $result;
+            }
+        } catch (Exception $e) {
+            error_log("Get all SEO settings error: " . $e->getMessage());
+        }
+        
+        return [];
+    }
+    
+    public function updateSEOSettings($pageName, $data) {
+        try {
+            // Build dynamic query based on provided data
+            $updateFields = [];
+            $params = [':page_name' => $pageName];
+            
+            $allowedFields = [
+                'meta_title', 'meta_description', 'meta_keywords', 'og_title', 'og_description',
+                'og_image', 'twitter_title', 'twitter_description', 'twitter_image', 'canonical_url',
+                'robots_txt', 'google_analytics_id', 'google_tag_manager_id', 'facebook_pixel_id',
+                'schema_markup', 'custom_meta_tags'
+            ];
+            
+            foreach ($allowedFields as $field) {
+                if (array_key_exists($field, $data)) {
+                    $updateFields[] = "$field = :$field";
+                    $params[":$field"] = $data[$field];
+                }
+            }
+            
+            if (empty($updateFields)) {
+                return false; // No data to update
+            }
+            
+            $query = "UPDATE seo_settings SET " . implode(', ', $updateFields) . " WHERE page_name = :page_name";
+            
+            $stmt = $this->conn->prepare($query);
+            return $stmt->execute($params);
+        } catch (Exception $e) {
+            error_log("Update SEO settings error: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function createSEOSettings($pageName, $data) {
+        try {
+            $query = "INSERT INTO seo_settings (page_name, meta_title, meta_description, meta_keywords, og_title, og_description, og_image, twitter_title, twitter_description, twitter_image, canonical_url, robots_txt, google_analytics_id, google_tag_manager_id, facebook_pixel_id, schema_markup, custom_meta_tags) VALUES (:page_name, :meta_title, :meta_description, :meta_keywords, :og_title, :og_description, :og_image, :twitter_title, :twitter_description, :twitter_image, :canonical_url, :robots_txt, :google_analytics_id, :google_tag_manager_id, :facebook_pixel_id, :schema_markup, :custom_meta_tags)";
+            
+            $stmt = $this->conn->prepare($query);
+            return $stmt->execute([
+                ':page_name' => $pageName,
+                ':meta_title' => $data['meta_title'] ?? '',
+                ':meta_description' => $data['meta_description'] ?? '',
+                ':meta_keywords' => $data['meta_keywords'] ?? '',
+                ':og_title' => $data['og_title'] ?? '',
+                ':og_description' => $data['og_description'] ?? '',
+                ':og_image' => $data['og_image'] ?? '',
+                ':twitter_title' => $data['twitter_title'] ?? '',
+                ':twitter_description' => $data['twitter_description'] ?? '',
+                ':twitter_image' => $data['twitter_image'] ?? '',
+                ':canonical_url' => $data['canonical_url'] ?? '',
+                ':robots_txt' => $data['robots_txt'] ?? '',
+                ':google_analytics_id' => $data['google_analytics_id'] ?? '',
+                ':google_tag_manager_id' => $data['google_tag_manager_id'] ?? '',
+                ':facebook_pixel_id' => $data['facebook_pixel_id'] ?? '',
+                ':schema_markup' => $data['schema_markup'] ?? '',
+                ':custom_meta_tags' => $data['custom_meta_tags'] ?? ''
+            ]);
+        } catch (Exception $e) {
+            error_log("Create SEO settings error: " . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>

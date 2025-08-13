@@ -161,8 +161,51 @@ if ($_POST && isset($_POST['contact_form'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?> | Professional HR Consulting & Recruitment Agency</title>
-    <meta name="description" content="<?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in Maldives. Government-licensed professional workforce solutions.'); ?>">
+    <?php
+    // Get SEO settings for current page
+    $currentPage = 'home'; // Default to home page
+    $seoSettings = [];
+    
+    if ($databaseAvailable && $contentManager) {
+        try {
+            $seoSettings = $contentManager->getSEOSettings($currentPage);
+        } catch (Exception $e) {
+            // Fallback to global settings
+            $seoSettings = $contentManager->getSEOSettings('global');
+        }
+    } else {
+        // Fallback to global settings
+        $seoSettings = [
+            'meta_title' => 'Sky Border Solutions | Professional HR Consulting & Recruitment Agency',
+            'meta_description' => 'Leading HR consultancy and recruitment firm in Maldives. Government-licensed professional workforce solutions.',
+            'meta_keywords' => 'HR consulting, recruitment agency, Maldives, workforce solutions, HR services, professional recruitment, talent acquisition, HR consultancy',
+            'google_analytics_id' => '',
+            'google_tag_manager_id' => '',
+            'facebook_pixel_id' => ''
+        ];
+    }
+    ?>
+    
+    <title><?php echo htmlspecialchars($seoSettings['meta_title'] ?? $companyInfo['company_name'] ?? 'Sky Border Solutions'); ?></title>
+    <meta name="description" content="<?php echo htmlspecialchars($seoSettings['meta_description'] ?? $companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in Maldives. Government-licensed professional workforce solutions.'); ?>">
+    <meta name="keywords" content="<?php echo htmlspecialchars($seoSettings['meta_keywords'] ?? 'HR consulting, recruitment agency, Maldives, workforce solutions, HR services, professional recruitment, talent acquisition, HR consultancy'); ?>">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="<?php echo htmlspecialchars($seoSettings['og_title'] ?? $seoSettings['meta_title'] ?? 'Sky Border Solutions | Professional HR Consulting & Recruitment Agency'); ?>">
+    <meta property="og:description" content="<?php echo htmlspecialchars($seoSettings['og_description'] ?? $seoSettings['meta_description'] ?? 'Leading HR consultancy and recruitment firm in Maldives. Government-licensed professional workforce solutions.'); ?>">
+    <meta property="og:image" content="<?php echo htmlspecialchars($seoSettings['og_image'] ?? '/images/logo.svg'); ?>">
+    <meta property="og:url" content="<?php echo htmlspecialchars($seoSettings['canonical_url'] ?? 'https://skybordersolutions.com'); ?>">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Sky Border Solutions">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($seoSettings['twitter_title'] ?? $seoSettings['meta_title'] ?? 'Sky Border Solutions | Professional HR Consulting & Recruitment Agency'); ?>">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($seoSettings['twitter_description'] ?? $seoSettings['meta_description'] ?? 'Leading HR consultancy and recruitment firm in Maldives. Government-licensed professional workforce solutions.'); ?>">
+    <meta name="twitter:image" content="<?php echo htmlspecialchars($seoSettings['twitter_image'] ?? '/images/logo.svg'); ?>">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="<?php echo htmlspecialchars($seoSettings['canonical_url'] ?? 'https://skybordersolutions.com'); ?>">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -635,9 +678,66 @@ if ($_POST && isset($_POST['contact_form'])) {
             }
         }
     </script>
+    
+    <!-- Google Analytics -->
+    <?php if (!empty($seoSettings['google_analytics_id'])): ?>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo htmlspecialchars($seoSettings['google_analytics_id']); ?>"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '<?php echo htmlspecialchars($seoSettings['google_analytics_id']); ?>');
+    </script>
+    <?php endif; ?>
+    
+    <!-- Google Tag Manager -->
+    <?php if (!empty($seoSettings['google_tag_manager_id'])): ?>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','<?php echo htmlspecialchars($seoSettings['google_tag_manager_id']); ?>');</script>
+    <?php endif; ?>
+    
+    <!-- Facebook Pixel -->
+    <?php if (!empty($seoSettings['facebook_pixel_id'])): ?>
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '<?php echo htmlspecialchars($seoSettings['facebook_pixel_id']); ?>');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=<?php echo htmlspecialchars($seoSettings['facebook_pixel_id']); ?>&ev=PageView&noscript=1"
+    /></noscript>
+    <?php endif; ?>
+    
+    <!-- Schema Markup -->
+    <?php if (!empty($seoSettings['schema_markup'])): ?>
+    <script type="application/ld+json">
+        <?php echo $seoSettings['schema_markup']; ?>
+    </script>
+    <?php endif; ?>
+    
+    <!-- Custom Meta Tags -->
+    <?php if (!empty($seoSettings['custom_meta_tags'])): ?>
+        <?php echo $seoSettings['custom_meta_tags']; ?>
+    <?php endif; ?>
 </head>
 
 <body class="h-full bg-transparent theme-transition">
+    <!-- Google Tag Manager (noscript) -->
+    <?php if (!empty($seoSettings['google_tag_manager_id'])): ?>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo htmlspecialchars($seoSettings['google_tag_manager_id']); ?>"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <?php endif; ?>
+    
     <!-- Transparent Dark Mode Toggle -->
     <div class="fixed top-6 right-6 z-50">
         <button id="theme-toggle" class="group relative p-4 rounded-2xl transparent-card-strong shadow-2xl text-white hover:scale-110 active:scale-95 theme-transition focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2" aria-label="Toggle dark mode" title="Toggle dark/light mode">
@@ -696,12 +796,12 @@ if ($_POST && isset($_POST['contact_form'])) {
                     <div class="mx-auto mt-10 max-w-3xl">
                         <div class="transparent-card-strong rounded-2xl p-8 border-0">
                             <p class="text-xl leading-8 text-white font-medium">
-                                <span class="relative">
+                        <span class="relative">
                                     <span class="absolute -left-8 top-0 text-white/60 text-3xl">"</span>
-                            <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
+                    <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
                                     <span class="absolute -right-8 bottom-0 text-white/60 text-3xl">"</span>
-                                </span>
-                            </p>
+                        </span>
+                </p>
                         </div>
                     </div>
                 </div>
@@ -792,11 +892,11 @@ if ($_POST && isset($_POST['contact_form'])) {
                             <div class="flex items-center mb-8">
                                 <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-purple-500 shadow-xl group-hover:shadow-2xl transition-all duration-400 group-hover:scale-110">
                                     <i class="fas fa-bullseye text-white text-2xl"></i>
-                                </div>
+                            </div>
                                 <div class="ml-6">
                                     <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Our Mission</h3>
                                     <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">What drives us forward</p>
-                                </div>
+                        </div>
                             </div>
                             <p class="text-gray-700 dark:text-gray-200 leading-relaxed text-lg">
                             <?php echo htmlspecialchars($companyInfo['mission']); ?>
@@ -810,11 +910,11 @@ if ($_POST && isset($_POST['contact_form'])) {
                             <div class="flex items-center mb-8">
                                 <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-500 shadow-xl group-hover:shadow-2xl transition-all duration-400 group-hover:scale-110">
                                     <i class="fas fa-eye text-white text-2xl"></i>
-                                </div>
+                            </div>
                                 <div class="ml-6">
                                     <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Our Vision</h3>
                                     <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Where we're heading</p>
-                                </div>
+                        </div>
                             </div>
                             <p class="text-gray-700 dark:text-gray-200 leading-relaxed text-lg">
                             <?php echo htmlspecialchars($companyInfo['vision']); ?>

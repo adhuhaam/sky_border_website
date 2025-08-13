@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and upload directories
+Disallow: /admin/
+Disallow: /uploads/
+
+# Allow important files
+Allow: /images/
+Allow: /css/
+Allow: /js/
+
+# Sitemap
+Sitemap: https://skybordersolutions.com/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1
