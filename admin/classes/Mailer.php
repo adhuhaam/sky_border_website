@@ -70,6 +70,23 @@ class Mailer {
             return $this->getFallbackTemplate();
         }
         
+        // Get real data from database
+        try {
+            $contentManager = new \ContentManager();
+            $clients = $contentManager->getClients();
+            $services = $contentManager->getServiceCategories();
+            $industries = $contentManager->getPortfolioCategories();
+            $companyInfo = $contentManager->getCompanyInfo();
+            $stats = $contentManager->getStatistics();
+        } catch (Exception $e) {
+            // Fallback data if database fails
+            $clients = [];
+            $services = [];
+            $industries = [];
+            $companyInfo = [];
+            $stats = [];
+        }
+        
         // Replace placeholders with actual values
         $domain = $_SERVER['HTTP_HOST'] ?? 'localhost';
         $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
@@ -79,7 +96,254 @@ class Mailer {
         $template = str_replace('{{contact_email}}', '{{contact_email}}', $template); // Keep placeholder for personalization
         $template = str_replace('{{unsubscribe_link}}', '{{unsubscribe_link}}', $template); // Keep placeholder for personalization
         
+        // Replace dynamic content placeholders
+        $template = str_replace('{{clients_data}}', $this->generateClientsHTML($clients), $template);
+        $template = str_replace('{{services_data}}', $this->generateServicesHTML($services), $template);
+        $template = str_replace('{{industries_data}}', $this->generateIndustriesHTML($industries), $template);
+        $template = str_replace('{{company_info}}', $this->generateCompanyInfoHTML($companyInfo), $template);
+        $template = str_replace('{{stats_data}}', $this->generateStatsHTML($stats), $template);
+        
         return $template;
+    }
+    
+    /**
+     * Generate clients HTML from database data
+     */
+    private function generateClientsHTML($clients) {
+        if (empty($clients)) {
+            return $this->getFallbackClientsHTML();
+        }
+        
+        $html = '';
+        foreach (array_slice($clients, 0, 4) as $client) {
+            $initials = strtoupper(substr($client['client_name'], 0, 2));
+            $html .= '
+            <div class="client-card hover:shadow-lg hover:border-blue-300 transition-all duration-300">
+                <div class="client-logo">' . $initials . '</div>
+                <div class="client-name">' . htmlspecialchars($client['client_name']) . '</div>
+                <div class="client-category">' . htmlspecialchars($client['category_name'] ?? 'General') . '</div>
+            </div>';
+        }
+        
+        return $html;
+    }
+    
+    /**
+     * Generate services HTML from database data
+     */
+    private function generateServicesHTML($services) {
+        if (empty($services)) {
+            return $this->getFallbackServicesHTML();
+        }
+        
+        $html = '';
+        foreach (array_slice($services, 0, 4) as $service) {
+            $icon = $this->getServiceIcon($service['icon_class']);
+            $html .= '
+            <div class="service-card hover:shadow-lg transition-shadow duration-300">
+                <div class="service-icon">' . $icon . '</div>
+                <h3 class="service-title">' . htmlspecialchars($service['category_name']) . '</h3>
+                <p class="service-description">' . htmlspecialchars($service['category_description']) . '</p>
+            </div>';
+        }
+        
+        return $html;
+    }
+    
+    /**
+     * Generate industries HTML from database data
+     */
+    private function generateIndustriesHTML($industries) {
+        if (empty($industries)) {
+            return $this->getFallbackIndustriesHTML();
+        }
+        
+        $html = '';
+        foreach (array_slice($industries, 0, 4) as $industry) {
+            $icon = $this->getIndustryIcon($industry['icon_class']);
+            $html .= '
+            <div class="industry-card hover:shadow-md hover:scale-105 transition-all duration-300">
+                <div class="industry-icon">' . $icon . '</div>
+                <div class="industry-name">' . htmlspecialchars($industry['category_name']) . '</div>
+                <div class="industry-description">' . htmlspecialchars($industry['description']) . '</div>
+            </div>';
+        }
+        
+        return $html;
+    }
+    
+    /**
+     * Generate company info HTML from database data
+     */
+    private function generateCompanyInfoHTML($companyInfo) {
+        if (empty($companyInfo)) {
+            return $this->getFallbackCompanyInfoHTML();
+        }
+        
+        return '
+        <div class="about-content">
+            <h2 class="about-title">About Us</h2>
+            <p class="about-description">' . htmlspecialchars($companyInfo['about_us'] ?? 'Sky Border Solution Pvt Ltd is a government-licensed HR consultancy and recruitment firm headquartered in the Republic of Maldives.') . '</p>
+        </div>';
+    }
+    
+    /**
+     * Generate stats HTML from database data
+     */
+    private function generateStatsHTML($stats) {
+        if (empty($stats)) {
+            return $this->getFallbackStatsHTML();
+        }
+        
+        $html = '';
+        foreach (array_slice($stats, 0, 3) as $stat) {
+            $html .= '
+            <div class="stat-item hover:shadow-lg hover:scale-105 transition-all duration-300">
+                <div class="stat-value">' . htmlspecialchars($stat['stat_value']) . '</div>
+                <div class="stat-label">' . htmlspecialchars($stat['stat_label']) . '</div>
+            </div>';
+        }
+        
+        return $html;
+    }
+    
+    /**
+     * Get service icon from icon class
+     */
+    private function getServiceIcon($iconClass) {
+        $iconMap = [
+            'fas fa-user-tie' => '👔',
+            'fas fa-users-cog' => '⚙️',
+            'fas fa-passport' => '🛂',
+            'fas fa-shield-alt' => '🛡️'
+        ];
+        
+        return $iconMap[$iconClass] ?? '💼';
+    }
+    
+    /**
+     * Get industry icon from icon class
+     */
+    private function getIndustryIcon($iconClass) {
+        $iconMap = [
+            'fas fa-hard-hat' => '🏗️',
+            'fas fa-concierge-bell' => '🏨',
+            'fas fa-user-md' => '🏥',
+            'fas fa-laptop-code' => '💻'
+        ];
+        
+        return $iconMap[$iconClass] ?? '🏢';
+    }
+    
+    /**
+     * Get fallback clients HTML
+     */
+    private function getFallbackClientsHTML() {
+        return '
+        <div class="client-card hover:shadow-lg hover:border-blue-300 transition-all duration-300">
+            <div class="client-logo">LC</div>
+            <div class="client-name">Leading Construction Company</div>
+            <div class="client-category">Construction & Engineering</div>
+        </div>
+        <div class="client-card hover:shadow-lg hover:border-blue-300 transition-all duration-300">
+            <div class="client-logo">LR</div>
+            <div class="client-name">Luxury Resort & Spa</div>
+            <div class="client-category">Tourism & Hospitality</div>
+        </div>
+        <div class="client-card hover:shadow-lg hover:border-blue-300 transition-all duration-300">
+            <div class="client-logo">IH</div>
+            <div class="client-name">Investment Holdings Group</div>
+            <div class="client-category">Investments & Trading</div>
+        </div>
+        <div class="client-card hover:shadow-lg hover:border-blue-300 transition-all duration-300">
+            <div class="client-logo">MC</div>
+            <div class="client-name">Medical Center Plus</div>
+            <div class="client-category">Healthcare Services</div>
+        </div>';
+    }
+    
+    /**
+     * Get fallback services HTML
+     */
+    private function getFallbackServicesHTML() {
+        return '
+        <div class="service-card hover:shadow-lg transition-shadow duration-300">
+            <div class="service-icon">👔</div>
+            <h3 class="service-title">Recruitment Services</h3>
+            <p class="service-description">Source and screen candidates across multiple sectors with our comprehensive recruitment solutions.</p>
+        </div>
+        <div class="service-card hover:shadow-lg transition-shadow duration-300">
+            <div class="service-icon">⚙️</div>
+            <h3 class="service-title">HR Support Services</h3>
+            <p class="service-description">Comprehensive post-recruitment support and compliance management for your workforce.</p>
+        </div>
+        <div class="service-card hover:shadow-lg transition-shadow duration-300">
+            <div class="service-icon">🛂</div>
+            <h3 class="service-title">Permits & Visa Processing</h3>
+            <p class="service-description">Government approvals for legal expatriate employment with streamlined processing.</p>
+        </div>
+        <div class="service-card hover:shadow-lg transition-shadow duration-300">
+            <div class="service-icon">🛡️</div>
+            <h3 class="service-title">Insurance Services</h3>
+            <p class="service-description">Comprehensive insurance coverage for expatriate employees and their families.</p>
+        </div>';
+    }
+    
+    /**
+     * Get fallback industries HTML
+     */
+    private function getFallbackIndustriesHTML() {
+        return '
+        <div class="industry-card hover:shadow-md hover:scale-105 transition-all duration-300">
+            <div class="industry-icon">🏗️</div>
+            <div class="industry-name">Construction & Engineering</div>
+            <div class="industry-description">Major construction and infrastructure projects</div>
+        </div>
+        <div class="industry-card hover:shadow-md hover:scale-105 transition-all duration-300">
+            <div class="industry-icon">🏨</div>
+            <div class="industry-name">Tourism & Hospitality</div>
+            <div class="industry-description">Leading resorts and hotels</div>
+        </div>
+        <div class="industry-card hover:shadow-md hover:scale-105 transition-all duration-300">
+            <div class="industry-icon">🏥</div>
+            <div class="industry-name">Healthcare Services</div>
+            <div class="industry-description">Hospitals, clinics, and medical facilities</div>
+        </div>
+        <div class="industry-card hover:shadow-md hover:scale-105 transition-all duration-300">
+            <div class="industry-icon">💻</div>
+            <div class="industry-name">Professional Services</div>
+            <div class="industry-description">IT, finance, administration, and consultancy</div>
+        </div>';
+    }
+    
+    /**
+     * Get fallback company info HTML
+     */
+    private function getFallbackCompanyInfoHTML() {
+        return '
+        <div class="about-content">
+            <h2 class="about-title">About Us</h2>
+            <p class="about-description">Sky Border Solution Pvt Ltd is a government-licensed HR consultancy and recruitment firm headquartered in the Republic of Maldives.</p>
+        </div>';
+    }
+    
+    /**
+     * Get fallback stats HTML
+     */
+    private function getFallbackStatsHTML() {
+        return '
+        <div class="stat-item hover:shadow-lg hover:scale-105 transition-all duration-300">
+            <div class="stat-value">1000+</div>
+            <div class="stat-label">Successful Placements</div>
+        </div>
+        <div class="stat-item hover:shadow-lg hover:scale-105 transition-all duration-300">
+            <div class="stat-value">50+</div>
+            <div class="stat-label">Partner Companies</div>
+        </div>
+        <div class="stat-item hover:shadow-lg hover:scale-105 transition-all duration-300">
+            <div class="stat-value">100%</div>
+            <div class="stat-label">Licensed & Compliant</div>
+        </div>';
     }
     
     /**
