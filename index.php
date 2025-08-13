@@ -352,8 +352,18 @@ if ($_POST && isset($_POST['contact_form'])) {
         
         /* Advanced Animations */
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1); 
+            }
+            25% { 
+                transform: translateY(-15px) rotate(0.5deg) scale(1.02); 
+            }
+            50% { 
+                transform: translateY(-25px) rotate(0deg) scale(1.05); 
+            }
+            75% { 
+                transform: translateY(-15px) rotate(-0.5deg) scale(1.02); 
+            }
         }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
@@ -467,21 +477,21 @@ if ($_POST && isset($_POST['contact_form'])) {
             transform: scale(1.05);
         }
         
-        /* Floating Elements */
+        /* Enhanced Floating Elements */
         .floating-element {
-            animation: float 6s ease-in-out infinite;
+            animation: float 8s ease-in-out infinite;
         }
         
         .floating-element-delay-1 {
-            animation-delay: 1s;
+            animation-delay: 2.5s;
         }
         
         .floating-element-delay-2 {
-            animation-delay: 2s;
+            animation-delay: 5s;
         }
         
         .floating-element-delay-3 {
-            animation-delay: 3s;
+            animation-delay: 1.5s;
         }
         
         /* Additional Animation Classes */
@@ -597,13 +607,13 @@ if ($_POST && isset($_POST['contact_form'])) {
             @apply bg-blue-400 text-white;
         }
         
-        /* Hero Section Button Variants - For dark backgrounds */
+        /* Hero Section Button Variants - Modern Tailwind Catalyst Style */
         .hero-button-primary {
-            @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2;
+            @apply bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold py-4 px-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-300/50 focus:ring-offset-2;
         }
         
         .hero-button-secondary {
-            @apply bg-white/10 hover:bg-white/20 text-white font-medium py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2 backdrop-blur-md border border-white/20;
+            @apply bg-white/90 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 text-slate-800 dark:text-white font-semibold py-4 px-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2 backdrop-blur-md border border-white/30 dark:border-white/20;
         }
         
         /* Transparent Card Styles */
@@ -649,6 +659,49 @@ if ($_POST && isset($_POST['contact_form'])) {
             .admin-button, .admin-button-secondary, .admin-button-success {
                 @apply py-3 px-4 text-base;
             }
+        }
+        
+        /* Enhanced Shadow Utilities */
+        .shadow-3xl {
+            box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .shadow-4xl {
+            box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Enhanced Text Utilities for Hero Section */
+        .text-shadow-sm {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .text-shadow-md {
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .text-shadow-lg {
+            text-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Enhanced Backdrop Blur Utilities */
+        .backdrop-blur-xs {
+            backdrop-filter: blur(4px);
+        }
+        
+        .backdrop-blur-sm {
+            backdrop-filter: blur(8px);
+        }
+        
+        .backdrop-blur-md {
+            backdrop-filter: blur(12px);
+        }
+        
+        .backdrop-blur-lg {
+            backdrop-filter: blur(16px);
+        }
+        
+        .backdrop-blur-xl {
+            backdrop-filter: blur(24px);
         }
         
         /* Transparent Button Styles */
@@ -894,93 +947,98 @@ if ($_POST && isset($_POST['contact_form'])) {
 
 
     <!-- Hero Section -->
-    <section id="home" class="relative overflow-hidden bg-white dark:bg-gray-900 theme-transition min-h-screen flex items-center">
-        <!-- Subtle Background Pattern -->
+    <section id="home" class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-blue-950 dark:to-indigo-950 theme-transition min-h-screen flex items-center">
+        <!-- Enhanced Background Pattern -->
         <div class="absolute inset-0 -z-20">
-            <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-green-50 dark:from-blue-950 dark:via-slate-900 dark:to-green-950"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100/40 via-transparent to-transparent dark:from-blue-900/20"></div>
             
             <!-- Enhanced Floating Elements -->
-            <div class="absolute top-20 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-100 to-transparent rounded-full opacity-30 floating-element blur-md"></div>
-            <div class="absolute top-40 right-1/4 w-80 h-80 bg-gradient-to-br from-green-100 to-transparent rounded-full opacity-25 floating-element blur-md floating-element-delay-1"></div>
-            <div class="absolute -bottom-20 left-1/2 w-72 h-72 bg-gradient-to-br from-blue-50 to-green-50 rounded-full opacity-20 floating-element blur-md floating-element-delay-2"></div>
+            <div class="absolute top-20 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-200/30 to-purple-200/20 rounded-full opacity-40 floating-element blur-xl"></div>
+            <div class="absolute top-40 right-1/4 w-80 h-80 bg-gradient-to-br from-indigo-200/30 to-blue-200/20 rounded-full opacity-35 floating-element blur-xl floating-element-delay-1"></div>
+            <div class="absolute -bottom-20 left-1/2 w-72 h-72 bg-gradient-to-br from-purple-200/20 to-blue-200/20 rounded-full opacity-30 floating-element blur-xl floating-element-delay-2"></div>
             
             <!-- Additional Floating Elements -->
-            <div class="absolute top-1/3 left-10 w-32 h-32 bg-gradient-to-br from-yellow-100 to-transparent rounded-full opacity-20 floating-element blur-md floating-element-delay-3"></div>
-            <div class="absolute bottom-1/3 right-10 w-24 h-24 bg-gradient-to-br from-gray-100 to-transparent rounded-full opacity-15 floating-element blur-md"></div>
+            <div class="absolute top-1/3 left-10 w-32 h-32 bg-gradient-to-br from-cyan-200/25 to-transparent rounded-full opacity-25 floating-element blur-lg floating-element-delay-3"></div>
+            <div class="absolute bottom-1/3 right-10 w-24 h-24 bg-gradient-to-br from-slate-200/20 to-transparent rounded-full opacity-20 floating-element blur-lg"></div>
         </div>
         
         <!-- Main Content -->
         <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32 xl:py-40">
             <div class="text-center">
+                <!-- Logo -->
+                <div class="scroll-reveal mb-8" style="animation-delay: 0.1s;">
+                    <div class="inline-flex items-center justify-center w-24 h-24 sm:w-32 sm:h-32 bg-white/80 dark:bg-white/10 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-110">
+                        <img src="/images/logo.svg" alt="Sky Border Solutions Logo" class="w-16 h-16 sm:w-20 sm:h-20 filter drop-shadow-lg">
+                    </div>
+                </div>
+
                 <!-- Main Heading -->
                 <div class="scroll-reveal" style="animation-delay: 0.2s;">
-                    <h1 class="mx-auto max-w-6xl text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
+                    <h1 class="mx-auto max-w-6xl text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
                         <span class="block">
-                            <span class="gradient-text">
-                        <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
+                            <span class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent text-shadow-lg">
+                                <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
                             </span>
                         </span>
-                        <span class="mt-4 block text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-white/80">
+                        <span class="mt-4 block text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-medium text-slate-700 dark:text-slate-200 text-shadow-sm">
                             Professional Workforce Solutions
-                    </span>
-                </h1>
+                        </span>
+                    </h1>
                 </div>
 
                 <!-- Tagline -->
                 <div class="scroll-reveal" style="animation-delay: 0.4s;">
                     <div class="mx-auto mt-8 sm:mt-10 max-w-3xl px-4">
-                        <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 sm:p-8 rounded-xl hover:bg-white/20 transition-all duration-300">
-                            <p class="text-lg sm:text-xl leading-7 sm:leading-8 text-white font-normal">
-                        <span class="relative">
-                                    <span class="absolute -left-6 sm:-left-8 top-0 text-white/60 text-2xl sm:text-3xl">"</span>
-                    <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
-                                    <span class="absolute -right-6 sm:-right-8 bottom-0 text-white/60 text-2xl sm:text-3xl">"</span>
-                        </span>
-                </p>
+                        <div class="bg-white/70 dark:bg-white/10 backdrop-blur-xl border border-white/30 dark:border-white/20 p-6 sm:p-8 rounded-2xl hover:bg-white/80 dark:hover:bg-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl">
+                            <p class="text-lg sm:text-xl leading-7 sm:leading-8 text-slate-800 dark:text-white font-medium text-shadow-sm">
+                                <span class="relative">
+                                    <span class="absolute -left-6 sm:-left-8 top-0 text-blue-500/60 dark:text-blue-400/60 text-2xl sm:text-3xl">"</span>
+                                    <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
+                                    <span class="absolute -right-6 sm:-right-8 bottom-0 text-blue-500/60 dark:text-blue-400/60 text-2xl sm:text-3xl">"</span>
+                                </span>
+                            </p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Description -->
                 <div class="scroll-reveal" style="animation-delay: 0.6s;">
-                    <p class="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-white/70">
-                    <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
-                </p>
+                    <p class="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-slate-600 dark:text-slate-300 font-medium text-shadow-sm">
+                        <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
+                    </p>
                 </div>
 
                 <!-- Enhanced Status Badges -->
                 <div class="mx-auto mt-12 mb-8 flex flex-wrap justify-center gap-3 sm:gap-4 px-4 scroll-reveal" style="animation-delay: 0.7s;">
-                    <div class="group relative inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 px-4 sm:px-6 py-3 text-sm font-normal text-white hover:bg-white/20 transition-all duration-300 animate-pulse-glow rounded-xl">
-                        <i class="fas fa-certificate mr-3 text-green-400 text-lg animate-float"></i>
+                    <div class="group relative inline-flex items-center bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 sm:px-6 py-3 text-sm font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 animate-pulse-glow rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105">
+                        <i class="fas fa-certificate mr-3 text-white text-lg animate-float"></i>
                         <span class="relative z-10">Government Licensed</span>
                     </div>
-                    <div class="group relative inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 px-4 sm:px-6 py-3 text-sm font-normal text-white hover:bg-white/20 transition-all duration-300 animate-pulse-glow rounded-xl" style="animation-delay: 0.1s;">
-                        <i class="fas fa-award mr-3 text-blue-400 text-lg animate-float"></i>
+                    <div class="group relative inline-flex items-center bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 sm:px-6 py-3 text-sm font-semibold hover:from-blue-600 hover:to-indigo-600 transition-all duration-300 animate-pulse-glow rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105" style="animation-delay: 0.1s;">
+                        <i class="fas fa-award mr-3 text-white text-lg animate-float"></i>
                         <span class="relative z-10">HR Consulting & Recruitment</span>
                     </div>
                 </div>
 
-                <!-- Enhanced CTA Buttons -->
+                <!-- Enhanced CTA Buttons with Tailwind Catalyst Style -->
                 <div class="mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-4 scroll-reveal" style="animation-delay: 0.8s;">
-                    <a href="#contact" class="group relative inline-flex items-center justify-center w-full sm:w-auto animate-pulse-glow hero-button-primary">
+                    <a href="#contact" class="group relative inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-300/50 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900">
                         <i class="fas fa-comments mr-3 text-lg animate-float"></i>
                         <span>Get Started Today</span>
                         <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-2 animate-float"></i>
                     </a>
-                    <a href="#services" class="group inline-flex items-center justify-center w-full sm:w-auto animate-pulse-glow hero-button-secondary">
+                    <a href="#services" class="group inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 bg-white/90 dark:bg-white/10 hover:bg-white dark:hover:bg-white/20 text-slate-800 dark:text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900 backdrop-blur-md border border-white/30 dark:border-white/20">
                         <i class="fas fa-eye mr-3 transition-transform group-hover:scale-110 text-lg animate-float"></i>
                         <span>Explore Services</span>
                         <i class="fas fa-arrow-down ml-3 transition-transform group-hover:translate-y-2 animate-float"></i>
                     </a>
                 </div>
 
-
-
-                <!-- Transparent Scroll Indicator -->
+                <!-- Enhanced Scroll Indicator -->
                 <div class="mt-24">
                     <div class="flex flex-col items-center">
-                        <p class="text-sm text-white/70 mb-4 font-medium">Learn more about us</p>
-                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl text-white hover:text-white/80 transition-all duration-300 hover:scale-110">
+                        <p class="text-sm text-slate-600 dark:text-slate-300 mb-4 font-medium text-shadow-sm">Learn more about us</p>
+                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 bg-white/80 dark:bg-white/10 backdrop-blur-lg border border-white/30 dark:border-white/20 rounded-2xl text-slate-700 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:scale-110 shadow-lg hover:shadow-xl">
                             <i class="fas fa-chevron-down text-xl animate-bounce group-hover:translate-y-1 transition-transform duration-300"></i>
                         </a>
                     </div>
