@@ -498,6 +498,17 @@ class Mailer {
                 $mail->SMTPSecure = $smtpConfig['encryption'];
                 $mail->Port = $smtpConfig['port'];
                 
+                // Enhanced debugging and authentication for sendTestEmail method
+                $mail->SMTPDebug = 0; // Set to 2 for detailed debugging
+                $mail->Debugoutput = 'error_log';
+                
+                // Try different authentication methods
+                $mail->AuthType = 'LOGIN'; // Try LOGIN instead of default
+                
+                // Set timeout values
+                $mail->Timeout = 30;
+                $mail->SMTPKeepAlive = true;
+                
                 // Recipients
                 $mail->setFrom($smtpConfig['from_email'], $smtpConfig['from_name']);
                 $mail->addAddress($email);
