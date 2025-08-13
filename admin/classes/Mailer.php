@@ -49,40 +49,89 @@ class Mailer {
      * Render website as HTML email
      */
     public function renderWebsiteAsEmail($url) {
-        // Get the current domain for relative URLs
+        // Use the static email template instead of dynamic rendering
+        return $this->getStaticWebsiteTemplate();
+    }
+    
+    /**
+     * Get the static website email template
+     */
+    private function getStaticWebsiteTemplate() {
+        $templatePath = __DIR__ . '/../email-templates/website-template.html';
+        
+        if (!file_exists($templatePath)) {
+            // Fallback to a basic template if file doesn't exist
+            return $this->getFallbackTemplate();
+        }
+        
+        $template = file_get_contents($templatePath);
+        
+        if ($template === false) {
+            return $this->getFallbackTemplate();
+        }
+        
+        // Replace placeholders with actual values
         $domain = $_SERVER['HTTP_HOST'] ?? 'localhost';
         $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
         $baseUrl = $protocol . '://' . $domain;
         
-        // If URL is relative, make it absolute
-        if (strpos($url, 'http') !== 0) {
-            $url = $baseUrl . $url;
-        }
+        $template = str_replace('{{website_url}}', $baseUrl, $template);
+        $template = str_replace('{{contact_email}}', '{{contact_email}}', $template); // Keep placeholder for personalization
+        $template = str_replace('{{unsubscribe_link}}', '{{unsubscribe_link}}', $template); // Keep placeholder for personalization
         
-        // Fetch the website content
-        $context = stream_context_create([
-            'http' => [
-                'method' => 'GET',
-                'header' => [
-                    'User-Agent: Mozilla/5.0 (compatible; MailerBot/1.0)',
-                    'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                    'Accept-Language: en-US,en;q=0.5',
-                    'Accept-Encoding: gzip, deflate',
-                    'Connection: keep-alive',
-                ]
-            ]
-        ]);
+        return $template;
+    }
+    
+    /**
+     * Get a fallback template if the main template file is missing
+     */
+    private function getFallbackTemplate() {
+        $domain = $_SERVER['HTTP_HOST'] ?? 'localhost';
+        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+        $baseUrl = $protocol . '://' . $domain;
         
-        $html = file_get_contents($url, false, $context);
-        
-        if ($html === false) {
-            throw new Exception("Failed to fetch website content from: $url");
-        }
-        
-        // Convert to email-friendly HTML
-        $emailHtml = $this->convertToEmailHTML($html, $baseUrl);
-        
-        return $emailHtml;
+        return '
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Sky Border Solutions</title>
+        </head>
+        <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h1 style="color: #1e40af; margin-bottom: 10px;">Sky Border Solutions</h1>
+                    <p style="color: #666; font-size: 18px;">Your Trusted Partner in Business Growth</p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #1e40af, #166534); color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px;">
+                    <h2 style="margin-bottom: 20px;">Welcome to Sky Border Solutions</h2>
+                    <p style="font-size: 16px; line-height: 1.6;">We specialize in helping businesses achieve their growth objectives through strategic consulting, process optimization, and innovative solutions.</p>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1e40af; margin-bottom: 15px;">Our Services</h3>
+                    <ul style="color: #666; line-height: 1.8;">
+                        <li>Business Strategy & Planning</li>
+                        <li>Process Optimization</li>
+                        <li>Growth Consulting</li>
+                        <li>Market Entry Strategies</li>
+                        <li>Performance Improvement</li>
+                    </ul>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="' . $baseUrl . '" style="background: linear-gradient(135deg, #1-40af, #166534); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">Visit Our Website</a>
+                </div>
+                
+                <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; color: #999; font-size: 14px;">
+                    <p>This email was sent to {{contact_email}}</p>
+                    <p>&copy; 2025 Sky Border Solutions. All rights reserved.</p>
+                </div>
+            </div>
+        </body>
+        </html>';
     }
     
     /**
