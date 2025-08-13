@@ -597,6 +597,15 @@ if ($_POST && isset($_POST['contact_form'])) {
             @apply bg-blue-400 text-white;
         }
         
+        /* Hero Section Button Variants - For dark backgrounds */
+        .hero-button-primary {
+            @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2;
+        }
+        
+        .hero-button-secondary {
+            @apply bg-white/10 hover:bg-white/20 text-white font-medium py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2 backdrop-blur-md border border-white/20;
+        }
+        
         /* Transparent Card Styles */
         .modern-card {
             background: rgba(255, 255, 255, 0.05);
@@ -911,7 +920,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                         <?php echo htmlspecialchars($companyInfo['company_name'] ?? 'Sky Border Solutions'); ?>
                             </span>
                         </span>
-                        <span class="mt-4 block text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-theme-secondary">
+                        <span class="mt-4 block text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-normal text-white/80">
                             Professional Workforce Solutions
                     </span>
                 </h1>
@@ -920,12 +929,12 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <!-- Tagline -->
                 <div class="scroll-reveal" style="animation-delay: 0.4s;">
                     <div class="mx-auto mt-8 sm:mt-10 max-w-3xl px-4">
-                        <div class="admin-card p-6 sm:p-8 admin-hover-lift">
-                            <p class="text-lg sm:text-xl leading-7 sm:leading-8 text-theme-primary font-normal">
+                        <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 sm:p-8 rounded-xl hover:bg-white/20 transition-all duration-300">
+                            <p class="text-lg sm:text-xl leading-7 sm:leading-8 text-white font-normal">
                         <span class="relative">
-                                    <span class="absolute -left-6 sm:-left-8 top-0 text-theme-muted text-2xl sm:text-3xl">"</span>
+                                    <span class="absolute -left-6 sm:-left-8 top-0 text-white/60 text-2xl sm:text-3xl">"</span>
                     <?php echo htmlspecialchars($companyInfo['tagline'] ?? 'Where compliance meets competence'); ?>
-                                    <span class="absolute -right-6 sm:-right-8 bottom-0 text-theme-muted text-2xl sm:text-3xl">"</span>
+                                    <span class="absolute -right-6 sm:-right-8 bottom-0 text-white/60 text-2xl sm:text-3xl">"</span>
                         </span>
                 </p>
                         </div>
@@ -934,31 +943,31 @@ if ($_POST && isset($_POST['contact_form'])) {
 
                 <!-- Description -->
                 <div class="scroll-reveal" style="animation-delay: 0.6s;">
-                    <p class="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-theme-secondary">
+                    <p class="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-white/70">
                     <?php echo htmlspecialchars($companyInfo['description'] ?? 'Leading HR consultancy and recruitment firm in the Republic of Maldives, providing end-to-end manpower solutions with excellence and integrity.'); ?>
                 </p>
                 </div>
 
                 <!-- Enhanced Status Badges -->
                 <div class="mx-auto mt-12 mb-8 flex flex-wrap justify-center gap-3 sm:gap-4 px-4 scroll-reveal" style="animation-delay: 0.7s;">
-                    <div class="group relative inline-flex items-center admin-card px-4 sm:px-6 py-3 text-sm font-normal text-theme-primary admin-hover-lift transition-all duration-300 animate-pulse-glow">
-                        <i class="fas fa-certificate mr-3 text-green-600 text-lg animate-float"></i>
+                    <div class="group relative inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 px-4 sm:px-6 py-3 text-sm font-normal text-white hover:bg-white/20 transition-all duration-300 animate-pulse-glow rounded-xl">
+                        <i class="fas fa-certificate mr-3 text-green-400 text-lg animate-float"></i>
                         <span class="relative z-10">Government Licensed</span>
                     </div>
-                    <div class="group relative inline-flex items-center admin-card px-4 sm:px-6 py-3 text-sm font-normal text-theme-primary admin-hover-lift transition-all duration-300 animate-pulse-glow" style="animation-delay: 0.1s;">
-                        <i class="fas fa-award mr-3 text-blue-600 text-lg animate-float"></i>
+                    <div class="group relative inline-flex items-center bg-white/10 backdrop-blur-md border border-white/20 px-4 sm:px-6 py-3 text-sm font-normal text-white hover:bg-white/20 transition-all duration-300 animate-pulse-glow rounded-xl" style="animation-delay: 0.1s;">
+                        <i class="fas fa-award mr-3 text-blue-400 text-lg animate-float"></i>
                         <span class="relative z-10">HR Consulting & Recruitment</span>
                     </div>
                 </div>
 
                 <!-- Enhanced CTA Buttons -->
                 <div class="mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-4 scroll-reveal" style="animation-delay: 0.8s;">
-                    <a href="#contact" class="group relative inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 text-base font-normal text-white admin-button rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 w-full sm:w-auto animate-pulse-glow admin-hover-lift">
+                    <a href="#contact" class="group relative inline-flex items-center justify-center w-full sm:w-auto animate-pulse-glow hero-button-primary">
                         <i class="fas fa-comments mr-3 text-lg animate-float"></i>
                         <span>Get Started Today</span>
                         <i class="fas fa-arrow-right ml-3 transition-transform group-hover:translate-x-2 animate-float"></i>
                     </a>
-                    <a href="#services" class="group inline-flex items-center justify-center px-8 sm:px-10 py-4 sm:py-5 text-base font-normal text-white admin-button-secondary rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-300 focus:ring-offset-2 w-full sm:w-auto animate-pulse-glow admin-hover-lift">
+                    <a href="#services" class="group inline-flex items-center justify-center w-full sm:w-auto animate-pulse-glow hero-button-secondary">
                         <i class="fas fa-eye mr-3 transition-transform group-hover:scale-110 text-lg animate-float"></i>
                         <span>Explore Services</span>
                         <i class="fas fa-arrow-down ml-3 transition-transform group-hover:translate-y-2 animate-float"></i>
@@ -971,7 +980,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <div class="mt-24">
                     <div class="flex flex-col items-center">
                         <p class="text-sm text-white/70 mb-4 font-medium">Learn more about us</p>
-                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 bg-white/10 dark:bg-gray-800/50 backdrop-blur-md border border-white/20 dark:border-gray-600/50 rounded-2xl text-white hover:text-white/80 transition-all duration-300 hover:scale-110">
+                        <a href="#about" class="group inline-flex items-center justify-center w-16 h-16 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl text-white hover:text-white/80 transition-all duration-300 hover:scale-110">
                             <i class="fas fa-chevron-down text-xl animate-bounce group-hover:translate-y-1 transition-transform duration-300"></i>
                         </a>
                     </div>
