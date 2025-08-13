@@ -1,0 +1,48 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# PHP
+*.log
+*.cache
+*.tmp
+*.swp
+*.swo
+*~
+
+# Composer
+/vendor/
+composer.lock
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Uploads (if you don't want to track uploaded files)
+admin/uploads/*.jpg
+admin/uploads/*.png
+admin/uploads/*.gif
+admin/uploads/*.pdf
+admin/uploads/*.doc
+admin/uploads/*.docx
+
+# Keep upload directory structure but ignore actual files
+!admin/uploads/*/
+!admin/uploads/*/index.php
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Backup files
+*.bak
+*.backup
+*.old

@@ -418,30 +418,44 @@ class Mailer {
             // Render the website as email
             $renderedHtml = $this->renderWebsiteAsEmail('/');
             
-            // Send test email to admin
-            $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-            
-            // Server settings
-            $mail->isSMTP();
-            $mail->Host = $smtpConfig['host'];
-            $mail->SMTPAuth = true;
-            $mail->Username = $smtpConfig['username'];
-            $mail->Password = $smtpConfig['password'];
-            $mail->SMTPSecure = $smtpConfig['encryption'];
-            $mail->Port = $smtpConfig['port'];
-            
-            // Recipients
-            $mail->setFrom($smtpConfig['from_email'], $smtpConfig['from_name']);
-            $mail->addAddress($smtpConfig['username']); // Send to admin email
-            
-            // Content
-            $mail->isHTML(true);
-            $mail->Subject = '[TEST] ' . $campaign['subject'];
-            $mail->Body = $renderedHtml;
-            
-            $mail->send();
-            
-            return ['success' => true, 'message' => 'Test campaign sent successfully'];
+            // Send test email to admin using PHPMailer
+            try {
+                // Check if PHPMailer is available via Composer
+                if (class_exists('PHPMailer\PHPMailer\PHPMailer')) {
+                    $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+                } 
+                // Check if PHPMailer is available in local classes directory
+                elseif (class_exists('PHPMailer')) {
+                    $mail = new PHPMailer(true);
+                } else {
+                    return ['success' => false, 'error' => 'PHPMailer not found. Please install it first.'];
+                }
+                
+                // Server settings
+                $mail->isSMTP();
+                $mail->Host = $smtpConfig['host'];
+                $mail->SMTPAuth = true;
+                $mail->Username = $smtpConfig['username'];
+                $mail->Password = $smtpConfig['password'];
+                $mail->SMTPSecure = $smtpConfig['encryption'];
+                $mail->Port = $smtpConfig['port'];
+                
+                // Recipients
+                $mail->setFrom($smtpConfig['from_email'], $smtpConfig['from_name']);
+                $mail->addAddress($smtpConfig['username']); // Send to admin email
+                
+                // Content
+                $mail->isHTML(true);
+                $mail->Subject = '[TEST] ' . $campaign['subject'];
+                $mail->Body = $renderedHtml;
+                
+                $mail->send();
+                
+                return ['success' => true, 'message' => 'Test campaign sent successfully to ' . $smtpConfig['username']];
+                
+            } catch (Exception $e) {
+                return ['success' => false, 'error' => 'Email could not be sent. Mailer Error: ' . $e->getMessage()];
+            }
             
         } catch (Exception $e) {
             return ['success' => false, 'error' => $e->getMessage()];

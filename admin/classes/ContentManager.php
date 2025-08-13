@@ -1120,10 +1120,19 @@ class ContentManager {
                 return ['success' => false, 'error' => 'Missing required SMTP parameters'];
             }
             
-            // Create a test email using PHPMailer or similar
-            $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-            
+            // Send test email using PHPMailer
             try {
+                // Check if PHPMailer is available via Composer
+                if (class_exists('PHPMailer\PHPMailer\PHPMailer')) {
+                    $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+                } 
+                // Check if PHPMailer is available in local classes directory
+                elseif (class_exists('PHPMailer')) {
+                    $mail = new PHPMailer(true);
+                } else {
+                    return ['success' => false, 'error' => 'PHPMailer not found. Please install it first.'];
+                }
+                
                 // Server settings
                 $mail->isSMTP();
                 $mail->Host = $host;
@@ -1170,7 +1179,7 @@ class ContentManager {
                 return ['success' => true, 'message' => 'Test email sent successfully to ' . $username];
                 
             } catch (Exception $e) {
-                return ['success' => false, 'error' => 'Email could not be sent. Mailer Error: ' . $mail->ErrorInfo];
+                return ['success' => false, 'error' => 'Email could not be sent. Mailer Error: ' . $e->getMessage()];
             }
             
         } catch (Exception $e) {
@@ -1352,7 +1361,7 @@ class ContentManager {
     // Campaign Methods
     public function getCampaigns($status = null, $limit = 50) {
         try {
-            $query = "SELECT * FROM email_campaigns";
+            $query = "SELECT * FROM campaigns";
             
             if ($status) {
                 $query .= " WHERE status = :status";
@@ -1375,7 +1384,7 @@ class ContentManager {
     
     public function getCampaign($id) {
         try {
-            $query = "SELECT * FROM email_campaigns WHERE id = :id LIMIT 1";
+            $query = "SELECT * FROM campaigns WHERE id = :id LIMIT 1";
             $stmt = $this->conn->prepare($query);
             $stmt->execute([':id' => $id]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -1387,7 +1396,7 @@ class ContentManager {
     
     public function addCampaign($data) {
         try {
-            $query = "INSERT INTO email_campaigns (
+            $query = "INSERT INTO campaigns (
                 campaign_name, subject, content, recipient_list, status, scheduled_at, created_at
             ) VALUES (
                 :campaign_name, :subject, :content, :recipient_list, :status, :scheduled_at, NOW()
@@ -1400,10 +1409,10 @@ class ContentManager {
             $data['scheduled_at'] = $data['scheduled_at'] ?? null;
             
             return $stmt->execute([
-                ':campaign_name' => $data['campaign_name'],
+                ':campaign_name' => $data['name'],
                 ':subject' => $data['subject'],
-                ':content' => $data['content'],
-                ':recipient_list' => $data['recipient_list'],
+                ':content' => $data['rendered_html'],
+                ':recipient_list' => '',
                 ':status' => $data['status'],
                 ':scheduled_at' => $data['scheduled_at']
             ]);
@@ -1415,7 +1424,7 @@ class ContentManager {
     
     public function updateCampaign($id, $data) {
         try {
-            $query = "UPDATE email_campaigns SET 
+            $query = "UPDATE campaigns SET 
                 campaign_name = :campaign_name,
                 subject = :subject,
                 content = :content,
@@ -1432,10 +1441,10 @@ class ContentManager {
             $data['scheduled_at'] = $data['scheduled_at'] ?? null;
             
             return $stmt->execute([
-                ':campaign_name' => $data['campaign_name'],
+                ':campaign_name' => $data['name'],
                 ':subject' => $data['subject'],
-                ':content' => $data['content'],
-                ':recipient_list' => $data['recipient_list'],
+                ':content' => $data['rendered_html'],
+                ':recipient_list' => '',
                 ':status' => $data['status'],
                 ':scheduled_at' => $data['scheduled_at'],
                 ':id' => $id
@@ -1448,7 +1457,7 @@ class ContentManager {
     
     public function deleteCampaign($id) {
         try {
-            $query = "DELETE FROM email_campaigns WHERE id = :id";
+            $query = "DELETE FROM campaigns WHERE id = :id";
             $stmt = $this->conn->prepare($query);
             return $stmt->execute([':id' => $id]);
         } catch (Exception $e) {
@@ -1459,7 +1468,7 @@ class ContentManager {
     
     public function getAllCampaigns() {
         try {
-            $query = "SELECT * FROM email_campaigns ORDER BY created_at DESC";
+            $query = "SELECT * FROM campaigns ORDER BY created_at DESC";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -1474,7 +1483,7 @@ class ContentManager {
             $query = "SELECT 
                         status,
                         COUNT(*) as count
-                      FROM email_campaigns 
+                      FROM campaigns 
                       GROUP BY status";
             $stmt = $this->conn->prepare($query);
             $stmt->execute();
