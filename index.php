@@ -1626,14 +1626,13 @@ if ($_POST && isset($_POST['contact_form'])) {
                 <div class="space-y-8">
                     <div>
                         <div class="flex items-center">
-                            <img src="images/logo.svg" alt="Sky Border Solutions" class="h-8 w-auto">
-                            <span class="ml-3 text-xl font-bold text-white"><?php echo htmlspecialchars($companyInfo['company_name']); ?></span>
+                            <img src="images/wlogo.png" alt="Sky Border Solutions" class="h-8 w-auto">
                         </div>
                         <p class="mt-4 text-sm leading-6 text-gray-300">
                             <?php echo htmlspecialchars($companyInfo['tagline']); ?>
                         </p>
                         <p class="mt-2 text-sm leading-6 text-gray-400">
-                            Leading HR consultancy and recruitment firm in the Republic of Maldives.
+                            
                         </p>
                     </div>
                     
@@ -1681,7 +1680,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                             </ul>
                         </div>
                     </div>
-                    <div class="md:grid md:grid-cols-2 md:gap-8">
+                    <div class="md:grid md:grid-cols-1 md:gap-8">
                         <div>
                             <h3 class="text-sm font-semibold leading-6 text-white">Contact Info</h3>
                             <ul role="list" class="mt-6 space-y-4">
@@ -1699,14 +1698,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                                 </li>
                             </ul>
                         </div>
-                        <div class="mt-10 md:mt-0">
-                            <h3 class="text-sm font-semibold leading-6 text-white">Quick Actions</h3>
-                            <ul role="list" class="mt-6 space-y-4">
-                                <li><a href="#contact" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Get Quote</a></li>
-                                <li><a href="admin/" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">Admin</a></li>
-                                <li><a href="check-setup.php" class="text-sm leading-6 text-gray-300 hover:text-white transition-colors">System Status</a></li>
-                            </ul>
-                        </div>
+                      
                     </div>
                 </div>
             </div>
@@ -1718,7 +1710,7 @@ if ($_POST && isset($_POST['contact_form'])) {
                         &copy; <span id="year"><?php echo date('Y'); ?></span> <?php echo htmlspecialchars($companyInfo['company_name']); ?>. All rights reserved.
                     </p>
                     <p class="mt-4 text-xs leading-5 text-gray-400 sm:mt-0">
-                        Government Licensed HR Consultancy • Licensed & Compliant
+                        Republic of Maldives
                     </p>
                 </div>
             </div>
